@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\PlayerScript.cs" />
     <Compile Include="Assets\Scripts\Attack and Movement.cs" />
     <Compile Include="Assets\Scripts\MousePosition3D.cs" />
+    <Compile Include="Assets\Scripts\Abilities.cs" />
     <Compile Include="Assets\Scripts\CameraScript.cs" />
   </ItemGroup>
   <ItemGroup>
