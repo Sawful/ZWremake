@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-    static public int player_hp = 50;
-    static public int player_damage = 5;
-    static public float player_range = 5;
-    static public float player_speed = 3;
+    static public int playerHitpoint = 50;
+    static public int playerDamage = 5;
+    static public float playerRange = 5;
+    static public float playerSpeed = 3;
+    static public float playerAttackspeed = 1.0F;
 
 
     // Start is called before the first frame update
@@ -19,6 +20,15 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (playerHitpoint <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    void takeDamage(int damage)
+    {
+        print(playerHitpoint);
+        playerHitpoint -= damage;
     }
 }
