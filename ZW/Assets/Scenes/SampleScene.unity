@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44300658, g: 0.49219716, b: 0.57192636, a: 1}
+  m_IndirectSpecularColor: {r: 0.443006, g: 0.49219692, b: 0.57192516, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -715,7 +715,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 447552055}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -1235,7 +1235,7 @@ GameObject:
   - component: {fileID: 1329710632}
   - component: {fileID: 1329710636}
   - component: {fileID: 1329710638}
-  - component: {fileID: 1329710639}
+  - component: {fileID: 1329710641}
   - component: {fileID: 1329710640}
   m_Layer: 6
   m_Name: Player
@@ -1364,22 +1364,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5db12d86834b3f24897c2fac83f44495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1329710639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1329710630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0497d6de923dc543aa274756c6ea442, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 0}
-  rotateSpeedMovement: 0.05
-  distanceWithEnemy: 0
-  anim: {fileID: 0}
 --- !u!114 &1329710640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1408,6 +1392,24 @@ MonoBehaviour:
   abilityText4: {fileID: 1266153944}
   ability4Key: 114
   ability4Cooldown: 10
+--- !u!114 &1329710641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1329710630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 501f246877d55fc45baa66818439114a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  rotateSpeedMovement: 0.05
+  distanceWithEnemy: 0
+  attackCooldown: 0
+  enemyClicked: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!1 &1456643796
 GameObject:
   m_ObjectHideFlags: 0
@@ -1495,6 +1497,8 @@ GameObject:
   - component: {fileID: 1466088559}
   - component: {fileID: 1466088558}
   - component: {fileID: 1466088557}
+  - component: {fileID: 1466088561}
+  - component: {fileID: 1466088562}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
@@ -1588,6 +1592,47 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1466088561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1466088556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab9ec1bd63b6e1d468079221839f700a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitpoint: 50
+  damage: 2
+  speed: 1.5
+  range: 0.5
+  attackSpeed: 1
+  player: {fileID: 0}
+  agent: {fileID: 0}
+--- !u!195 &1466088562
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1466088556}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.49999997
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.99999994
+  m_BaseOffset: 0.49999997
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1594629705
 GameObject:
   m_ObjectHideFlags: 0
