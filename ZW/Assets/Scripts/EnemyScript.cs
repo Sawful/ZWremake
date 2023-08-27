@@ -11,6 +11,7 @@ public class EnemyScript : MonoBehaviour
     public float speed = 1.5F;
     public float range = 0.5F;
     public float attackSpeed = 1.0F;
+    public float attackCooldown = 0;
 
     // Initialize Objects and Component
     public GameObject player;
@@ -40,10 +41,16 @@ public class EnemyScript : MonoBehaviour
             Destroy(gameObject);
         }
         // Attack
-        if (range > Vector3.Distance(gameObject.transform.position, player.transform.position))
+        if (attackCooldown > 0)
+        {
+            attackCooldown -= Time.deltaTime;
+        }
+
+        if (range > Vector3.Distance(gameObject.transform.position, player.transform.position) && attackCooldown < 0.05)
         {
             player.SendMessage("takeDamage", damage, SendMessageOptions.DontRequireReceiver);
-            print("die :(");
+            attackCooldown = 0.5F;
+            print("hit");
         }
     }
 
