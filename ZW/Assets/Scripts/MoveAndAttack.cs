@@ -19,12 +19,15 @@ public class MoveAndAttack : MonoBehaviour
     // Initialize Objects and Components
     public GameObject enemyClicked;
     public Animator anim;
+    public GameObject hitParticle;
+    public AudioSource hitSound;
 
     // Start is called before the first frame update
     void Start()
     {
-        // Get agent
+        // Get components
         agent = gameObject.GetComponent<NavMeshAgent>();
+        hitSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -44,7 +47,7 @@ public class MoveAndAttack : MonoBehaviour
             }
 
             // When enemy is in range
-            else 
+            else
             {
                 gameObject.transform.LookAt(enemyClicked.transform.position);
                 agent.SetDestination(gameObject.transform.position);
@@ -57,7 +60,12 @@ public class MoveAndAttack : MonoBehaviour
         if (attacking && attackCooldown < 0)
         {
             enemyClicked.SendMessage("takeDamage", PlayerScript.playerDamage, SendMessageOptions.DontRequireReceiver);
+            // VFX and SFX
+            SpawnHitParticles(enemyClicked.transform.position);
+            hitSound.Play();
+            //Set cooldown
             attackCooldown = 1 / PlayerScript.playerAttackspeed;
+
         }
 
 
@@ -98,6 +106,10 @@ public class MoveAndAttack : MonoBehaviour
                 }
             }
         }
+
+        void SpawnHitParticles(Vector3 Position)
+        {
+            Instantiate(hitParticle, Position, Quaternion.identity);
+        }
     }
 }
-

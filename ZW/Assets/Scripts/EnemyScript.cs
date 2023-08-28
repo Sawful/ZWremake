@@ -34,8 +34,9 @@ public class EnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Death state
+        // Move
         agent.SetDestination(player.transform.position);
+        // Death state
         if (hitpoint <= 0)
         {
             Destroy(gameObject);
