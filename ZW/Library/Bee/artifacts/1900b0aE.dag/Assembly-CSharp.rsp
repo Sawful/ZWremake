@@ -361,6 +361,7 @@
 "Assets/Scripts/Abilities.cs"
 "Assets/Scripts/CameraScript.cs"
 "Assets/Scripts/EnemyScript.cs"
+"Assets/Scripts/GameManager.cs"
 "Assets/Scripts/MoveAndAttack.cs"
 "Assets/Scripts/PlayerScript.cs"
 -langversion:9.0
