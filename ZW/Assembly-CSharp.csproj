@@ -62,6 +62,7 @@
     <Compile Include="Assets\BillboardCanvas.cs" />
     <Compile Include="Assets\Scripts\Abilities.cs" />
     <Compile Include="Assets\Scripts\EnemyScript.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\MoveAndAttack.cs" />
     <Compile Include="Assets\Scripts\CameraScript.cs" />
   </ItemGroup>
