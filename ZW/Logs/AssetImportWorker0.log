@@ -1,10 +1,6 @@
 Using pre-set license
 Built from '2022.3/staging' branch; Version is '2022.3.7f1 (b16b3b16c7a0) revision 11627323'; Using compiler version '192829333'; Build Type 'Release'
-<<<<<<< HEAD
 OS: 'Windows 11  (10.0.22621) 64bit Core' Language: 'fr' Physical Memory: 16221 MB
-=======
-OS: 'Windows 10  (10.0.19045) 64bit Core' Language: 'fr' Physical Memory: 12163 MB
->>>>>>> main
 BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
 
 COMMAND LINE ARGUMENTS:
@@ -15,7 +11,6 @@ C:\Program Files\Unity\Hub\Editor\2022.3.7f1\Editor\Unity.exe
 -name
 AssetImportWorker0
 -projectPath
-<<<<<<< HEAD
 C:/Users/natha/ZWremake/ZW
 -logFile
 Logs/AssetImportWorker0.log
@@ -23,15 +18,6 @@ Logs/AssetImportWorker0.log
 52125
 Successfully changed project path to: C:/Users/natha/ZWremake/ZW
 C:/Users/natha/ZWremake/ZW
-=======
-C:/Users/CO/Desktop/Projects/ZWremake/ZW
--logFile
-Logs/AssetImportWorker0.log
--srvPort
-58279
-Successfully changed project path to: C:/Users/CO/Desktop/Projects/ZWremake/ZW
-C:/Users/CO/Desktop/Projects/ZWremake/ZW
->>>>>>> main
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
     "memorysetup-bucket-allocator-granularity=16"
     "memorysetup-bucket-allocator-bucket-count=8"
@@ -63,7 +49,6 @@ C:/Users/CO/Desktop/Projects/ZWremake/ZW
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-<<<<<<< HEAD
 Player connection [1784] Host "[IP] 10.10.155.35 [Port] 0 [Flags] 2 [Guid] 1479836163 [EditorId] 1479836163 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-SF7SM3J9) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
 Player connection [1784] Host "[IP] 10.10.155.35 [Port] 0 [Flags] 2 [Guid] 1479836163 [EditorId] 1479836163 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-SF7SM3J9) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
@@ -80,29 +65,10 @@ Direct3D:
     Vendor:   NVIDIA
     VRAM:     5968 MB
     Driver:   31.0.15.3623
-=======
-Player connection [10628] Host "[IP] 10.10.155.34 [Port] 0 [Flags] 2 [Guid] 1269609903 [EditorId] 1269609903 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-5MB4KIF) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
-
-Player connection [10628] Host "[IP] 10.10.155.34 [Port] 0 [Flags] 2 [Guid] 1269609903 [EditorId] 1269609903 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-5MB4KIF) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
-
-Refreshing native plugins compatible for Editor in 19.67 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Initialize engine version: 2022.3.7f1 (b16b3b16c7a0)
-[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2022.3.7f1/Editor/Data/Resources/UnitySubsystems
-[Subsystems] Discovering subsystems at path C:/Users/CO/Desktop/Projects/ZWremake/ZW/Assets
-GfxDevice: creating device client; threaded=0; jobified=0
-Direct3D:
-    Version:  Direct3D 11.0 [level 11.0]
-    Renderer: NVIDIA GeForce MX130 (ID=0x174d)
-    Vendor:   NVIDIA
-    VRAM:     2008 MB
-    Driver:   31.0.15.3118
->>>>>>> main
 Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2022.3.7f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2022.3.7f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2022.3.7f1/Editor/Data/MonoBleedingEdge/etc'
-<<<<<<< HEAD
 Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56900
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
@@ -114,24 +80,10 @@ Mono: successfully reloaded assembly
 - Finished resetting the current domain, in  0.527 seconds
 Domain Reload Profiling: 1653ms
 	BeginReloadAssembly (364ms)
-=======
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56204
-Begin MonoManager ReloadAssembly
-Registering precompiled unity dll's ...
-Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.7f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.043258 seconds.
-- Loaded All Assemblies, in  6.549 seconds
-Native extension for WindowsStandalone target not found
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  2.443 seconds
-Domain Reload Profiling: 8986ms
-	BeginReloadAssembly (741ms)
->>>>>>> main
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-<<<<<<< HEAD
 		CreateAndSetChildDomain (2ms)
 	RebuildCommonClasses (137ms)
 	RebuildNativeTypeToScriptingClass (40ms)
@@ -155,31 +107,6 @@ Domain Reload Profiling: 8986ms
 			BeforeProcessingInitializeOnLoad (4ms)
 			ProcessInitializeOnLoadAttributes (283ms)
 			ProcessInitializeOnLoadMethodAttributes (89ms)
-=======
-		CreateAndSetChildDomain (1ms)
-	RebuildCommonClasses (257ms)
-	RebuildNativeTypeToScriptingClass (96ms)
-	initialDomainReloadingComplete (2842ms)
-	LoadAllAssembliesAndSetupDomain (2605ms)
-		LoadAssemblies (735ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (2598ms)
-			TypeCache.Refresh (2592ms)
-				TypeCache.ScanAssembly (2529ms)
-			ScanForSourceGeneratedMonoScriptInfo (2ms)
-			ResolveRequiredComponents (3ms)
-	FinalizeReload (2444ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1874ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (47ms)
-			SetLoadedEditorAssemblies (26ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (12ms)
-			ProcessInitializeOnLoadAttributes (1436ms)
-			ProcessInitializeOnLoadMethodAttributes (353ms)
->>>>>>> main
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -187,7 +114,6 @@ Domain Reload Profiling: 8986ms
 ========================================================================
 Worker process is ready to serve import requests
 Begin MonoManager ReloadAssembly
-<<<<<<< HEAD
 Symbol file LoadedFromMemory doesn't match image C:\Users\natha\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\natha\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 - Loaded All Assemblies, in  1.747 seconds
@@ -235,55 +161,6 @@ Unloading 3276 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 44 unused Assets / (129.8 KB). Loaded Objects now: 3738.
 Memory consumption went from 118.4 MB to 118.3 MB.
 Total: 3.838000 ms (FindLiveObjects: 0.412400 ms CreateObjectMapping: 0.378500 ms MarkObjects: 2.922000 ms  DeleteObjects: 0.123900 ms)
-=======
-Symbol file LoadedFromMemory doesn't match image C:\Users\CO\Desktop\Projects\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
-Symbol file LoadedFromMemory doesn't match image C:\Users\CO\Desktop\Projects\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-- Loaded All Assemblies, in  1.942 seconds
-Refreshing native plugins compatible for Editor in 11.39 ms, found 3 plugins.
-Native extension for WindowsStandalone target not found
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.354 seconds
-Domain Reload Profiling: 3282ms
-	BeginReloadAssembly (381ms)
-		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (14ms)
-		BackupInstance (0ms)
-		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (37ms)
-	RebuildCommonClasses (150ms)
-	RebuildNativeTypeToScriptingClass (81ms)
-	initialDomainReloadingComplete (222ms)
-	LoadAllAssembliesAndSetupDomain (1093ms)
-		LoadAssemblies (826ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (504ms)
-			TypeCache.Refresh (438ms)
-				TypeCache.ScanAssembly (410ms)
-			ScanForSourceGeneratedMonoScriptInfo (38ms)
-			ResolveRequiredComponents (25ms)
-	FinalizeReload (1354ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (957ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (19ms)
-			SetLoadedEditorAssemblies (7ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (208ms)
-			ProcessInitializeOnLoadAttributes (660ms)
-			ProcessInitializeOnLoadMethodAttributes (39ms)
-			AfterProcessingInitializeOnLoad (23ms)
-			EditorAssembliesLoaded (0ms)
-		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (16ms)
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.11 seconds
-Refreshing native plugins compatible for Editor in 91.35 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3277 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 44 unused Assets / (129.7 KB). Loaded Objects now: 3739.
-Memory consumption went from 118.4 MB to 118.2 MB.
-Total: 6.305300 ms (FindLiveObjects: 0.344100 ms CreateObjectMapping: 0.505500 ms MarkObjects: 5.171700 ms  DeleteObjects: 0.282100 ms)
->>>>>>> main
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
@@ -300,7 +177,6 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-<<<<<<< HEAD
   Time since last request: 632576.811004 seconds.
   path: Assets/UI/ui.png
   artifactKey: Guid(b5341f69e9052d949a626ab679bcdb5c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
@@ -492,79 +368,6 @@ Unloading 3268 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 23 unused Assets / (101.7 KB). Loaded Objects now: 3790.
 Memory consumption went from 121.8 MB to 121.7 MB.
 Total: 3.962400 ms (FindLiveObjects: 0.365300 ms CreateObjectMapping: 0.330000 ms MarkObjects: 3.138600 ms  DeleteObjects: 0.127000 ms)
-=======
-  Time since last request: 993410.706659 seconds.
-  path: Assets/Scripts/GameManager.cs
-  artifactKey: Guid(880f75568ef2e0e41a7bee7af989659f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/GameManager.cs using Guid(880f75568ef2e0e41a7bee7af989659f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '309fdc283c894aade2b364991c7ec89c') in 0.009415 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 0
-========================================================================
-Received Import Request.
-  Time since last request: 320.351931 seconds.
-  path: Assets/Scripts/GameManager.cs
-  artifactKey: Guid(880f75568ef2e0e41a7bee7af989659f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/GameManager.cs using Guid(880f75568ef2e0e41a7bee7af989659f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '70016f983aa3ae3bddfdb4456d7b9174') in 0.006814 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 0
-========================================================================
-Received Import Request.
-  Time since last request: 93.551395 seconds.
-  path: Assets/Scripts/GameManager.cs
-  artifactKey: Guid(880f75568ef2e0e41a7bee7af989659f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/GameManager.cs using Guid(880f75568ef2e0e41a7bee7af989659f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4c3041e4ecceee8e14094ed351220e7d') in 0.015246 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 0
-========================================================================
-Received Prepare
-Begin MonoManager ReloadAssembly
-Symbol file LoadedFromMemory doesn't match image C:\Users\CO\Desktop\Projects\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
-Symbol file LoadedFromMemory doesn't match image C:\Users\CO\Desktop\Projects\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-- Loaded All Assemblies, in  3.306 seconds
-Refreshing native plugins compatible for Editor in 7.09 ms, found 3 plugins.
-Native extension for WindowsStandalone target not found
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in 10.292 seconds
-Domain Reload Profiling: 13567ms
-	BeginReloadAssembly (1900ms)
-		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (15ms)
-		BackupInstance (0ms)
-		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (68ms)
-	RebuildCommonClasses (150ms)
-	RebuildNativeTypeToScriptingClass (151ms)
-	initialDomainReloadingComplete (154ms)
-	LoadAllAssembliesAndSetupDomain (920ms)
-		LoadAssemblies (2626ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (46ms)
-			TypeCache.Refresh (16ms)
-				TypeCache.ScanAssembly (0ms)
-			ScanForSourceGeneratedMonoScriptInfo (16ms)
-			ResolveRequiredComponents (13ms)
-	FinalizeReload (10293ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (2720ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (17ms)
-			SetLoadedEditorAssemblies (7ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (169ms)
-			ProcessInitializeOnLoadAttributes (2471ms)
-			ProcessInitializeOnLoadMethodAttributes (35ms)
-			AfterProcessingInitializeOnLoad (21ms)
-			EditorAssembliesLoaded (0ms)
-		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (18ms)
-Refreshing native plugins compatible for Editor in 13.88 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3268 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 23 unused Assets / (101.7 KB). Loaded Objects now: 3754.
-Memory consumption went from 116.9 MB to 116.8 MB.
-Total: 10.025000 ms (FindLiveObjects: 1.089600 ms CreateObjectMapping: 0.472800 ms MarkObjects: 8.376700 ms  DeleteObjects: 0.081400 ms)
->>>>>>> main
 
 Prepare: number of updated asset objects reloaded= 0
 AssetImportParameters requested are different than current active one (requested -> active):
@@ -583,7 +386,6 @@ AssetImportParameters requested are different than current active one (requested
 ========================================================================
 Received Prepare
 Begin MonoManager ReloadAssembly
-<<<<<<< HEAD
 Symbol file LoadedFromMemory doesn't match image C:\Users\natha\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\natha\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 - Loaded All Assemblies, in  0.943 seconds
@@ -630,54 +432,6 @@ Unloading 3268 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 23 unused Assets / (101.7 KB). Loaded Objects now: 3805.
 Memory consumption went from 121.8 MB to 121.7 MB.
 Total: 6.109100 ms (FindLiveObjects: 0.323100 ms CreateObjectMapping: 0.289600 ms MarkObjects: 5.429300 ms  DeleteObjects: 0.066000 ms)
-=======
-Symbol file LoadedFromMemory doesn't match image C:\Users\CO\Desktop\Projects\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
-Symbol file LoadedFromMemory doesn't match image C:\Users\CO\Desktop\Projects\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-- Loaded All Assemblies, in  1.694 seconds
-Refreshing native plugins compatible for Editor in 16.18 ms, found 3 plugins.
-Native extension for WindowsStandalone target not found
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  3.734 seconds
-Domain Reload Profiling: 5415ms
-	BeginReloadAssembly (508ms)
-		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (19ms)
-		BackupInstance (0ms)
-		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (97ms)
-	RebuildCommonClasses (155ms)
-	RebuildNativeTypeToScriptingClass (43ms)
-	initialDomainReloadingComplete (109ms)
-	LoadAllAssembliesAndSetupDomain (864ms)
-		LoadAssemblies (1127ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (41ms)
-			TypeCache.Refresh (14ms)
-				TypeCache.ScanAssembly (0ms)
-			ScanForSourceGeneratedMonoScriptInfo (0ms)
-			ResolveRequiredComponents (24ms)
-	FinalizeReload (3736ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1499ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (23ms)
-			SetLoadedEditorAssemblies (9ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (243ms)
-			ProcessInitializeOnLoadAttributes (998ms)
-			ProcessInitializeOnLoadMethodAttributes (173ms)
-			AfterProcessingInitializeOnLoad (52ms)
-			EditorAssembliesLoaded (1ms)
-		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (31ms)
-Refreshing native plugins compatible for Editor in 16.94 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3269 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 23 unused Assets / (102.0 KB). Loaded Objects now: 3769.
-Memory consumption went from 117.2 MB to 117.1 MB.
-Total: 8.200300 ms (FindLiveObjects: 0.307800 ms CreateObjectMapping: 0.259200 ms MarkObjects: 7.552800 ms  DeleteObjects: 0.079200 ms)
->>>>>>> main
 
 Prepare: number of updated asset objects reloaded= 0
 AssetImportParameters requested are different than current active one (requested -> active):
@@ -694,7 +448,6 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
-<<<<<<< HEAD
 Received Import Request.
   Time since last request: 517.218652 seconds.
   path: Assets/UI/Icons/Arrow Indicator.png
@@ -903,56 +656,6 @@ Unloading 3269 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 23 unused Assets / (101.7 KB). Loaded Objects now: 3844.
 Memory consumption went from 121.8 MB to 121.7 MB.
 Total: 5.575400 ms (FindLiveObjects: 0.473700 ms CreateObjectMapping: 0.394000 ms MarkObjects: 4.591600 ms  DeleteObjects: 0.113400 ms)
-=======
-Received Prepare
-Begin MonoManager ReloadAssembly
-Symbol file LoadedFromMemory doesn't match image C:\Users\CO\Desktop\Projects\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
-Symbol file LoadedFromMemory doesn't match image C:\Users\CO\Desktop\Projects\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-- Loaded All Assemblies, in  1.002 seconds
-Refreshing native plugins compatible for Editor in 9.39 ms, found 3 plugins.
-Native extension for WindowsStandalone target not found
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.776 seconds
-Domain Reload Profiling: 2768ms
-	BeginReloadAssembly (327ms)
-		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (12ms)
-		BackupInstance (0ms)
-		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (61ms)
-	RebuildCommonClasses (90ms)
-	RebuildNativeTypeToScriptingClass (39ms)
-	initialDomainReloadingComplete (82ms)
-	LoadAllAssembliesAndSetupDomain (454ms)
-		LoadAssemblies (606ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (45ms)
-			TypeCache.Refresh (16ms)
-				TypeCache.ScanAssembly (0ms)
-			ScanForSourceGeneratedMonoScriptInfo (14ms)
-			ResolveRequiredComponents (13ms)
-	FinalizeReload (1777ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (757ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (12ms)
-			SetLoadedEditorAssemblies (6ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (171ms)
-			ProcessInitializeOnLoadAttributes (517ms)
-			ProcessInitializeOnLoadMethodAttributes (32ms)
-			AfterProcessingInitializeOnLoad (18ms)
-			EditorAssembliesLoaded (0ms)
-		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (11ms)
-Refreshing native plugins compatible for Editor in 5.42 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3269 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 23 unused Assets / (101.7 KB). Loaded Objects now: 3784.
-Memory consumption went from 117.2 MB to 117.1 MB.
-Total: 4.370300 ms (FindLiveObjects: 0.276900 ms CreateObjectMapping: 0.266200 ms MarkObjects: 3.761400 ms  DeleteObjects: 0.064700 ms)
->>>>>>> main
 
 Prepare: number of updated asset objects reloaded= 0
 AssetImportParameters requested are different than current active one (requested -> active):
@@ -971,7 +674,6 @@ AssetImportParameters requested are different than current active one (requested
 ========================================================================
 Received Prepare
 Begin MonoManager ReloadAssembly
-<<<<<<< HEAD
 Symbol file LoadedFromMemory doesn't match image C:\Users\natha\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\natha\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 - Loaded All Assemblies, in  0.923 seconds
@@ -1082,54 +784,6 @@ Unloading 3269 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 23 unused Assets / (101.8 KB). Loaded Objects now: 3874.
 Memory consumption went from 121.9 MB to 121.8 MB.
 Total: 7.507700 ms (FindLiveObjects: 0.320600 ms CreateObjectMapping: 0.305000 ms MarkObjects: 6.801100 ms  DeleteObjects: 0.079600 ms)
-=======
-Symbol file LoadedFromMemory doesn't match image C:\Users\CO\Desktop\Projects\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
-Symbol file LoadedFromMemory doesn't match image C:\Users\CO\Desktop\Projects\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-- Loaded All Assemblies, in  0.874 seconds
-Refreshing native plugins compatible for Editor in 13.40 ms, found 3 plugins.
-Native extension for WindowsStandalone target not found
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.726 seconds
-Domain Reload Profiling: 2593ms
-	BeginReloadAssembly (304ms)
-		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (13ms)
-		BackupInstance (0ms)
-		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (66ms)
-	RebuildCommonClasses (63ms)
-	RebuildNativeTypeToScriptingClass (30ms)
-	initialDomainReloadingComplete (58ms)
-	LoadAllAssembliesAndSetupDomain (411ms)
-		LoadAssemblies (549ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (35ms)
-			TypeCache.Refresh (13ms)
-				TypeCache.ScanAssembly (0ms)
-			ScanForSourceGeneratedMonoScriptInfo (13ms)
-			ResolveRequiredComponents (8ms)
-	FinalizeReload (1727ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (612ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (18ms)
-			SetLoadedEditorAssemblies (7ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (123ms)
-			ProcessInitializeOnLoadAttributes (420ms)
-			ProcessInitializeOnLoadMethodAttributes (30ms)
-			AfterProcessingInitializeOnLoad (14ms)
-			EditorAssembliesLoaded (0ms)
-		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (11ms)
-Refreshing native plugins compatible for Editor in 7.21 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3269 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 23 unused Assets / (101.7 KB). Loaded Objects now: 3799.
-Memory consumption went from 117.2 MB to 117.1 MB.
-Total: 6.250100 ms (FindLiveObjects: 0.302200 ms CreateObjectMapping: 0.271800 ms MarkObjects: 5.591300 ms  DeleteObjects: 0.083000 ms)
->>>>>>> main
 
 Prepare: number of updated asset objects reloaded= 0
 AssetImportParameters requested are different than current active one (requested -> active):
@@ -1148,7 +802,6 @@ AssetImportParameters requested are different than current active one (requested
 ========================================================================
 Received Prepare
 Begin MonoManager ReloadAssembly
-<<<<<<< HEAD
 Symbol file LoadedFromMemory doesn't match image C:\Users\natha\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\natha\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 - Loaded All Assemblies, in  0.767 seconds
@@ -1195,54 +848,6 @@ Unloading 3269 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 23 unused Assets / (101.8 KB). Loaded Objects now: 3889.
 Memory consumption went from 121.9 MB to 121.8 MB.
 Total: 3.880100 ms (FindLiveObjects: 0.289400 ms CreateObjectMapping: 0.311800 ms MarkObjects: 3.212600 ms  DeleteObjects: 0.065300 ms)
-=======
-Symbol file LoadedFromMemory doesn't match image C:\Users\CO\Desktop\Projects\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
-Symbol file LoadedFromMemory doesn't match image C:\Users\CO\Desktop\Projects\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-- Loaded All Assemblies, in  3.723 seconds
-Refreshing native plugins compatible for Editor in 6.63 ms, found 3 plugins.
-Native extension for WindowsStandalone target not found
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.606 seconds
-Domain Reload Profiling: 5321ms
-	BeginReloadAssembly (3199ms)
-		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (11ms)
-		BackupInstance (0ms)
-		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (2827ms)
-	RebuildCommonClasses (58ms)
-	RebuildNativeTypeToScriptingClass (23ms)
-	initialDomainReloadingComplete (52ms)
-	LoadAllAssembliesAndSetupDomain (382ms)
-		LoadAssemblies (540ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (35ms)
-			TypeCache.Refresh (12ms)
-				TypeCache.ScanAssembly (0ms)
-			ScanForSourceGeneratedMonoScriptInfo (12ms)
-			ResolveRequiredComponents (10ms)
-	FinalizeReload (1607ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (593ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (13ms)
-			SetLoadedEditorAssemblies (5ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (99ms)
-			ProcessInitializeOnLoadAttributes (424ms)
-			ProcessInitializeOnLoadMethodAttributes (33ms)
-			AfterProcessingInitializeOnLoad (18ms)
-			EditorAssembliesLoaded (0ms)
-		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (11ms)
-Refreshing native plugins compatible for Editor in 5.20 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3269 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 23 unused Assets / (101.7 KB). Loaded Objects now: 3814.
-Memory consumption went from 117.2 MB to 117.1 MB.
-Total: 4.705000 ms (FindLiveObjects: 0.283700 ms CreateObjectMapping: 0.253700 ms MarkObjects: 4.084800 ms  DeleteObjects: 0.081500 ms)
->>>>>>> main
 
 Prepare: number of updated asset objects reloaded= 0
 AssetImportParameters requested are different than current active one (requested -> active):
@@ -1261,7 +866,6 @@ AssetImportParameters requested are different than current active one (requested
 ========================================================================
 Received Prepare
 Begin MonoManager ReloadAssembly
-<<<<<<< HEAD
 Symbol file LoadedFromMemory doesn't match image C:\Users\natha\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\natha\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 - Loaded All Assemblies, in  0.764 seconds
@@ -1308,54 +912,6 @@ Unloading 3269 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 23 unused Assets / (101.8 KB). Loaded Objects now: 3904.
 Memory consumption went from 121.9 MB to 121.8 MB.
 Total: 3.707700 ms (FindLiveObjects: 0.491800 ms CreateObjectMapping: 0.299200 ms MarkObjects: 2.852100 ms  DeleteObjects: 0.062700 ms)
-=======
-Symbol file LoadedFromMemory doesn't match image C:\Users\CO\Desktop\Projects\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
-Symbol file LoadedFromMemory doesn't match image C:\Users\CO\Desktop\Projects\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-- Loaded All Assemblies, in  1.207 seconds
-Refreshing native plugins compatible for Editor in 8.66 ms, found 3 plugins.
-Native extension for WindowsStandalone target not found
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  5.378 seconds
-Domain Reload Profiling: 6575ms
-	BeginReloadAssembly (342ms)
-		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (12ms)
-		BackupInstance (0ms)
-		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (63ms)
-	RebuildCommonClasses (87ms)
-	RebuildNativeTypeToScriptingClass (29ms)
-	initialDomainReloadingComplete (76ms)
-	LoadAllAssembliesAndSetupDomain (664ms)
-		LoadAssemblies (826ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (42ms)
-			TypeCache.Refresh (14ms)
-				TypeCache.ScanAssembly (0ms)
-			ScanForSourceGeneratedMonoScriptInfo (15ms)
-			ResolveRequiredComponents (12ms)
-	FinalizeReload (5378ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (904ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (16ms)
-			SetLoadedEditorAssemblies (6ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (312ms)
-			ProcessInitializeOnLoadAttributes (512ms)
-			ProcessInitializeOnLoadMethodAttributes (38ms)
-			AfterProcessingInitializeOnLoad (20ms)
-			EditorAssembliesLoaded (0ms)
-		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (15ms)
-Refreshing native plugins compatible for Editor in 8.48 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3269 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 23 unused Assets / (101.7 KB). Loaded Objects now: 3829.
-Memory consumption went from 117.2 MB to 117.1 MB.
-Total: 5.441800 ms (FindLiveObjects: 0.329000 ms CreateObjectMapping: 0.285400 ms MarkObjects: 4.742800 ms  DeleteObjects: 0.083300 ms)
->>>>>>> main
 
 Prepare: number of updated asset objects reloaded= 0
 AssetImportParameters requested are different than current active one (requested -> active):
@@ -1374,7 +930,6 @@ AssetImportParameters requested are different than current active one (requested
 ========================================================================
 Received Prepare
 Begin MonoManager ReloadAssembly
-<<<<<<< HEAD
 Symbol file LoadedFromMemory doesn't match image C:\Users\natha\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\natha\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 - Loaded All Assemblies, in  1.224 seconds
@@ -1421,54 +976,6 @@ Unloading 3269 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 23 unused Assets / (101.8 KB). Loaded Objects now: 3919.
 Memory consumption went from 121.9 MB to 121.8 MB.
 Total: 4.724400 ms (FindLiveObjects: 0.309800 ms CreateObjectMapping: 0.255200 ms MarkObjects: 4.049300 ms  DeleteObjects: 0.108500 ms)
-=======
-Symbol file LoadedFromMemory doesn't match image C:\Users\CO\Desktop\Projects\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
-Symbol file LoadedFromMemory doesn't match image C:\Users\CO\Desktop\Projects\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-- Loaded All Assemblies, in  1.384 seconds
-Refreshing native plugins compatible for Editor in 23.14 ms, found 3 plugins.
-Native extension for WindowsStandalone target not found
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  4.272 seconds
-Domain Reload Profiling: 5655ms
-	BeginReloadAssembly (358ms)
-		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (46ms)
-		BackupInstance (0ms)
-		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (71ms)
-	RebuildCommonClasses (74ms)
-	RebuildNativeTypeToScriptingClass (24ms)
-	initialDomainReloadingComplete (53ms)
-	LoadAllAssembliesAndSetupDomain (870ms)
-		LoadAssemblies (999ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (52ms)
-			TypeCache.Refresh (18ms)
-				TypeCache.ScanAssembly (0ms)
-			ScanForSourceGeneratedMonoScriptInfo (0ms)
-			ResolveRequiredComponents (30ms)
-	FinalizeReload (4276ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1515ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (33ms)
-			SetLoadedEditorAssemblies (13ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (273ms)
-			ProcessInitializeOnLoadAttributes (1084ms)
-			ProcessInitializeOnLoadMethodAttributes (72ms)
-			AfterProcessingInitializeOnLoad (41ms)
-			EditorAssembliesLoaded (1ms)
-		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (28ms)
-Refreshing native plugins compatible for Editor in 47.88 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3269 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 23 unused Assets / (101.7 KB). Loaded Objects now: 3844.
-Memory consumption went from 117.3 MB to 117.2 MB.
-Total: 19.383300 ms (FindLiveObjects: 0.452500 ms CreateObjectMapping: 0.470100 ms MarkObjects: 17.275000 ms  DeleteObjects: 1.183800 ms)
->>>>>>> main
 
 Prepare: number of updated asset objects reloaded= 0
 AssetImportParameters requested are different than current active one (requested -> active):
@@ -1487,7 +994,6 @@ AssetImportParameters requested are different than current active one (requested
 ========================================================================
 Received Prepare
 Begin MonoManager ReloadAssembly
-<<<<<<< HEAD
 Symbol file LoadedFromMemory doesn't match image C:\Users\natha\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\natha\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 - Loaded All Assemblies, in  0.721 seconds
@@ -2110,54 +1616,6 @@ Unloading 3269 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 23 unused Assets / (101.9 KB). Loaded Objects now: 4069.
 Memory consumption went from 122.0 MB to 121.9 MB.
 Total: 3.037200 ms (FindLiveObjects: 0.272800 ms CreateObjectMapping: 0.203800 ms MarkObjects: 2.508900 ms  DeleteObjects: 0.050700 ms)
-=======
-Symbol file LoadedFromMemory doesn't match image C:\Users\CO\Desktop\Projects\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
-Symbol file LoadedFromMemory doesn't match image C:\Users\CO\Desktop\Projects\ZWremake\ZW\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-- Loaded All Assemblies, in  0.975 seconds
-Refreshing native plugins compatible for Editor in 11.49 ms, found 3 plugins.
-Native extension for WindowsStandalone target not found
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.842 seconds
-Domain Reload Profiling: 2808ms
-	BeginReloadAssembly (295ms)
-		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (16ms)
-		BackupInstance (0ms)
-		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (52ms)
-	RebuildCommonClasses (83ms)
-	RebuildNativeTypeToScriptingClass (26ms)
-	initialDomainReloadingComplete (67ms)
-	LoadAllAssembliesAndSetupDomain (493ms)
-		LoadAssemblies (631ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (44ms)
-			TypeCache.Refresh (14ms)
-				TypeCache.ScanAssembly (0ms)
-			ScanForSourceGeneratedMonoScriptInfo (15ms)
-			ResolveRequiredComponents (13ms)
-	FinalizeReload (1843ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (678ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (22ms)
-			SetLoadedEditorAssemblies (6ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (150ms)
-			ProcessInitializeOnLoadAttributes (460ms)
-			ProcessInitializeOnLoadMethodAttributes (24ms)
-			AfterProcessingInitializeOnLoad (15ms)
-			EditorAssembliesLoaded (0ms)
-		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (12ms)
-Refreshing native plugins compatible for Editor in 5.55 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3269 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 23 unused Assets / (101.7 KB). Loaded Objects now: 3859.
-Memory consumption went from 117.3 MB to 117.2 MB.
-Total: 3.919000 ms (FindLiveObjects: 0.288000 ms CreateObjectMapping: 0.280600 ms MarkObjects: 3.285100 ms  DeleteObjects: 0.063900 ms)
->>>>>>> main
 
 Prepare: number of updated asset objects reloaded= 0
 AssetImportParameters requested are different than current active one (requested -> active):
