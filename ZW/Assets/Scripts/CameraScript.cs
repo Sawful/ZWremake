@@ -28,7 +28,32 @@ public class CameraScript : MonoBehaviour
     // FixedUpdate is Update for physics
     void FixedUpdate()
     {
-        transform.Translate(Vector3.forward * 10f * Time.fixedDeltaTime * Input.GetAxis("Vertical"), Space.World);
-        transform.Translate(Vector3.right * 10f * Time.fixedDeltaTime * Input.GetAxis("Horizontal"), Space.World);
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            transform.Translate(Vector3.forward * 15f * Time.fixedDeltaTime, Space.World);
+        }
+
+        else if (Input.mousePosition.y >= Screen.height * 0.98) { transform.Translate(Vector3.forward * 15f * Time.fixedDeltaTime, Space.World); }
+
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            transform.Translate(Vector3.forward * 15f * -Time.fixedDeltaTime, Space.World);
+        }
+
+        else if (Input.mousePosition.y <= Screen.height * 0.02) { transform.Translate(Vector3.forward * 15f * -Time.fixedDeltaTime, Space.World); }
+
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            transform.Translate(Vector3.right * 15f * Time.fixedDeltaTime, Space.World);
+        }
+
+        else if (Input.mousePosition.x >= Screen.width * 0.98) { transform.Translate(Vector3.right * 15f * Time.fixedDeltaTime, Space.World); }
+
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            transform.Translate(Vector3.right * 15f * -Time.fixedDeltaTime, Space.World);
+        }
+
+        else if (Input.mousePosition.x <= Screen.width * 0.02) { transform.Translate(Vector3.right * 15f * -Time.fixedDeltaTime, Space.World); }  
     }
 }
