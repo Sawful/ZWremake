@@ -7,17 +7,22 @@ using static UnityEditor.PlayerSettings;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject enemyToSpawn;
-    
+    public GameObject enemy;
+    static public int round = 0;
+    public GameObject spawn1;
+    public GameObject spawn2;
+    public GameObject spawn3;
+    public GameObject spawn4;
+
     // Start is called before the first frame update
     void Start()
     {
-        GameObject spawn1 = GameObject.Find("SpawnLocation1");
-        GameObject spawn2 = GameObject.Find("SpawnLocation2");
-        GameObject spawn3 = GameObject.Find("SpawnLocation3");
-        GameObject spawn4 = GameObject.Find("SpawnLocation4");
+        spawn1 = GameObject.Find("SpawnLocation1");
+        spawn2 = GameObject.Find("SpawnLocation2");
+        spawn3 = GameObject.Find("SpawnLocation3");
+        spawn4 = GameObject.Find("SpawnLocation4");
 
-        Turn1(spawn1, spawn2, spawn3, spawn4);
+        Round1();
     }
 
     // Update is called once per frame
@@ -33,12 +38,65 @@ public class GameManager : MonoBehaviour
             GameObject newObject = Instantiate<GameObject>(obj, pos, Quaternion.identity);
         }
     }
-    // Turn is cut down into a function to change turns easily
-    void Turn1(GameObject spawn1, GameObject spawn2, GameObject spawn3, GameObject spawn4)
+
+    void SpawnAllCorners(GameObject obj, int number)
     {
-        SpawnObject(enemyToSpawn, spawn1.transform.position, 3);
-        SpawnObject(enemyToSpawn, spawn2.transform.position, 3);
-        SpawnObject(enemyToSpawn, spawn3.transform.position, 3);
-        SpawnObject(enemyToSpawn, spawn4.transform.position, 3);
+        SpawnObject(obj, spawn1.transform.position, number);
+        SpawnObject(obj, spawn2.transform.position, number);
+        SpawnObject(obj, spawn3.transform.position, number);
+        SpawnObject(obj, spawn4.transform.position, number);
+    }
+
+    // Turn is cut down into a function to change turns easily
+    void Round1()
+    {
+        StartCoroutine(waiter());
+        round++;
+        print(round);
+        IEnumerator waiter()
+        {
+            SpawnAllCorners(enemy, 1);
+
+            yield return new WaitForSeconds(5);
+
+            SpawnAllCorners(enemy, 1);
+
+            yield return new WaitForSeconds(5);
+
+            SpawnAllCorners(enemy, 1);
+
+            yield return new WaitForSeconds(10);
+
+            Round2();
+        }
+    }
+
+    void Round2()
+    {
+        StartCoroutine(waiter());
+        round++;
+        print(round);
+        IEnumerator waiter()
+        {
+            SpawnAllCorners(enemy, 1);
+
+            yield return new WaitForSeconds(1);
+
+            SpawnAllCorners(enemy, 1);
+
+            yield return new WaitForSeconds(1);
+
+            SpawnAllCorners(enemy, 1);
+
+            yield return new WaitForSeconds(1);
+
+            SpawnAllCorners(enemy, 1);
+
+            yield return new WaitForSeconds(1);
+
+            SpawnAllCorners(enemy, 1);
+
+            yield return new WaitForSeconds(1);
+        }
     }
 }
