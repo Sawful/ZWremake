@@ -37,9 +37,14 @@ public class MoveAndAttack : MonoBehaviour
 
         if (walkToEnemy)
         {
-            agent.SetDestination(enemyClicked.transform.position);
+            // When enemy is out of range
+            if (PlayerScript.playerRange < Vector3.Distance(gameObject.transform.position, enemyClicked.transform.position))
+            {
+                agent.SetDestination(enemyClicked.transform.position);
+            }
 
-            if (PlayerScript.playerRange >= Vector3.Distance(gameObject.transform.position, enemyClicked.transform.position))
+            // When enemy is in range
+            else 
             {
                 gameObject.transform.LookAt(enemyClicked.transform.position);
                 agent.SetDestination(gameObject.transform.position);
@@ -47,17 +52,14 @@ public class MoveAndAttack : MonoBehaviour
                 attacking = true;
             }
         }
-        
-        if (attackCooldown > 0)
-        {
-            attackCooldown -= Time.deltaTime;
-        }
-
-        if (attacking && attackCooldown < 0.05)
+        // AutoAttack
+        attackCooldown -= Time.deltaTime;
+        if (attacking && attackCooldown < 0)
         {
             enemyClicked.SendMessage("takeDamage", PlayerScript.playerDamage, SendMessageOptions.DontRequireReceiver);
             attackCooldown = 1 / PlayerScript.playerAttackspeed;
         }
+
 
         void AttackMove()
         {
@@ -67,6 +69,7 @@ public class MoveAndAttack : MonoBehaviour
 
                 if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
                 {
+                    // When the raycast hit an Ground object 
                     if (hit.collider.tag == "Ground")
                     {
                         agent.SetDestination(hit.point);
@@ -74,17 +77,17 @@ public class MoveAndAttack : MonoBehaviour
                         walkToEnemy = false;
                         attacking = false;
                     }
-
+                    // When the raycast hits an Enemy object
                     if (hit.collider.tag == "Enemy")
                     {
                         enemyClicked = hit.collider.gameObject;
                         distanceWithEnemy = Vector3.Distance(gameObject.transform.position, enemyClicked.transform.position);
-
+                        // Out of range --> Walks up to the enemy
                         if (distanceWithEnemy > PlayerScript.playerRange)
                         {
                             walkToEnemy = true;
                         }
-
+                        // In range --> Stop an attack the enemy
                         else
                         {
                             agent.SetDestination(gameObject.transform.position);
