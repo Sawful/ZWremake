@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public class MoveAndAttack : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class MoveAndAttack : MonoBehaviour
     public Animator anim;
     public GameObject hitParticle;
     public AudioSource hitSound;
+    public GameObject clickAnimation;
 
     // Start is called before the first frame update
     void Start()
@@ -84,6 +86,7 @@ public class MoveAndAttack : MonoBehaviour
                         agent.stoppingDistance = 0;
                         walkToEnemy = false;
                         attacking = false;
+                        Instantiate(clickAnimation, hit.point, Quaternion.identity * Quaternion.Euler(-90f, 0f, 0f));
                     }
                     // When the raycast hits an Enemy object
                     if (hit.collider.tag == "Enemy")

@@ -2149,6 +2149,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   hitParticle: {fileID: 4925066325717932311, guid: aa12c3da3b783ef489b4ebb7f463c472, type: 3}
   hitSound: {fileID: 0}
+  clickAnimation: {fileID: 3447859052201722378, guid: 5382d6d47f6019a42b41a3dde33d10f1, type: 3}
 --- !u!82 &1329710642
 AudioSource:
   m_ObjectHideFlags: 0
