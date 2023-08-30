@@ -28,7 +28,6 @@ public class EnemyScript : MonoBehaviour
 
         // Range also adds size of player and enemy, which isn't the case for player attack.
         range += (gameObject.transform.localScale.x / 2) + (player.transform.localScale.x / 2);
-        print(range);
     }
 
     // Update is called once per frame
@@ -51,7 +50,6 @@ public class EnemyScript : MonoBehaviour
         {
             player.SendMessage("takeDamage", damage, SendMessageOptions.DontRequireReceiver);
             attackCooldown = 0.5F;
-            print("hit");
         }
     }
 
