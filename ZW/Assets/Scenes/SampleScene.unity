@@ -1648,6 +1648,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5abbfea8a4176ce4187cc514c443e20f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fov: 0
+  minFov: 30
+  maxFov: 120
+  sensitivity: 40
+  velocity: 0
+  smoothTime: 0.1
 --- !u!1 &1252975489
 GameObject:
   m_ObjectHideFlags: 0
@@ -2129,7 +2135,6 @@ MonoBehaviour:
   hitSound: {fileID: 0}
   clickAnimation: {fileID: 3447859052201722378, guid: 5382d6d47f6019a42b41a3dde33d10f1, type: 3}
   possibleTargets: []
-  enemyLayer: 0
   layermask:
     serializedVersion: 2
     m_Bits: 128
