@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class Abilities : MonoBehaviour
 {
+    public BindKey keybind;
     [Header("Ability 1")]
     public Image abilityImage1;
     public Text abilityText1;
@@ -62,6 +63,8 @@ public class Abilities : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        keybind = GetComponent<BindKey>();
+
         abilityImage1.fillAmount = 0;
         abilityImage2.fillAmount = 0;
         abilityImage3.fillAmount = 0;
@@ -178,7 +181,7 @@ public class Abilities : MonoBehaviour
 
     private void Ability1Input()
     {
-        if (Input.GetKeyDown(ability1Key) && !isAbility1Cooldown)
+        if (Input.GetKeyDown(keybind.ability1Key) && !isAbility1Cooldown)
         {
             ability1Canvas.enabled = true;
             ability1Fire.enabled = true;
@@ -206,7 +209,7 @@ public class Abilities : MonoBehaviour
 
     private void Ability2Input()
     {
-        if (Input.GetKeyDown(ability2Key) && !isAbility2Cooldown)
+        if (Input.GetKeyDown(keybind.ability2Key) && !isAbility2Cooldown)
         {
             ability2Canvas.enabled = true;
             ability2Skillshot.enabled = true;
@@ -233,7 +236,7 @@ public class Abilities : MonoBehaviour
 
     private void Ability3Input()
     {
-        if (Input.GetKeyDown(ability3Key) && !isAbility3Cooldown)
+        if (Input.GetKeyDown(keybind.ability3Key) && !isAbility3Cooldown)
         {
             ability3Canvas.enabled = true;
             ability3Area.enabled = true;
@@ -261,7 +264,7 @@ public class Abilities : MonoBehaviour
 
     private void Ability4Input()
     {
-        if (Input.GetKeyDown(ability4Key) && !isAbility4Cooldown)
+        if (Input.GetKeyDown(keybind.ability4Key) && !isAbility4Cooldown)
         {
             ability4Canvas.enabled = true;
             ability4Area.enabled = true;

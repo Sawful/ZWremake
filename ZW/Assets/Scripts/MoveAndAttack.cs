@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
@@ -20,7 +21,7 @@ public class MoveAndAttack : MonoBehaviour
     bool attacking = false;
     bool attackClick = false;
     // X input
-    bool pressedX = false;
+    bool pressedAttackMoveKey = false;
     // Initialize Objects and Components
     public GameObject enemyClicked;
     public Animator anim;
@@ -28,6 +29,7 @@ public class MoveAndAttack : MonoBehaviour
     public AudioSource hitSound;
     public GameObject clickAnimation;
     public Collider[] possibleTargets;
+    public BindKey keybind;
     // Enemy layermask for Attack Click
     [SerializeField] private LayerMask layermask;
     //
@@ -41,6 +43,7 @@ public class MoveAndAttack : MonoBehaviour
         // Get components
         agent = gameObject.GetComponent<NavMeshAgent>();
         hitSound = GetComponent<AudioSource>();
+        keybind = GetComponent<BindKey>();
     }
 
     // Update is called once per frame
@@ -50,14 +53,12 @@ public class MoveAndAttack : MonoBehaviour
         agent.speed = PlayerScript.playerSpeed;
 
         // Check if X was pressed before
-        if (Input.GetKeyDown("x"))
+        if (Input.GetKeyDown(keybind.attackMoveKey))
         {
-            print("pressed x");
-            pressedX = true;
-
+            pressedAttackMoveKey = true;
         }
         // If X was pressed and left click is pressed:
-        if (Input.GetMouseButtonDown(0) && pressedX)
+        if (Input.GetMouseButtonDown(0) && pressedAttackMoveKey)
         {
             attackClick = true;
         }
@@ -101,7 +102,7 @@ public class MoveAndAttack : MonoBehaviour
             if (Input.GetMouseButtonDown(1))
             {
                 attackClick = false;
-                pressedX = false;
+                pressedAttackMoveKey = false;
 
                 RaycastHit hit;
 
@@ -138,8 +139,9 @@ public class MoveAndAttack : MonoBehaviour
                 }
             }
             // Attack click
-            if (Input.GetMouseButtonDown(0) && pressedX)
+            if (Input.GetMouseButtonDown(0) && pressedAttackMoveKey)
             {
+                pressedAttackMoveKey = false;
                 RaycastHit hit;
 
                 if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))

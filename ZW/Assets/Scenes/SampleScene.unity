@@ -1961,6 +1961,7 @@ GameObject:
   - component: {fileID: 1329710633}
   - component: {fileID: 1329710636}
   - component: {fileID: 1329710638}
+  - component: {fileID: 1329710643}
   - component: {fileID: 1329710640}
   - component: {fileID: 1329710641}
   - component: {fileID: 1329710642}
@@ -2088,6 +2089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78febf92b63c5644bbfc3b3a62a88a72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keybind: {fileID: 0}
   abilityImage1: {fileID: 818104002}
   abilityText1: {fileID: 1738139003}
   ability1Key: 113
@@ -2135,6 +2137,7 @@ MonoBehaviour:
   hitSound: {fileID: 0}
   clickAnimation: {fileID: 3447859052201722378, guid: 5382d6d47f6019a42b41a3dde33d10f1, type: 3}
   possibleTargets: []
+  keybind: {fileID: 0}
   layermask:
     serializedVersion: 2
     m_Bits: 128
@@ -2234,6 +2237,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1329710643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1329710630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79b50d53a5ac3fc4db2d7509c9e6e5da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ability1Key: 113
+  ability2Key: 119
+  ability3Key: 101
+  ability4Key: 114
+  attackMoveKey: 120
 --- !u!1 &1359711931
 GameObject:
   m_ObjectHideFlags: 0
