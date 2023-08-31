@@ -278,6 +278,7 @@ GameObject:
   - component: {fileID: 5008801875380506}
   - component: {fileID: 4529134268565033271}
   - component: {fileID: 9194765412238628893}
+  - component: {fileID: 8531111031721839573}
   - component: {fileID: 5045505434091510315}
   m_Layer: 7
   m_Name: Enemy
@@ -385,14 +386,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab9ec1bd63b6e1d468079221839f700a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitpoint: 50
-  damage: 2
-  speed: 1.5
+  health: 100
+  damage: 10
   range: 0.5
+  speed: 3
   attackSpeed: 1
-  attackCooldown: 0
+  attackReload: 1
+  damageLerpDuration: 0.1
+  currentHealth: 100
+  targetHealth: 100
+  healthUI: {fileID: 0}
+  playerStats: {fileID: 0}
   player: {fileID: 0}
   agent: {fileID: 0}
+--- !u!114 &8531111031721839573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8179390173337327931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf4afc334bac8364fa75468c3b03bf70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthSlider3D: {fileID: 8932379345887539131}
+  healthSlider2D: {fileID: 0}
 --- !u!195 &5045505434091510315
 NavMeshAgent:
   m_ObjectHideFlags: 0

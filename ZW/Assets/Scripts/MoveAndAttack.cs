@@ -20,6 +20,8 @@ public class MoveAndAttack : MonoBehaviour
     bool walkToEnemy = false;
     bool attacking = false;
     bool attackClick = false;
+    //Get player stats
+    public PlayerScript playerScript;
     // X input
     bool pressedAttackMoveKey = false;
     // Initialize Objects and Components
@@ -44,13 +46,14 @@ public class MoveAndAttack : MonoBehaviour
         agent = gameObject.GetComponent<NavMeshAgent>();
         hitSound = GetComponent<AudioSource>();
         keybind = GetComponent<BindKey>();
+        playerScript = GetComponent<PlayerScript>();    
     }
 
     // Update is called once per frame
     void Update()
     {
         // Update move speed
-        agent.speed = PlayerScript.playerSpeed;
+        agent.speed = playerScript.speed;
 
         // Check if X was pressed before
         if (Input.GetKeyDown(keybind.attackMoveKey))
@@ -69,7 +72,7 @@ public class MoveAndAttack : MonoBehaviour
         if (walkToEnemy)
         {
             // When enemy is out of range
-            if (PlayerScript.playerRange < Vector3.Distance(gameObject.transform.position, enemyClicked.transform.position))
+            if (playerScript.range < Vector3.Distance(gameObject.transform.position, enemyClicked.transform.position))
             {
                 agent.SetDestination(enemyClicked.transform.position);
             }
@@ -84,21 +87,21 @@ public class MoveAndAttack : MonoBehaviour
             }
         }
         // AutoAttack
-        attackCooldown -= Time.deltaTime;
-        if (attacking && attackCooldown < 0)
+        playerScript.attackReload -= Time.deltaTime;
+        if (attacking && playerScript.attackReload < 0)
         {
-            enemyClicked.SendMessage("takeDamage", PlayerScript.playerDamage, SendMessageOptions.DontRequireReceiver);
+            enemyClicked.GetComponent<BaseEnemyStats>().takeDamage(gameObject, playerScript.damage);
             // VFX and SFX
             SpawnHitParticles(enemyClicked.transform.position);
             hitSound.Play();
             //Set cooldown
-            attackCooldown = 1 / PlayerScript.playerAttackspeed;
+            playerScript.attackReload = playerScript.attackSpeed;
 
         }
 
         void AttackMove()
         {
-            possibleTargets = Physics.OverlapSphere(gameObject.transform.position, PlayerScript.playerRange, layermask);
+            possibleTargets = Physics.OverlapSphere(gameObject.transform.position, playerScript.range, layermask);
             if (Input.GetMouseButtonDown(1))
             {
                 attackClick = false;
@@ -124,7 +127,7 @@ public class MoveAndAttack : MonoBehaviour
                         enemyClicked = hit.collider.gameObject;
                         distanceWithEnemy = Vector3.Distance(gameObject.transform.position, enemyClicked.transform.position);
                         // Out of range --> Walks up to the enemy
-                        if (distanceWithEnemy > PlayerScript.playerRange)
+                        if (distanceWithEnemy > playerScript.range)
                         {
                             walkToEnemy = true;
                         }
@@ -161,7 +164,7 @@ public class MoveAndAttack : MonoBehaviour
                         enemyClicked = hit.collider.gameObject;
                         distanceWithEnemy = Vector3.Distance(gameObject.transform.position, enemyClicked.transform.position);
                         // Out of range --> Walks up to the enemy
-                        if (distanceWithEnemy > PlayerScript.playerRange)
+                        if (distanceWithEnemy > playerScript.range)
                         {
                             walkToEnemy = true;
                         }
@@ -190,27 +193,27 @@ public class MoveAndAttack : MonoBehaviour
                         }
                     }
 
-                        // Attack the first enemy detected
-                        enemyClicked = closestAttackClickEnemy.gameObject;
-                        attacking = true;
-                        // then Stop
-                        agent.SetDestination(gameObject.transform.position);
-                        gameObject.transform.LookAt(enemyClicked.transform.position);
+                    // Attack the first enemy detected
+                    enemyClicked = closestAttackClickEnemy.gameObject;
+                    attacking = true;
+                    // then Stop
+                    agent.SetDestination(gameObject.transform.position);
+                    gameObject.transform.LookAt(enemyClicked.transform.position);
                 }
             }
             // After attack click, if enemy in range
-            else if (attackClick == true && possibleTargets != null && possibleTargets.Length != 0 && attackCooldown < 0)
+            else if (attackClick == true && possibleTargets != null && possibleTargets.Length != 0 && playerScript.attackReload < 0)
             {
                 closestDistance = Mathf.Infinity;
 
                 foreach (Collider i in possibleTargets)
                 {
-                   attackClickEnemyDistance = Vector3.Distance(gameObject.transform.position, i.transform.position);
-                   if (attackClickEnemyDistance < closestDistance)
-                   {
+                    attackClickEnemyDistance = Vector3.Distance(gameObject.transform.position, i.transform.position);
+                    if (attackClickEnemyDistance < closestDistance)
+                    {
                         closestDistance = attackClickEnemyDistance;
                         closestAttackClickEnemy = i;
-                      Console.WriteLine(attackClickEnemyDistance);
+                        Console.WriteLine(attackClickEnemyDistance);
                     }
                 }
 
@@ -224,8 +227,8 @@ public class MoveAndAttack : MonoBehaviour
         }
     }
 
-        void SpawnHitParticles(Vector3 Position)
-        {
-            Instantiate(hitParticle, Position, Quaternion.identity);
-        }
+    void SpawnHitParticles(Vector3 Position)
+    {
+        Instantiate(hitParticle, Position, Quaternion.identity);
+    }
 }
