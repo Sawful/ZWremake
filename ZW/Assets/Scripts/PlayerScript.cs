@@ -4,31 +4,95 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-    static public int playerHitpoint = 50;
-    static public int playerDamage = 5;
-    static public float playerRange = 5;
-    static public float playerSpeed = 3;
-    static public float playerAttackspeed = 1.0F;
+    [Header("Base Stats")]
+    public int health;
+    public int damage;
+    public float range;
+    public float speed;
+    public float attackSpeed;
+    public float attackReload = 0;
 
+    //Health Slider Variables
+    public float damageLerpDuration;
+    public float currentHealth;
+    public float targetHealth;
+    public Coroutine damageCoroutine;
 
-    // Start is called before the first frame update
-    void Start()
+    HealthUI healthUI;
+
+    private void Awake()
     {
-        
+        healthUI = GetComponent<HealthUI>();
+
+        currentHealth = health;
+        targetHealth = health;
+
+        healthUI.Start3DSlider(health);
+        healthUI.Update2DSlider(health, currentHealth);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerHitpoint <= 0)
+        if (health <= 0)
         {
             Destroy(gameObject);
         }
     }
 
-    void takeDamage(int damage)
+    public void takeDamage(GameObject target, float damageAmount)
     {
-        print(playerHitpoint);
-        playerHitpoint -= damage;
+
+        targetHealth -= damageAmount;
+
+        if (targetHealth <= 0)
+        {
+            CheckIfPlayerDead();
+            Destroy(gameObject);
+        }
+        else if (damageCoroutine == null)
+        {
+            StartLerpHealth();
+        }
+
+    }
+
+    private void CheckIfPlayerDead()
+    {
+        healthUI.Update2DSlider(health, 0);
+    }
+
+    public void StartLerpHealth()
+    {
+        if (damageCoroutine == null)
+        {
+            damageCoroutine = StartCoroutine(LerpHealth());
+        }
+    }
+
+    private IEnumerator LerpHealth()
+    {
+        float elapsedTime = 0;
+        float initialHealth = currentHealth;
+        float target = targetHealth;
+
+        while (elapsedTime < damageLerpDuration)
+        {
+            currentHealth = Mathf.Lerp(initialHealth, target, elapsedTime / damageLerpDuration);
+            UpdateHealthUI();
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        currentHealth = target;
+        UpdateHealthUI();
+
+        damageCoroutine = null;
+    }
+    private void UpdateHealthUI()
+    {
+        healthUI.Update2DSlider(health, currentHealth);
+        healthUI.Update3DSlider(health, currentHealth);
     }
 }

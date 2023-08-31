@@ -1965,6 +1965,7 @@ GameObject:
   - component: {fileID: 1329710640}
   - component: {fileID: 1329710641}
   - component: {fileID: 1329710642}
+  - component: {fileID: 1329710644}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -2077,6 +2078,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5db12d86834b3f24897c2fac83f44495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 200
+  damage: 10
+  range: 5
+  speed: 4
+  attackSpeed: 1
+  attackReload: 1
+  damageLerpDuration: 0.1
+  currentHealth: 200
+  targetHealth: 200
 --- !u!114 &1329710640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2131,6 +2141,7 @@ MonoBehaviour:
   rotateSpeedMovement: 0.05
   distanceWithEnemy: 0
   attackCooldown: 0
+  playerScript: {fileID: 0}
   enemyClicked: {fileID: 0}
   anim: {fileID: 0}
   hitParticle: {fileID: 4925066325717932311, guid: aa12c3da3b783ef489b4ebb7f463c472, type: 3}
@@ -2254,6 +2265,20 @@ MonoBehaviour:
   ability3Key: 101
   ability4Key: 114
   attackMoveKey: 120
+--- !u!114 &1329710644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1329710630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf4afc334bac8364fa75468c3b03bf70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthSlider3D: {fileID: 1959935083}
+  healthSlider2D: {fileID: 284196625}
 --- !u!1 &1359711931
 GameObject:
   m_ObjectHideFlags: 0
@@ -3004,14 +3029,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 234797729653642105, guid: 1ae932f1cc4f9b64f80bc34b14ccd991, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 234797729653642105, guid: 1ae932f1cc4f9b64f80bc34b14ccd991, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 234797729653642105, guid: 1ae932f1cc4f9b64f80bc34b14ccd991, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10
       objectReference: {fileID: 0}
@@ -3063,10 +3080,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
-    - target: {fileID: 8179390173337327931, guid: 1ae932f1cc4f9b64f80bc34b14ccd991, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 9194765412238628893, guid: 1ae932f1cc4f9b64f80bc34b14ccd991, type: 3}
+      propertyPath: playerStats
+      value: 
+      objectReference: {fileID: 1329710638}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
