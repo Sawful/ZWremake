@@ -10,8 +10,12 @@ public class HealthUI : MonoBehaviour
 
     public void Start()
     {
-        healthSlider2D.interactable = false;
-        healthSlider3D.interactable = false; 
+        healthSlider3D.interactable = false;
+
+        if (gameObject.CompareTag("Player"))
+        {
+            healthSlider2D.interactable = false;
+        }
     }
     public void Start3DSlider(float maxValue)
     {

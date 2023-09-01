@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\Abilities.cs" />
     <Compile Include="Assets\Scripts\BaseEnemyScript.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\ProjectileScript.cs" />
     <Compile Include="Assets\Scripts\HealthUI.cs" />
     <Compile Include="Assets\Scripts\MoveAndAttack.cs" />
     <Compile Include="Assets\Scripts\CameraScript.cs" />

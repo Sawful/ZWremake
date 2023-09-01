@@ -32,7 +32,9 @@ public class MoveAndAttack : MonoBehaviour
     public GameObject clickAnimation;
     public Collider[] possibleTargets;
     public BindKey keybind;
-    public BaseEnemyStats enemyScript;
+    public BaseEnemyScript enemyScript;
+    public GameObject rangedProjectile;
+    public GameObject projectile;
     // Enemy layermask for Attack Click
     [SerializeField] private LayerMask layermask;
     //
@@ -47,7 +49,7 @@ public class MoveAndAttack : MonoBehaviour
         agent = gameObject.GetComponent<NavMeshAgent>();
         hitSound = GetComponent<AudioSource>();
         keybind = GetComponent<BindKey>();
-        playerScript = GetComponent<PlayerScript>();    
+        playerScript = GetComponent<PlayerScript>();   
     }
 
     // Update is called once per frame
@@ -91,13 +93,25 @@ public class MoveAndAttack : MonoBehaviour
         playerScript.attackReload -= Time.deltaTime;
         if (attacking && playerScript.attackReload < 0)
         {
-            enemyScript = enemyClicked.GetComponent<BaseEnemyStats>();
-            enemyClicked.GetComponent<BaseEnemyStats>().takeDamage(gameObject, playerScript.damage);
-            // VFX and SFX
-            SpawnHitParticles(enemyClicked.transform.position);
-            hitSound.Play();
-            //Set cooldown
-            playerScript.attackReload = playerScript.attackSpeed;
+            enemyScript = enemyClicked.GetComponent<BaseEnemyScript>();
+            // Range
+            if (playerScript.rangedAttack)
+            {
+                projectile = Instantiate(rangedProjectile, transform.position, Quaternion.identity);
+                playerScript.attackReload = playerScript.attackSpeed;
+                projectile.GetComponent<ProjectileScript>().FindEnemy(enemyClicked);
+            }
+            // Melee
+            else
+            {
+                enemyClicked.GetComponent<BaseEnemyScript>().takeDamage(gameObject, playerScript.damage);
+                // VFX and SFX
+                SpawnHitParticles(enemyClicked.transform.position);
+                hitSound.Play();
+                //Set cooldown
+                playerScript.attackReload = playerScript.attackSpeed;
+            }
+
 
             // Is enemy dead
             if (enemyScript.health <= 0)
@@ -109,7 +123,9 @@ public class MoveAndAttack : MonoBehaviour
 
         void AttackMove()
         {
+            // Check all targets in range >> possibleTargets
             possibleTargets = Physics.OverlapSphere(gameObject.transform.position, playerScript.range, layermask);
+            // Right click
             if (Input.GetMouseButtonDown(1))
             {
                 attackClick = false;

@@ -1964,8 +1964,8 @@ GameObject:
   - component: {fileID: 1329710643}
   - component: {fileID: 1329710640}
   - component: {fileID: 1329710641}
-  - component: {fileID: 1329710642}
   - component: {fileID: 1329710644}
+  - component: {fileID: 1329710642}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -2084,6 +2084,8 @@ MonoBehaviour:
   speed: 4
   attackSpeed: 1
   attackReload: 1
+  rangedAttack: 1
+  projectileSpeed: 10
   level: 0
   exp: 0
   expUntilLevelUp: 2
@@ -2154,6 +2156,8 @@ MonoBehaviour:
   possibleTargets: []
   keybind: {fileID: 0}
   enemyScript: {fileID: 0}
+  rangedProjectile: {fileID: 5409107180833425106, guid: 3a01b1988df88e64d937f1874d0142ff, type: 3}
+  projectile: {fileID: 0}
   layermask:
     serializedVersion: 2
     m_Bits: 128
@@ -3073,13 +3077,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 242334680327900191, guid: 1ae932f1cc4f9b64f80bc34b14ccd991, type: 3}
-      propertyPath: m_Layer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 307781683330153172, guid: 1ae932f1cc4f9b64f80bc34b14ccd991, type: 3}
-      propertyPath: m_Layer
-      value: 5
+    - target: {fileID: 5045505434091510315, guid: 1ae932f1cc4f9b64f80bc34b14ccd991, type: 3}
+      propertyPath: m_AutoBraking
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5211354023049781855, guid: 1ae932f1cc4f9b64f80bc34b14ccd991, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3089,25 +3089,9 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7644752179503446069, guid: 1ae932f1cc4f9b64f80bc34b14ccd991, type: 3}
-      propertyPath: m_Layer
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 8179390173337327931, guid: 1ae932f1cc4f9b64f80bc34b14ccd991, type: 3}
       propertyPath: m_Name
       value: Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 8251198404000714040, guid: 1ae932f1cc4f9b64f80bc34b14ccd991, type: 3}
-      propertyPath: m_Layer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8827335711031589812, guid: 1ae932f1cc4f9b64f80bc34b14ccd991, type: 3}
-      propertyPath: m_Layer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8932379345887539131, guid: 1ae932f1cc4f9b64f80bc34b14ccd991, type: 3}
-      propertyPath: m_Interactable
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9194765412238628893, guid: 1ae932f1cc4f9b64f80bc34b14ccd991, type: 3}
       propertyPath: playerStats
