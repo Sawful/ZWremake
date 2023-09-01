@@ -13,6 +13,10 @@ public class BaseEnemyStats : MonoBehaviour
     public float attackSpeed;
     public float attackReload = 0;
 
+    [Header("Kill Reward")]
+    public int expReward;
+    public int goldReward;
+
     //Health Slider Variables
     public float damageLerpDuration;
     public float currentHealth;
@@ -61,11 +65,6 @@ public class BaseEnemyStats : MonoBehaviour
     {
         //Enemy pattern 
         agent.SetDestination(player.transform.position);
-        //Death state
-        if (health <= 0)
-        {
-            Destroy(gameObject);
-        }
         // Attack
         if (attackReload > 0)
         {
@@ -78,14 +77,15 @@ public class BaseEnemyStats : MonoBehaviour
             attackReload = attackSpeed;
         }
     }
-    public void takeDamage(GameObject stats, float damageAmount)
+    public void takeDamage(GameObject attacker, float damageAmount)
     {
         targetHealth -= damageAmount;
 
         if (targetHealth <= 0)
         {
-            Destroy(gameObject);
+            attacker.GetComponent<PlayerScript>().killReward(expReward, goldReward);
             CheckIfEnemyDead();
+            Destroy(gameObject);
         }
         else if (damageCoroutine == null)
         {

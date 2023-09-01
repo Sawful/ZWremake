@@ -8,6 +8,11 @@ public class HealthUI : MonoBehaviour
     public Slider healthSlider3D;
     public Slider healthSlider2D;
 
+    public void Start()
+    {
+        healthSlider2D.interactable = false;
+        healthSlider3D.interactable = false; 
+    }
     public void Start3DSlider(float maxValue)
     {
         healthSlider3D.maxValue = maxValue;

@@ -32,6 +32,7 @@ public class MoveAndAttack : MonoBehaviour
     public GameObject clickAnimation;
     public Collider[] possibleTargets;
     public BindKey keybind;
+    public BaseEnemyStats enemyScript;
     // Enemy layermask for Attack Click
     [SerializeField] private LayerMask layermask;
     //
@@ -90,12 +91,19 @@ public class MoveAndAttack : MonoBehaviour
         playerScript.attackReload -= Time.deltaTime;
         if (attacking && playerScript.attackReload < 0)
         {
+            enemyScript = enemyClicked.GetComponent<BaseEnemyStats>();
             enemyClicked.GetComponent<BaseEnemyStats>().takeDamage(gameObject, playerScript.damage);
             // VFX and SFX
             SpawnHitParticles(enemyClicked.transform.position);
             hitSound.Play();
             //Set cooldown
             playerScript.attackReload = playerScript.attackSpeed;
+
+            // Is enemy dead
+            if (enemyScript.health <= 0)
+            {
+                attacking = false;
+            }
 
         }
 

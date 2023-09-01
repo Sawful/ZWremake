@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5211354023049781855}
   - component: {fileID: 1875621405598642128}
   - component: {fileID: 5101490135161380131}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 2702954874163524703}
   - component: {fileID: 3578551152801503467}
   - component: {fileID: 8242854136003874229}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,7 +163,7 @@ GameObject:
   - component: {fileID: 4895596374480868771}
   - component: {fileID: 8710351562729178351}
   - component: {fileID: 845564747905786417}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: 3D Health Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -392,6 +392,8 @@ MonoBehaviour:
   speed: 3
   attackSpeed: 1
   attackReload: 1
+  expReward: 1
+  goldReward: 1
   damageLerpDuration: 0.1
   currentHealth: 100
   targetHealth: 100
@@ -445,7 +447,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4181894532071058033}
   - component: {fileID: 8932379345887539131}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Health Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -512,7 +514,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 5211354023049781855}
   m_HandleRect: {fileID: 0}
@@ -533,7 +535,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1088680802559529560}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Green Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}

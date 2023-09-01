@@ -12,6 +12,16 @@ public class PlayerScript : MonoBehaviour
     public float attackSpeed;
     public float attackReload = 0;
 
+    [Header("Experience")]
+    public int level = 0;
+    public int exp = 0;
+    public int expUntilLevelUp = 2;
+
+    [Header("Reward")]
+    public int gold = 0;
+
+    
+
     //Health Slider Variables
     public float damageLerpDuration;
     public float currentHealth;
@@ -54,6 +64,31 @@ public class PlayerScript : MonoBehaviour
         {
             StartLerpHealth();
         }
+
+    }
+
+    public void killReward(int expReward, int goldReward)
+    {
+        gold += goldReward;
+        print("Gold: " + gold);
+        gainExp(expReward);
+    }
+
+    public void gainExp(int expGained)
+    {
+        // Gain exp
+        exp += expGained;
+
+        // Check if Level up
+        if (expUntilLevelUp <= exp) 
+        {
+            exp = 0;
+            expUntilLevelUp += 1;
+            level += 1;
+        }
+        print("Exp amount: " + exp);
+        print("Exp till lvl up: " + expUntilLevelUp);
+        print("Level: " + level);
 
     }
 
