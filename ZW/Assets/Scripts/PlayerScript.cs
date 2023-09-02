@@ -9,6 +9,7 @@ public class PlayerScript : MonoBehaviour
     public int damage;
     public float range;
     public float speed;
+    // Attack speed is the number of attacks per second
     public float attackSpeed;
     public float attackReload = 0;
 

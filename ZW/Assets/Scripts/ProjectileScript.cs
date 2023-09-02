@@ -8,8 +8,8 @@ public class ProjectileScript : MonoBehaviour
     GameObject player;
     GameObject enemy;
     PlayerScript playerScript;
+    MoveAndAttack moveAndAttack;
     float speed;
-    NavMeshAgent agent;
     public GameObject hitParticle;
     public AudioSource hitSound;
 
@@ -18,33 +18,35 @@ public class ProjectileScript : MonoBehaviour
     {
         player = GameObject.Find("Player");
         playerScript = player.GetComponent<PlayerScript>();
-        agent = GetComponent<NavMeshAgent>();
+        moveAndAttack = player.GetComponent<MoveAndAttack>();
         speed = playerScript.projectileSpeed;
-        print(speed);
-        agent.speed = speed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        agent.destination = enemy.transform.position;
+        if (enemy)
+        {
+            transform.LookAt(enemy.transform);
+            transform.Translate(Vector3.forward * speed * Time.fixedDeltaTime);
+        }
+
+        else { Destroy(gameObject); }
     }
 
     public void FindEnemy(GameObject enemyTarget)
     {
-        print("found");
         enemy = enemyTarget;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        print("collide");
         if (collision.gameObject == enemy)
         {
             enemy.GetComponent<BaseEnemyScript>().takeDamage(player, playerScript.damage);
             // VFX and SFX
             SpawnHitParticles(enemy.transform.position);
-            hitSound.Play();
+            moveAndAttack.PlayHitSound();
             Destroy(gameObject);
         }
     }

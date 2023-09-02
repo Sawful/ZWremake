@@ -1965,7 +1965,7 @@ GameObject:
   - component: {fileID: 1329710640}
   - component: {fileID: 1329710641}
   - component: {fileID: 1329710644}
-  - component: {fileID: 1329710642}
+  - component: {fileID: 1329710645}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -2161,7 +2161,38 @@ MonoBehaviour:
   layermask:
     serializedVersion: 2
     m_Bits: 128
---- !u!82 &1329710642
+--- !u!114 &1329710643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1329710630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79b50d53a5ac3fc4db2d7509c9e6e5da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ability1Key: 113
+  ability2Key: 119
+  ability3Key: 101
+  ability4Key: 114
+  attackMoveKey: 120
+--- !u!114 &1329710644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1329710630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf4afc334bac8364fa75468c3b03bf70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthSlider3D: {fileID: 1959935083}
+  healthSlider2D: {fileID: 284196625}
+--- !u!82 &1329710645
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2257,37 +2288,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1329710643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1329710630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79b50d53a5ac3fc4db2d7509c9e6e5da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ability1Key: 113
-  ability2Key: 119
-  ability3Key: 101
-  ability4Key: 114
-  attackMoveKey: 120
---- !u!114 &1329710644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1329710630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf4afc334bac8364fa75468c3b03bf70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthSlider3D: {fileID: 1959935083}
-  healthSlider2D: {fileID: 284196625}
 --- !u!1 &1359711931
 GameObject:
   m_ObjectHideFlags: 0

@@ -98,7 +98,7 @@ public class MoveAndAttack : MonoBehaviour
             if (playerScript.rangedAttack)
             {
                 projectile = Instantiate(rangedProjectile, transform.position, Quaternion.identity);
-                playerScript.attackReload = playerScript.attackSpeed;
+                playerScript.attackReload = 1 / playerScript.attackSpeed;
                 projectile.GetComponent<ProjectileScript>().FindEnemy(enemyClicked);
             }
             // Melee
@@ -107,9 +107,9 @@ public class MoveAndAttack : MonoBehaviour
                 enemyClicked.GetComponent<BaseEnemyScript>().takeDamage(gameObject, playerScript.damage);
                 // VFX and SFX
                 SpawnHitParticles(enemyClicked.transform.position);
-                hitSound.Play();
+                
                 //Set cooldown
-                playerScript.attackReload = playerScript.attackSpeed;
+                playerScript.attackReload = 1 / playerScript.attackSpeed;
             }
 
 
@@ -254,5 +254,10 @@ public class MoveAndAttack : MonoBehaviour
     void SpawnHitParticles(Vector3 Position)
     {
         Instantiate(hitParticle, Position, Quaternion.identity);
+    }
+
+    public void PlayHitSound()
+    {
+        hitSound.Play();
     }
 }
