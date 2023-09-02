@@ -9,8 +9,13 @@ public class PlayerScript : MonoBehaviour
     public int damage;
     public float range;
     public float speed;
+    // Attack speed is the number of attacks per second
     public float attackSpeed;
     public float attackReload = 0;
+
+    [Header("Range attack")]
+    public bool rangedAttack = true;
+    public float projectileSpeed = 10;
 
     [Header("Experience")]
     public int level = 0;
@@ -19,8 +24,6 @@ public class PlayerScript : MonoBehaviour
 
     [Header("Reward")]
     public int gold = 0;
-
-    
 
     //Health Slider Variables
     public float damageLerpDuration;

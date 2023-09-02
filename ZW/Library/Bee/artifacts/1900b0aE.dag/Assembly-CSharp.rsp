@@ -368,6 +368,7 @@
 "Assets/Scripts/HealthUI.cs"
 "Assets/Scripts/MoveAndAttack.cs"
 "Assets/Scripts/PlayerScript.cs"
+"Assets/Scripts/ProjectileScript.cs"
 -langversion:9.0
 
 /deterministic
