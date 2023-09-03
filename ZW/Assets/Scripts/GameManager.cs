@@ -7,8 +7,13 @@ using static UnityEditor.PlayerSettings;
 
 public class GameManager : MonoBehaviour
 {
+    // Load enemy type
     public GameObject enemy;
+    public GameObject fastEnemy;
+    public GameObject tankEnemy;
+    // Round counter
     static public int round = 0;
+    // Load spawn locations
     public GameObject spawn1;
     public GameObject spawn2;
     public GameObject spawn3;
@@ -80,23 +85,158 @@ public class GameManager : MonoBehaviour
         {
             SpawnAllCorners(enemy, 1);
 
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(2);
 
             SpawnAllCorners(enemy, 1);
 
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(2);
 
             SpawnAllCorners(enemy, 1);
 
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(2);
 
             SpawnAllCorners(enemy, 1);
 
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(2);
 
             SpawnAllCorners(enemy, 1);
 
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(12);
+
+            Round3();
         }
     }
+
+    void Round3()
+    {
+        StartCoroutine(waiter());
+        round++;
+        print(round);
+        IEnumerator waiter()
+        {
+            SpawnAllCorners(fastEnemy, 3);
+
+            yield return new WaitForSeconds(5);
+
+            SpawnAllCorners(fastEnemy, 1);
+            SpawnAllCorners(enemy, 1);
+
+            yield return new WaitForSeconds(5);
+
+            SpawnAllCorners(fastEnemy, 1);
+            SpawnAllCorners(enemy, 1);
+
+            yield return new WaitForSeconds(5);
+
+            SpawnAllCorners(enemy, 1);
+
+            yield return new WaitForSeconds(1);
+
+            SpawnAllCorners(enemy, 1);
+
+            yield return new WaitForSeconds(1);
+
+            SpawnAllCorners(enemy, 1);
+
+            yield return new WaitForSeconds(1);
+
+            SpawnAllCorners(enemy, 1);
+
+            yield return new WaitForSeconds(1);
+
+            SpawnAllCorners(enemy, 1);
+
+            yield return new WaitForSeconds(1);
+
+            Round4();
+        }
+
+    }
+    void Round4()
+    {
+        StartCoroutine(waiter());
+        round++;
+        print(round);
+        IEnumerator waiter()
+        {
+            SpawnAllCorners(tankEnemy, 1);
+
+            yield return new WaitForSeconds(5);
+
+            SpawnAllCorners(tankEnemy, 1);
+
+            yield return new WaitForSeconds(5);
+
+            SpawnAllCorners(tankEnemy, 1);
+
+            yield return new WaitForSeconds(5);
+
+            SpawnAllCorners(tankEnemy, 1);
+
+            yield return new WaitForSeconds(5);
+
+            SpawnAllCorners(enemy, 3);
+
+            yield return new WaitForSeconds(10);
+        }
+
+    }
+    void Round5()
+        {
+            StartCoroutine(waiter());
+            round++;
+            print(round);
+            IEnumerator waiter()
+            {
+            SpawnAllCorners(tankEnemy, 1);
+            SpawnAllCorners(fastEnemy, 2);
+
+            yield return new WaitForSeconds(5);
+
+            SpawnAllCorners(tankEnemy, 1);
+            SpawnAllCorners(fastEnemy, 2);
+
+            yield return new WaitForSeconds(5);
+
+            SpawnAllCorners(tankEnemy, 1);
+            SpawnAllCorners(fastEnemy, 2);
+            SpawnAllCorners(enemy, 5);
+
+            yield return new WaitForSeconds(5);
+
+            SpawnAllCorners(tankEnemy, 1);
+            SpawnAllCorners(fastEnemy, 2);
+
+            yield return new WaitForSeconds(5);
+
+            SpawnAllCorners(tankEnemy, 1);
+            SpawnAllCorners(fastEnemy, 2);
+            SpawnAllCorners(enemy, 5);
+
+            yield return new WaitForSeconds(5);
+
+            SpawnAllCorners(tankEnemy, 1);
+
+            yield return new WaitForSeconds(1);
+
+            SpawnAllCorners(tankEnemy, 1);
+
+            yield return new WaitForSeconds(1);
+
+            SpawnAllCorners(tankEnemy, 1);
+
+            yield return new WaitForSeconds(1);
+
+            SpawnAllCorners(tankEnemy, 1);
+
+            yield return new WaitForSeconds(1);
+
+            SpawnAllCorners(tankEnemy, 1);
+
+            yield return new WaitForSeconds(1);
+            print("The end, for now...");
+        }
+
+    }
+
 }
