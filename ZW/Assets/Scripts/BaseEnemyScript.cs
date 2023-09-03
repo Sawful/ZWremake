@@ -11,7 +11,7 @@ public class BaseEnemyScript : MonoBehaviour
     public float range;
     public float speed;
     public float attackSpeed;
-    public float attackReload = 0;
+    private float attackReload = 0;
 
     [Header("Kill Reward")]
     public int expReward;
@@ -55,27 +55,31 @@ public class BaseEnemyScript : MonoBehaviour
         // Range also adds size of player and enemy, which isn't the case for player attack.
         range += (gameObject.transform.localScale.x / 2) + (player.transform.localScale.x / 2);
 
-        // Attack cooldown
-        attackSpeed = attackReload;
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        //Enemy pattern 
-        agent.SetDestination(player.transform.position);
-        // Attack
-        if (attackReload > 0)
-        {
-            attackReload -= Time.deltaTime;
+        if (player)
+        {         
+            //Enemy pattern 
+            agent.SetDestination(player.transform.position);
+            // Attack
+            if (attackReload > 0)
+            {
+                attackReload -= Time.deltaTime;
+            }
+
+            if (range > Vector3.Distance(gameObject.transform.position, player.transform.position) && attackReload < 0.05)
+            {
+                player.GetComponent<PlayerScript>().takeDamage(gameObject, damage);
+                attackReload = 1 / attackSpeed;
+            }
         }
 
-        if (range > Vector3.Distance(gameObject.transform.position, player.transform.position) && attackReload < 0.05)
-        {
-            player.GetComponent<PlayerScript>().takeDamage(gameObject, damage);
-            attackReload = attackSpeed;
-        }
+        else { agent.SetDestination(transform.position); }
+
     }
     public void takeDamage(GameObject attacker, float damageAmount)
     {
