@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "Zombie World": {
+      "commandName": "Project"
+    },
+    "Profil 1": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\CO\\Downloads\\Godot_v4.1.1-stable_mono_win64\\Godot_v4.1.1-stable_mono_win64.exe",
+      "commandLineArgs": "--path. --verbose",
+      "workingDirectory": ".",
+      "nativeDebugging": true
+    }
+  }
+}
