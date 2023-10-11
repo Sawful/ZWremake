@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dh83ht5tbsbiq"]
+[gd_scene load_steps=9 format=3 uid="uid://dh83ht5tbsbiq"]
 
 [ext_resource type="Script" path="res://Script/move_and_attack.cs" id="2_ayt3q"]
 [ext_resource type="Material" uid="uid://c311djjji0ny6" path="res://Visual/Material/player.tres" id="2_hhwjn"]
 [ext_resource type="Material" uid="uid://dgvs2u6xv5acv" path="res://Visual/Material/ground.tres" id="3_as0bh"]
+[ext_resource type="Script" path="res://Scene/CameraScript.cs" id="4_p4sdw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gjkbs"]
 
@@ -56,8 +57,10 @@ transform = Transform3D(-0.688354, -0.512917, 0.512917, 0, 0.707107, 0.707107, -
 light_energy = 0.838
 shadow_enabled = true
 
-[node name="CameraScript" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+[node name="CameraScript" type="Node3D" parent="." node_paths=PackedStringArray("camera3D")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+script = ExtResource("4_p4sdw")
+camera3D = NodePath("MainCamera")
 
 [node name="MainCamera" type="Camera3D" parent="CameraScript"]
 transform = Transform3D(1, 0, 0, 0, 0.173648, 0.984808, 0, -0.984808, 0.173648, 0, 14.5, 4)
