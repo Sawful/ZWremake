@@ -21,6 +21,8 @@ public partial class move_and_attack : Node3D
     private Vector3 cameraLocalStartingPosition;
     // Player States
     private bool moving = false;
+    // Constants
+    private float rotationWeight = 0.1f;
 
     public override void _Ready()
     {
@@ -33,8 +35,10 @@ public partial class move_and_attack : Node3D
         
         if (moving)
         {
-            LookAt(anchorPoint);
+            // Player update
+            Rotation = new Vector3(Rotation.X, Mathf.LerpAngle(Rotation.Y, Mathf.Atan2(anchorPoint.X - Position.X, anchorPoint.Z - Position.Z), rotationWeight), Rotation.Z);
             Position = Position.MoveToward(anchorPoint, speed * Convert.ToSingle(delta));
+            // Destination reached check
             if (Position == anchorPoint)
             {
                 moving = false;

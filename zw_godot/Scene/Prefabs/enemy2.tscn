@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://c7t6gy4h460v4"]
+
+[ext_resource type="Material" uid="uid://dli12syjo0a7k" path="res://Visual/Material/enemy.tres" id="1_dqngf"]
+[ext_resource type="Script" path="res://Script/enemy.cs" id="2_7q3io"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_va0vy"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_hld2k"]
+
+[sub_resource type="Curve3D" id="Curve3D_ndaa3"]
+
+[node name="RigidBody3D" type="RigidBody3D"]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_va0vy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_dqngf")
+mesh = SubResource("BoxMesh_hld2k")
+
+[node name="Node3D" type="Node3D" parent="."]
+script = ExtResource("2_7q3io")
+
+[node name="Path3D" type="Path3D" parent="Node3D"]
+curve = SubResource("Curve3D_ndaa3")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Node3D/Path3D"]
