@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://btk08876ggvce"]
+
+[ext_resource type="PackedScene" uid="uid://c7t6gy4h460v4" path="res://Scene/Prefabs/enemy.tscn" id="1_1cee3"]
+[ext_resource type="PackedScene" uid="uid://cunm7mu63qeb4" path="res://Scene/Prefabs/ground.tscn" id="2_4n4u5"]
+[ext_resource type="PackedScene" uid="uid://xjh6b4khdnpy" path="res://Scene/Prefabs/player.tscn" id="3_a0wd3"]
+[ext_resource type="Script" path="res://Script/CameraScript.cs" id="4_gxj7d"]
+
+[sub_resource type="Environment" id="Environment_v8m81"]
+background_mode = 1
+background_color = Color(0.403922, 0.737255, 0.870588, 1)
+
+[node name="Main" type="Node3D"]
+
+[node name="Ground" parent="." instance=ExtResource("2_4n4u5")]
+
+[node name="Player" parent="." node_paths=PackedStringArray("camera3D", "ground") instance=ExtResource("3_a0wd3")]
+camera3D = NodePath("../CameraScript/MainCamera")
+ground = NodePath("../Ground")
+speed = 4
+
+[node name="CameraScript" type="Node3D" parent="." node_paths=PackedStringArray("camera3D")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0)
+script = ExtResource("4_gxj7d")
+camera3D = NodePath("MainCamera")
+
+[node name="MainCamera" type="Camera3D" parent="CameraScript"]
+
+[node name="Enemy" parent="." instance=ExtResource("1_1cee3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_v8m81")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+light_energy = 0.8
+light_indirect_energy = 0.8
+shadow_enabled = true
+shadow_bias = 0.2

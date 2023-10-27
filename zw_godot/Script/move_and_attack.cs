@@ -10,17 +10,23 @@ public partial class move_and_attack : Node3D
     [Export] public RayCast3D rayCast3D;
     [Export] public Camera3D camera3D;
     [Export] public StaticBody3D ground;
+
     // Stats
     [Export] public int speed = 3;
+
     // Raycast layers
     [Export(PropertyHint.Layers3DPhysics)] public uint mouseColliderLayers;
+
     // Raycast lenght
     private const float rayLength = 1000.0f;
+
    // Vectors
     private Vector3 anchorPoint = Vector3.Zero;
     private Vector3 cameraLocalStartingPosition;
+
     // Player States
     private bool moving = false;
+
     // Constants
     private float rotationWeight = 0.1f;
 

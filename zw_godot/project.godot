@@ -11,13 +11,17 @@ config_version=5
 [application]
 
 config/name="Zombie World"
-run/main_scene="res://Scene/node_3d.tscn"
+run/main_scene="res://Scene/main.tscn"
 config/features=PackedStringArray("4.1", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [dotnet]
 
 project/assembly_name="Zombie World"
+
+[filesystem]
+
+import/fbx/enabled=false
 
 [input]
 
