@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://xjh6b4khdnpy"]
+
+[ext_resource type="Script" path="res://Script/move_and_attack.cs" id="1_amsi8"]
+[ext_resource type="Material" uid="uid://c311djjji0ny6" path="res://Visual/Material/player.tres" id="2_ofnkf"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ah6sg"]
+height = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_fhn0w"]
+
+[node name="Player" type="RigidBody3D" node_paths=PackedStringArray("rayCast3D")]
+collision_mask = 6
+script = ExtResource("1_amsi8")
+rayCast3D = NodePath("MoveAndAttack/RayCast3D")
+mouseColliderLayers = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_ah6sg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+material_override = ExtResource("2_ofnkf")
+mesh = SubResource("BoxMesh_fhn0w")
+
+[node name="MoveAndAttack" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="MoveAndAttack"]
+transform = Transform3D(-0.3251, 0.478189, -0.815871, 0.585685, -0.575551, -0.570714, -0.742485, -0.663382, -0.0929567, 0, 0, 0)
+target_position = Vector3(0, 0, 3.695)
+collision_mask = 6
