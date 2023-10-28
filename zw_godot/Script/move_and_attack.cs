@@ -12,7 +12,17 @@ public partial class move_and_attack : Node3D
     [Export] public StaticBody3D ground;
 
     // Stats
-    [Export] public int speed = 3;
+    [Export] public int maxHealth;
+    [Export] public int health;
+    [Export] public int damage;
+    [Export] public float range;
+    [Export] public float speed;
+    [Export] public float attackSpeed;
+    [Export] public float attackReload = 0;
+
+        // Ranged attack
+        [Export] public bool rangedAttack;
+        [Export] public float projectileSpeed = 10;
 
     // Raycast layers
     [Export(PropertyHint.Layers3DPhysics)] public uint mouseColliderLayers;
@@ -32,6 +42,15 @@ public partial class move_and_attack : Node3D
 
     public override void _Ready()
     {
+        // Initialise stats
+        maxHealth = 200;
+        health = maxHealth;
+        damage = 10;
+        range = 4f;
+        speed = 4;
+        attackSpeed = 1;
+
+        // Camera initialisation
         cameraLocalStartingPosition = ToLocal(camera3D.GlobalPosition);
     }
 
