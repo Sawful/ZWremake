@@ -4,16 +4,30 @@ using System;
 public partial class enemy : Node3D
 {
 	public move_and_attack player;
-	private RigidBody3D body;
-	private float speed = 2.0f;
+    private Vector3 playerPos;
+
+    // Stats
+    public int health;
+    public int damage;
+    public float range = 4;
+    public float speed = 2.0f;
+    public double attackSpeed = 1;
+    private double attackReload = 0;
+
+    // States
+    private bool moveState;
+    private bool attackState;
+
 	private float rotationWeight = 0.2f;
-	private Vector3 playerPos;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
-		player = GetTree().Root.GetNode("Main").GetNode<move_and_attack>("Player");
-        body = GetParent<RigidBody3D>();
+        player = GetTree().Root.GetNode("Main").GetNode<move_and_attack>("Player");
+
+        // Initialise states
+        moveState = true;
+        attackState = false;
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -21,19 +35,54 @@ public partial class enemy : Node3D
 	{
 		// Get player position
         playerPos = player.Position;
+        attackReload += -delta;
+        #region States
+        // Set State based on distance to player
+        if (range > Position.DistanceTo(playerPos)) 
+        {
+            attackState = true;
+            moveState = false;
+        }
 
-		// Move state
-		Rotate(playerPos);
-		Move(playerPos, delta);
+        else
+        {
+            moveState = true;
+            attackState = false;
+        }
+
+        // Move state
+        if (moveState)
+        {
+            Rotate(playerPos);
+            Move(playerPos, delta);
+        }
+
+        // Attack state
+        else if (attackState)
+        {
+            Rotate(playerPos);
+            if (attackReload <= 0)
+            {
+                Damage(player);
+                attackReload = 1 / attackSpeed;
+                GD.Print("damage");
+            }
+        }
+        #endregion
     }
 
 	public void Rotate(Vector3 rotationPoint)
 	{
-        body.Rotation = new Vector3(body.Rotation.X, Mathf.LerpAngle(body.Rotation.Y, Mathf.Atan2(rotationPoint.X - body.Position.X, rotationPoint.Z - body.Position.Z), rotationWeight), body.Rotation.Z);
+        Rotation = new Vector3(Rotation.X, Mathf.LerpAngle(Rotation.Y, Mathf.Atan2(rotationPoint.X - Position.X, rotationPoint.Z - Position.Z), rotationWeight), Rotation.Z);
     }
 
 	public void Move(Vector3 movePoint, double delta)
 	{
-        body.Position = body.Position.MoveToward(movePoint, speed * Convert.ToSingle(delta));
+        Position = Position.MoveToward(movePoint, speed * Convert.ToSingle(delta));
+    }
+
+    public void Damage(move_and_attack target)
+    {
+
     }
 }

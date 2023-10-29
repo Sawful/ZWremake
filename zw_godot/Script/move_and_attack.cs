@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 //using System.Collections;
 //using System.Collections.Generic;
 
@@ -17,12 +18,15 @@ public partial class move_and_attack : Node3D
     [Export] public int damage;
     [Export] public float range;
     [Export] public float speed;
-    [Export] public float attackSpeed;
-    [Export] public float attackReload = 0;
+    [Export] public double attackSpeed;
+    [Export] public double attackReload = 0;
 
         // Ranged attack
         [Export] public bool rangedAttack;
         [Export] public float projectileSpeed = 10;
+
+    // Enemy targets
+    public List<Object> possibleTargets;
 
     // Raycast layers
     [Export(PropertyHint.Layers3DPhysics)] public uint mouseColliderLayers;
@@ -36,6 +40,7 @@ public partial class move_and_attack : Node3D
 
     // Player States
     private bool moving = false;
+    private bool attacking = false;
 
     // Constants
     private float rotationWeight = 0.1f;
@@ -56,8 +61,9 @@ public partial class move_and_attack : Node3D
 
     public override void _PhysicsProcess(double delta)
     {
+        attackReload += -delta;
+
         // Basic movement
-        
         if (moving)
         {
             // Player update
@@ -69,7 +75,17 @@ public partial class move_and_attack : Node3D
                 moving = false;
             }
         }
-        
+
+        else if (attacking)
+        {
+            Rotation = new Vector3(Rotation.X, Mathf.LerpAngle(Rotation.Y, Mathf.Atan2(anchorPoint.X - Position.X, anchorPoint.Z - Position.Z), rotationWeight), Rotation.Z);
+
+            if (attackReload <= 0)
+            {
+                GD.Print("Player attacks");
+                attackReload = 1 / attackSpeed;
+            }
+        }
     }
 
     public override void _Input(InputEvent @event)
@@ -103,6 +119,11 @@ public partial class move_and_attack : Node3D
                 anchorPoint = (Vector3)hitDictionary["position"];
                 GlobalPosition.DirectionTo((Vector3)anchorPoint);
             }
+            GD.Print(objectHit);
+            //else if ()
+            //{
+            //
+            //}
         }
     }
 }
