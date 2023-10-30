@@ -6,10 +6,11 @@ public partial class enemy : Node3D
 	public move_and_attack player;
     private Vector3 playerPos;
 
+
     // Stats
-    public int health;
-    public int damage;
-    public float range = 4;
+    public int health = 30;
+    public int damage = 5;
+    public float range = 2;
     public float speed = 2.0f;
     public double attackSpeed = 1;
     private double attackReload = 0;
@@ -83,6 +84,23 @@ public partial class enemy : Node3D
 
     public void Damage(move_and_attack target)
     {
+        target.takeDamage(this, damage);
+    }
 
+    public void takeDamage(move_and_attack attacker, int damageAmount)
+    {
+        health -= damageAmount;
+        GD.Print("damage dealt");
+        GD.Print("current target health:" + health.ToString());
+        CheckIfDead();
+    }
+
+    public void CheckIfDead()
+    {
+        if (health <= 0)
+        {
+            
+            this.QueueFree();
+        }
     }
 }

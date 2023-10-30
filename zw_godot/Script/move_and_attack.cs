@@ -11,6 +11,7 @@ public partial class move_and_attack : Node3D
     [Export] public RayCast3D rayCast3D;
     [Export] public Camera3D camera3D;
     [Export] public StaticBody3D ground;
+    [Export] public enemy enemyClicked;
 
     // Stats
     [Export] public int maxHealth;
@@ -25,9 +26,6 @@ public partial class move_and_attack : Node3D
         [Export] public bool rangedAttack;
         [Export] public float projectileSpeed = 10;
 
-    // Enemy targets
-    public List<Object> possibleTargets;
-
     // Raycast layers
     [Export(PropertyHint.Layers3DPhysics)] public uint mouseColliderLayers;
 
@@ -37,6 +35,7 @@ public partial class move_and_attack : Node3D
    // Vectors
     private Vector3 anchorPoint = Vector3.Zero;
     private Vector3 cameraLocalStartingPosition;
+    private Vector3 enemyPos;
 
     // Player States
     private bool moving = false;
@@ -63,6 +62,14 @@ public partial class move_and_attack : Node3D
     {
         attackReload += -delta;
 
+        // GD.Print("moving: " + moving.ToString() + "    attacking: " + attacking.ToString());
+
+        // If enemy is dead or disappears, stop attacking
+        if (attacking && !IsInstanceValid(enemyClicked))
+        {
+            attacking = false;
+        }
+
         // Basic movement
         if (moving)
         {
@@ -75,15 +82,25 @@ public partial class move_and_attack : Node3D
                 moving = false;
             }
         }
-
+        // Attack state
         else if (attacking)
         {
-            Rotation = new Vector3(Rotation.X, Mathf.LerpAngle(Rotation.Y, Mathf.Atan2(anchorPoint.X - Position.X, anchorPoint.Z - Position.Z), rotationWeight), Rotation.Z);
+            enemyPos = enemyClicked.Position;
 
-            if (attackReload <= 0)
+            if (range > Position.DistanceTo(enemyPos))
             {
-                GD.Print("Player attacks");
-                attackReload = 1 / attackSpeed;
+                Rotation = new Vector3(Rotation.X, Mathf.LerpAngle(Rotation.Y, Mathf.Atan2(enemyPos.X - Position.X, enemyPos.Z - Position.Z), rotationWeight), Rotation.Z);
+                if (attackReload <= 0)
+                {
+                    Damage(enemyClicked);
+                    attackReload = 1 / attackSpeed;
+                }
+            }
+
+            else
+            {
+                Rotation = new Vector3(Rotation.X, Mathf.LerpAngle(Rotation.Y, Mathf.Atan2(enemyPos.X - Position.X, enemyPos.Z - Position.Z), rotationWeight), Rotation.Z);
+                Position = Position.MoveToward(enemyPos, speed * Convert.ToSingle(delta));
             }
         }
     }
@@ -99,6 +116,7 @@ public partial class move_and_attack : Node3D
 
     public void RayCast(InputEventMouseButton r_click)
     {
+        // Raycast
         PhysicsRayQueryParameters3D query = new()
         {
             From = camera3D.ProjectRayOrigin(r_click.Position),
@@ -108,22 +126,42 @@ public partial class move_and_attack : Node3D
             CollisionMask = mouseColliderLayers,
         };
 
-
+        // Checks if Raycast hit something
         var hitDictionary = GetWorld3D().DirectSpaceState.IntersectRay(query);
         if (hitDictionary.Count > 0) 
         {
+            
             var objectHit = hitDictionary["collider"].Obj;
             if (objectHit == ground)
             {
+                
                 moving = true;
+                attacking = false;
                 anchorPoint = (Vector3)hitDictionary["position"];
                 GlobalPosition.DirectionTo((Vector3)anchorPoint);
             }
-            GD.Print(objectHit);
-            //else if ()
-            //{
-            //
-            //}
+            
+            else if (objectHit.GetType().ToString() == "enemy")
+            {
+                moving = false;
+                attacking = true;
+                anchorPoint = (Vector3)hitDictionary["position"];
+                enemyClicked = (enemy)objectHit;
+                
+            }
         }
+    }
+
+
+    public void Damage(enemy target)
+    {
+        target.takeDamage(this, damage);
+    }
+
+    public void takeDamage(enemy attacker, int damageAmount)
+    {
+        health -= damageAmount;
+        GD.Print("damage taken");
+        GD.Print("current health:" + health.ToString());
     }
 }
