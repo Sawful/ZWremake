@@ -1,105 +1,107 @@
 using Godot;
 using System;
 
-public partial class enemy : Node3D
+public partial class Enemy : Node3D
 {
-	public move_and_attack player;
-    private Vector3 playerPos;
+	public MoveAndAttack Player;
+    private Vector3 PlayerPos;
 
 
     // Stats
-    public int health = 30;
-    public int damage = 5;
-    public float range = 2;
-    public float speed = 2.0f;
-    public double attackSpeed = 1;
-    private double attackReload = 0;
+    [Export] private int Health = 30;
+    [Export] private int Damage = 5;
+    [Export] private float Range = 2;
+    [Export] private float Speed = 2.0f;
+    [Export] private double AttackSpeed = 1;
+    [Export] private double AttackReload = 0;
 
     // States
-    private bool moveState;
-    private bool attackState;
+    private bool MoveState;
+    private bool AttackState;
 
-	private float rotationWeight = 0.2f;
+    private const float RotationWeight = 0.1f;
 
-    // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
-        player = GetTree().Root.GetNode("Main").GetNode<move_and_attack>("Player");
+        Player = GetTree().Root.GetNode("Main").GetNode<MoveAndAttack>("Player");
 
         // Initialise states
-        moveState = true;
-        attackState = false;
+        MoveState = true;
+        AttackState = false;
     }
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
 		// Get player position
-        playerPos = player.Position;
-        attackReload += -delta;
+        PlayerPos = Player.Position;
+        AttackReload -= delta;
         #region States
-        // Set State based on distance to player
-        if (range > Position.DistanceTo(playerPos)) 
-        {
-            attackState = true;
-            moveState = false;
-        }
-
-        else
-        {
-            moveState = true;
-            attackState = false;
-        }
+        SetStatesBasedOnDistance();
 
         // Move state
-        if (moveState)
+        if (MoveState)
         {
-            Rotate(playerPos);
-            Move(playerPos, delta);
+            RotateTo(PlayerPos, RotationWeight);
+            Move(PlayerPos, delta);
         }
 
         // Attack state
-        else if (attackState)
+        else if (AttackState)
         {
-            Rotate(playerPos);
-            if (attackReload <= 0)
+            RotateTo(PlayerPos, RotationWeight);
+            if (AttackReload <= 0)
             {
-                Damage(player);
-                attackReload = 1 / attackSpeed;
-                GD.Print("damage");
+                DealDamage(Player);
+                AttackReload = 1 / AttackSpeed;
+                GD.Print("Damage");
             }
         }
         #endregion
     }
 
-	public void Rotate(Vector3 rotationPoint)
-	{
-        Rotation = new Vector3(Rotation.X, Mathf.LerpAngle(Rotation.Y, Mathf.Atan2(rotationPoint.X - Position.X, rotationPoint.Z - Position.Z), rotationWeight), Rotation.Z);
-    }
 
-	public void Move(Vector3 movePoint, double delta)
-	{
-        Position = Position.MoveToward(movePoint, speed * Convert.ToSingle(delta));
-    }
-
-    public void Damage(move_and_attack target)
+    private void SetStatesBasedOnDistance()
     {
-        target.takeDamage(this, damage);
+        if (Range > Position.DistanceTo(PlayerPos))
+        {
+            AttackState = true;
+            MoveState = false;
+        }
+        else
+        {
+            MoveState = true;
+            AttackState = false;
+        }
     }
 
-    public void takeDamage(move_and_attack attacker, int damageAmount)
+    private void RotateTo(Vector3 rotationTo, float weight)
     {
-        health -= damageAmount;
+        var newRotationY = Mathf.LerpAngle(Rotation.Y, Mathf.Atan2(rotationTo.X - Position.X, rotationTo.Z - Position.Z), weight);
+        Rotation = new Vector3(Rotation.X, newRotationY, Rotation.Z);
+    }
+
+    private void Move(Vector3 movePoint, double delta)
+	{
+        Position = Position.MoveToward(movePoint, Speed * Convert.ToSingle(delta));
+    }
+
+    private void DealDamage(MoveAndAttack target)
+    {
+        target.TakeDamage(this, Damage);
+    }
+
+    public void TakeDamage(MoveAndAttack attacker, int damageAmount)
+    {
+        Health -= damageAmount;
         GD.Print("damage dealt");
-        GD.Print("current target health:" + health.ToString());
+        GD.Print("current target health:" + Health.ToString());
         CheckIfDead();
     }
 
-    public void CheckIfDead()
+    private void CheckIfDead()
     {
-        if (health <= 0)
+        if (Health <= 0)
         {
-            
             this.QueueFree();
         }
     }

@@ -11,11 +11,10 @@ background_color = Color(0.403922, 0.737255, 0.870588, 1)
 
 [node name="Main" type="Node3D"]
 
-[node name="Ground" parent="." instance=ExtResource("2_4n4u5")]
-
-[node name="Player" parent="." node_paths=PackedStringArray("camera3D", "ground") instance=ExtResource("3_a0wd3")]
-camera3D = NodePath("../CameraScript/MainCamera")
-ground = NodePath("../Ground")
+[node name="Player" parent="." node_paths=PackedStringArray("Camera3D", "Ground") instance=ExtResource("3_a0wd3")]
+Camera3D = NodePath("../CameraScript/MainCamera")
+Ground = NodePath("../Ground")
+MouseColliderLayers = 6
 
 [node name="CameraScript" type="Node3D" parent="." node_paths=PackedStringArray("camera3D")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0)
@@ -32,6 +31,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
 
 [node name="Enemy" parent="." instance=ExtResource("1_1cee3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
+
+[node name="Ground" parent="." instance=ExtResource("2_4n4u5")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_v8m81")
