@@ -3,22 +3,25 @@
 [ext_resource type="Material" uid="uid://dli12syjo0a7k" path="res://Visual/Material/enemy.tres" id="1_dqngf"]
 [ext_resource type="Script" path="res://Script/Enemy.cs" id="1_v7k81"]
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_va0vy"]
-height = 1.0
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_2md15"]
+height = 0.8
+radius = 0.4
 
 [sub_resource type="BoxMesh" id="BoxMesh_hld2k"]
 
 [node name="Enemy" type="RigidBody3D"]
 collision_layer = 2
 collision_mask = 7
+axis_lock_linear_y = true
+lock_rotation = true
 script = ExtResource("1_v7k81")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-shape = SubResource("CylinderShape3D_va0vy")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+shape = SubResource("CylinderShape3D_2md15")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0.5, 0)
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0.4, 0)
 layers = 2
 material_override = ExtResource("1_dqngf")
 mesh = SubResource("BoxMesh_hld2k")
