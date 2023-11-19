@@ -1,13 +1,21 @@
-[gd_scene load_steps=6 format=3 uid="uid://btk08876ggvce"]
+[gd_scene load_steps=8 format=3 uid="uid://btk08876ggvce"]
 
 [ext_resource type="Script" path="res://Scene/GameManager.cs" id="1_1rb3k"]
 [ext_resource type="PackedScene" uid="uid://cunm7mu63qeb4" path="res://Scene/Prefabs/ground.tscn" id="2_4n4u5"]
 [ext_resource type="PackedScene" uid="uid://xjh6b4khdnpy" path="res://Scene/Prefabs/player.tscn" id="3_a0wd3"]
 [ext_resource type="Script" path="res://Script/CameraScript.cs" id="4_gxj7d"]
+[ext_resource type="FontFile" uid="uid://d1b0osrg7ontx" path="res://The Macabre.otf" id="5_ktg16"]
 
 [sub_resource type="Environment" id="Environment_v8m81"]
 background_mode = 1
 background_color = Color(0.403922, 0.737255, 0.870588, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_e1pe8"]
+font = ExtResource("5_ktg16")
+font_size = 48
+font_color = Color(1, 1, 1, 0.811765)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Main" type="Node3D" node_paths=PackedStringArray("SpawnLocation")]
 script = ExtResource("1_1rb3k")
@@ -26,17 +34,30 @@ camera3D = NodePath("MainCamera")
 [node name="MainCamera" type="Camera3D" parent="CameraScript"]
 
 [node name="Ground" parent="." instance=ExtResource("2_4n4u5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.21262, -1.03289, 1.18891)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_v8m81")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+layers = 0
 light_energy = 0.8
-light_indirect_energy = 0.8
 shadow_enabled = true
-shadow_bias = 0.2
 
-[node name="SpawnLocation" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 5)
+[node name="SpawnLocation" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
+
+[node name="Seconds" type="Timer" parent="."]
+autostart = true
+
+[node name="TopBarDisplay" type="CenterContainer" parent="."]
+offset_right = 1152.0
+offset_bottom = 73.0
+
+[node name="TimeDisplay" type="Label" parent="TopBarDisplay"]
+layout_mode = 2
+text = "
+"
+label_settings = SubResource("LabelSettings_e1pe8")
+
+[connection signal="timeout" from="Seconds" to="." method="_on_seconds_timeout"]
