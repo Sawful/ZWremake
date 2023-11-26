@@ -1,24 +1,17 @@
-[gd_scene load_steps=8 format=3 uid="uid://btk08876ggvce"]
+[gd_scene load_steps=7 format=3 uid="uid://btk08876ggvce"]
 
-[ext_resource type="Script" path="res://Scene/GameManager.cs" id="1_1rb3k"]
+[ext_resource type="Script" path="res://Script/GameManager.cs" id="1_tnirx"]
 [ext_resource type="PackedScene" uid="uid://cunm7mu63qeb4" path="res://Scene/Prefabs/ground.tscn" id="2_4n4u5"]
 [ext_resource type="PackedScene" uid="uid://xjh6b4khdnpy" path="res://Scene/Prefabs/player.tscn" id="3_a0wd3"]
 [ext_resource type="Script" path="res://Script/CameraScript.cs" id="4_gxj7d"]
-[ext_resource type="FontFile" uid="uid://d1b0osrg7ontx" path="res://The Macabre.otf" id="5_ktg16"]
+[ext_resource type="PackedScene" uid="uid://bl0rsh88rppk" path="res://Scene/PlayerUI.tscn" id="5_npj1m"]
 
 [sub_resource type="Environment" id="Environment_v8m81"]
 background_mode = 1
 background_color = Color(0.403922, 0.737255, 0.870588, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_e1pe8"]
-font = ExtResource("5_ktg16")
-font_size = 48
-font_color = Color(1, 1, 1, 0.811765)
-outline_size = 4
-outline_color = Color(0, 0, 0, 1)
-
 [node name="Main" type="Node3D" node_paths=PackedStringArray("SpawnLocation")]
-script = ExtResource("1_1rb3k")
+script = ExtResource("1_tnirx")
 SpawnLocation = NodePath("SpawnLocation")
 
 [node name="Player" parent="." node_paths=PackedStringArray("Camera3D", "Ground") instance=ExtResource("3_a0wd3")]
@@ -50,14 +43,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
 [node name="Seconds" type="Timer" parent="."]
 autostart = true
 
-[node name="TopBarDisplay" type="CenterContainer" parent="."]
-offset_right = 1152.0
-offset_bottom = 73.0
-
-[node name="TimeDisplay" type="Label" parent="TopBarDisplay"]
-layout_mode = 2
-text = "
-"
-label_settings = SubResource("LabelSettings_e1pe8")
+[node name="PlayerUI" parent="." instance=ExtResource("5_npj1m")]
 
 [connection signal="timeout" from="Seconds" to="." method="_on_seconds_timeout"]

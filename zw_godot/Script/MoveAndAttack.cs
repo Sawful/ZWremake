@@ -5,22 +5,15 @@ using System.Collections.Generic;
 //using System.Collections.Generic;
 
 
-public partial class MoveAndAttack : Node3D
+public partial class MoveAndAttack : Entity
 {
+    
+
     // Nodes
     [Export] private RayCast3D RayCast3D;
     [Export] private Camera3D Camera3D;
     [Export] private StaticBody3D Ground;
     [Export] private Enemy EnemyClicked;
-
-    // Stats
-    [Export] private int MaxHealth = 200;
-    [Export] private int Health;
-    [Export] private int Damage = 10;
-    [Export] private float Range = 4;
-    [Export] private float Speed = 4;
-    [Export] private double AttackSpeed = 1;
-    [Export] private double AttackReload = 0;
 
         // Ranged attack
         [Export] private bool RangedAttack;
@@ -32,6 +25,10 @@ public partial class MoveAndAttack : Node3D
     // Raycast lenght
     private const float RayLength = 1000.0f;
 
+    // Abilities
+    public Overstrike Overstrike;
+
+
    // Vectors
     private Vector3 AnchorPoint = Vector3.Zero;
     private Vector3 CameraLocalStartingPosition;
@@ -41,13 +38,19 @@ public partial class MoveAndAttack : Node3D
     private bool Moving = false;
     private bool Attacking = false;
 
-    // Constants
-    private float RotationWeight = 0.1f;
-
     public override void _Ready()
     {
-        // Initialise stats
-        Health = MaxHealth;
+        // Stats
+        MaxHealth = 200;
+        Damage = 10;
+        Range = 4;
+        Speed = 4;
+        AttackSpeed = 1;
+
+        base._Ready();
+
+        Overstrike = (Overstrike)LoadAbility("Overstrike");
+
 
         // Camera initialisation
         CameraLocalStartingPosition = ToLocal(Camera3D.GlobalPosition);
@@ -67,6 +70,10 @@ public partial class MoveAndAttack : Node3D
         if (Moving)
         {
             MoveTo(delta, AnchorPoint);
+            if (Position == AnchorPoint)
+            {
+                Moving = false;
+            }
         }
         // Attack state
         else if (Attacking)
@@ -78,7 +85,7 @@ public partial class MoveAndAttack : Node3D
                 RotateTo(EnemyPos, RotationWeight);
                 if (AttackReload <= 0)
                 {
-                    DealDamage(EnemyClicked);
+                    DealDamage(EnemyClicked, Damage);
                     AttackReload = 1 / AttackSpeed;
                 }
             }
@@ -96,8 +103,12 @@ public partial class MoveAndAttack : Node3D
         {
             RayCast(eventMouseButton);
         }
-    }
 
+        if (@event.IsActionPressed("a_key") )
+        {
+            Overstrike.Execute(this);
+        }
+    }
 
     public void RayCast(InputEventMouseButton rClick)
     {
@@ -135,34 +146,8 @@ public partial class MoveAndAttack : Node3D
         }
     }
 
-
-    public void MoveTo(double delta, Vector3 moveTo)
+    public void UseAbility()
     {
-        // Player update
-        RotateTo(moveTo, RotationWeight);
-        Position = Position.MoveToward(moveTo, Speed * Convert.ToSingle(delta));
-        // Destination reached check
-        if (Position == AnchorPoint)
-        {
-            Moving = false;
-        }
-    }
 
-    public void RotateTo(Vector3 rotationPoint, float rotationWeight)
-    {
-        var newRotationY = Mathf.LerpAngle(Rotation.Y, Mathf.Atan2(rotationPoint.X - Position.X, rotationPoint.Z - Position.Z), rotationWeight);
-        Rotation = new Vector3(Rotation.X, newRotationY, Rotation.Z);
-    }
-
-    public void DealDamage(Enemy target)
-    {
-        target.TakeDamage(this, Damage);
-    }
-
-    public void TakeDamage(Enemy attacker, int damageAmount)
-    {
-        Health -= damageAmount;
-        GD.Print("damage taken");
-        GD.Print("current health:" + Health.ToString());
     }
 }
