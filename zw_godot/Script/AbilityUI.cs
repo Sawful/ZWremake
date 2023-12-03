@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class AbilityUI : ItemList
 {
@@ -9,6 +10,7 @@ public partial class AbilityUI : ItemList
     public Button AbilityButton2;
     public Button AbilityButton3;
     public Button AbilityButton4;
+    public Button[] AbilityButtons;
 
     public CompressedTexture2D abilityImage1;
     public CompressedTexture2D abilityImage2;
@@ -35,6 +37,7 @@ public partial class AbilityUI : ItemList
         AbilityCooldownText2 = AbilityButton2.GetNode<Label>("AbilityCooldownText2");
         AbilityCooldownText3 = AbilityButton3.GetNode<Label>("AbilityCooldownText3");
         AbilityCooldownText4 = AbilityButton4.GetNode<Label>("AbilityCooldownText4");
+
         AbilityCooldownText1.Text = "";
         AbilityCooldownText2.Text = "";
         AbilityCooldownText3.Text = "";
@@ -49,40 +52,10 @@ public partial class AbilityUI : ItemList
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
-        //IsButtonPressed(AbilityButton1, AbilityCooldownText1, Player.CurrentAbilityCooldown1, Player.AbilityCooldown1);
-
-        if (AbilityButton1.ButtonPressed)
-        {
-            AbilityButton1.Disabled = true;
-            Player.isAbility1Cooldown = true;
-            Player.CurrentAbilityCooldown1 = Player.AbilityCooldown1;
-
-        }
-        if (AbilityButton2.ButtonPressed)
-        {
-            AbilityButton2.Disabled = true;
-            Player.isAbility2Cooldown = true;
-            Player.CurrentAbilityCooldown2 = Player.AbilityCooldown2;
-        }
-        if (AbilityButton3.ButtonPressed)
-        {
-            AbilityButton3.Disabled = true;
-            Player.isAbility3Cooldown = true;
-            Player.CurrentAbilityCooldown3 = Player.AbilityCooldown3;
-        }
-        if (AbilityButton4.ButtonPressed)
-        {
-            AbilityButton4.Disabled = true;
-            Player.isAbility4Cooldown = true;
-            Player.CurrentAbilityCooldown4 = Player.AbilityCooldown4;
-        }
-
         AbilityCooldown(ref Player.CurrentAbilityCooldown1, ref Player.isAbility1Cooldown, AbilityCooldownText1, AbilityButton1, delta);
         AbilityCooldown(ref Player.CurrentAbilityCooldown2, ref Player.isAbility2Cooldown, AbilityCooldownText2, AbilityButton2, delta);
         AbilityCooldown(ref Player.CurrentAbilityCooldown3, ref Player.isAbility3Cooldown, AbilityCooldownText3, AbilityButton3, delta);
         AbilityCooldown(ref Player.CurrentAbilityCooldown4, ref Player.isAbility4Cooldown, AbilityCooldownText4, AbilityButton4, delta);
-
-
     }
 
     public override void _Input(InputEvent @event) 
@@ -120,15 +93,56 @@ public partial class AbilityUI : ItemList
         }
     }
 
-    //private void IsButtonPressed(Button AbilityButton, Label AbilityCooldownText, double CurrentAbilityCooldown, double AbilityCooldown)
-    //{
-     //   if (AbilityButton.ButtonPressed == true)
-    //    {
-     //       AbilityButton.Disabled = true;
-    //        AbilityCooldownText.Text = "clicked";
-    //        Player.isAbility1Cooldown = true;
-     //       CurrentAbilityCooldown = AbilityCooldown;
+    public void _on_ability_button_1_pressed()
+    {
+        Player.Abilities.Call(Player.Ability1, Player);
+    }
 
-    //    }
-    //}
+    public void SetAbility1Cooldown()
+    {
+        AbilityButton1.Disabled = true;
+        Player.isAbility1Cooldown = true;
+        Player.CurrentAbilityCooldown1 = Player.AbilityCooldown1;
+    }
+
+    public void _on_ability_button_2_pressed()
+    {
+        Player.Abilities.Call(Player.Ability2, Player);
+    }
+
+    public void SetAbility2Cooldown()
+    {
+        AbilityButton2.Disabled = true;
+        Player.isAbility2Cooldown = true;
+        Player.CurrentAbilityCooldown2 = Player.AbilityCooldown2;
+    }
+
+    public void _on_ability_button_3_pressed()
+    {
+        AbilityButton3.Disabled = true;
+        Player.isAbility3Cooldown = true;
+        Player.CurrentAbilityCooldown3 = Player.AbilityCooldown3;
+    }
+
+    public void SetAbility3Cooldown()
+    {
+        AbilityButton3.Disabled = true;
+        Player.isAbility3Cooldown = true;
+        Player.CurrentAbilityCooldown3 = Player.AbilityCooldown3;
+    }
+
+    public void _on_ability_button_4_pressed()
+    {
+        AbilityButton4.Disabled = true;
+        Player.isAbility4Cooldown = true;
+        Player.CurrentAbilityCooldown4 = Player.AbilityCooldown4;
+    }
+
+    public void SetAbility4Cooldown()
+    {
+        AbilityButton4.Disabled = true;
+        Player.isAbility4Cooldown = true;
+        Player.CurrentAbilityCooldown4 = Player.AbilityCooldown4;
+    }
+
 }

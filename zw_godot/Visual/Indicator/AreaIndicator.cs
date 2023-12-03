@@ -8,6 +8,11 @@ public partial class AreaIndicator : Node3D
     private Camera3D Camera3D;
     private Player Player;
     private Vector3 PointHit;
+    private Vector3 SupposedPosition;
+
+    public float range;
+    public double radius;
+
     // Raycast lenght
     private const float RayLength = 1000.0f;
 
@@ -16,12 +21,19 @@ public partial class AreaIndicator : Node3D
 	{
         Player = GetTree().Root.GetNode("Main").GetNode<Player>("Player");
         Camera3D = GetTree().Root.GetNode("Main").GetNode<Node3D>("CameraScript").GetNode<Camera3D>("MainCamera");
+
+        range = 4;
+
+
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-        Position = AbilityIndicatorRaycast();
+        SupposedPosition = AbilityIndicatorRaycast();
+
+        Position = Player.Position + (SupposedPosition - Player.Position).Normalized() * Mathf.Min(SupposedPosition.DistanceTo(Player.Position), range);
+        //Position = new Vector3 (Math.Clamp(AbilityIndicatorRaycast().X, Player.Position.X - range, Player.Position.X + range), 0.0f, Math.Clamp(AbilityIndicatorRaycast().Z, Player.Position.Z - range, Player.Position.Z + range));
     }
 
 

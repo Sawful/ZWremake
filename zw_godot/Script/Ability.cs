@@ -1,7 +1,9 @@
 using Godot;
 using System;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 public partial class Ability : Node
 {
@@ -10,12 +12,13 @@ public partial class Ability : Node
     [Export] private Camera3D Camera3D;
     [Export] private StaticBody3D Ground;
     private Node3D Main;
+    private AbilityUI AbilityUI;
 
     PackedScene AreaIndicator;
 
     public CancellationTokenSource cancellationTokenSource;
 
-    private bool Casting = false;
+    public bool Casting = false;
 
     private const float RayLength = 1000.0f;
 
@@ -34,6 +37,7 @@ public partial class Ability : Node
         Player = GetParent<Player>();
         Camera3D = Player.Camera3D;
         Ground = Player.Ground;
+        AbilityUI = GetTree().Root.GetNode("Main").GetNode("PlayerUI").GetNode("BottomBar").GetNode<AbilityUI>("AbilityUI");
 
         Main = Player.GetParent<Node3D>();
     }
@@ -103,9 +107,13 @@ public partial class Ability : Node
 
                 if (AbilityRaycast() is Enemy enemyHit)
                 {
+                    Vector3 EnemyPos = enemyHit.Position;
+
                     GD.Print("enemy found");
 
                     caster.DealDamage(enemyHit, caster.Damage * 10);
+
+                    AbilityUI.Call("SetAbility1Cooldown");
                 }
             }
 
@@ -130,12 +138,10 @@ public partial class Ability : Node
 
         AbilityCast.SetResult(false);
         AbilityCast = new TaskCompletionSource<bool>();
-
-        GD.Print(AreaIndicator);
+        Casting = true;
 
         AreaIndicator AreaIndic = (AreaIndicator)AreaIndicator.Instantiate();
         Main.AddChild(AreaIndic);
-        GD.Print(AreaIndic);
 
         if (await AbilityCast.Task == true)
         {
@@ -143,6 +149,8 @@ public partial class Ability : Node
             // Cursor goes back to normal
             GD.Print("Flamestorm casted");
             AbilityCast = new TaskCompletionSource<bool>();
+
+            AbilityUI.Call("SetAbility2Cooldown");
 
         }
         else
@@ -160,6 +168,7 @@ public partial class Ability : Node
 
         AbilityCast.SetResult(false); // Cancel other abilities
         AbilityCast = new TaskCompletionSource<bool>(); // Reset task to await cast confirmation
+        Casting = true;
 
         if (await AbilityCast.Task == true) // Ability casted
         {

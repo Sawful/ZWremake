@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 //using System.Collections;
 //using System.Collections.Generic;
 
@@ -125,24 +126,9 @@ public partial class Player : Entity
         {
             RayCast(eventMouseButton);
         }
-
-        if (@event.IsActionPressed("a_key") & !isAbility1Cooldown)
-        {
-            AbilityUI.AbilityButton1.ButtonPressed = true;
-            Abilities.Call(Ability1, this);
-        }
-
-        if (@event.IsActionPressed("z_key") & !isAbility1Cooldown)
-        {
-            AbilityUI.AbilityButton2.ButtonPressed = true;
-            Abilities.Call(Ability2, this);
-        }
-
     }
 
-
-
-        public void RayCast(InputEventMouseButton rClick)
+    public void RayCast(InputEventMouseButton rClick)
     {
         // Raycast
         PhysicsRayQueryParameters3D query = new()
@@ -159,6 +145,11 @@ public partial class Player : Entity
         if (hitDictionary.Count > 0) 
         {
             var objectHit = hitDictionary["collider"].Obj;
+
+            Abilities.AbilityCast.SetResult(false);
+            Abilities.AbilityCast = new TaskCompletionSource<bool>();
+            Abilities.Casting = false;
+
             if (objectHit == Ground)
             {
                 Moving = true;
@@ -178,8 +169,13 @@ public partial class Player : Entity
         }
     }
 
-    public void UseAbility(Ability ability)
-    {
+    //public async void WalkUpAttack(float range, Vector3 target, double delta)
+    //{
+    //    while (Position.DistanceTo(target) >= range)
+    //    {
+    //        MoveTo(delta, EnemyPos);
+    //    }
 
-    }
+
+    //}
 }

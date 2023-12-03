@@ -1,10 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://bl0rsh88rppk"]
+[gd_scene load_steps=18 format=3 uid="uid://bl0rsh88rppk"]
 
 [ext_resource type="FontFile" uid="uid://d1b0osrg7ontx" path="res://Visual/Ui/Font/The Macabre.otf" id="1_51u4j"]
 [ext_resource type="Theme" uid="uid://bxe73ibnjartc" path="res://Visual/Theme/PlayerUITheme.tres" id="2_v3j47"]
 [ext_resource type="Script" path="res://Script/AbilityUI.cs" id="3_8qh8h"]
 [ext_resource type="Texture2D" uid="uid://b4x3fwa61578y" path="res://Visual/Ui/Icon/ability1.png" id="4_2lp2a"]
-[ext_resource type="InputEventKey" uid="uid://dcmnaw7c525y8" path="res://AbilityKey1.tres" id="4_fx40d"]
 [ext_resource type="Texture2D" uid="uid://cd8cp4s5o0cj5" path="res://Visual/Ui/Icon/ability2.png" id="5_xvn8f"]
 [ext_resource type="Texture2D" uid="uid://ch5ydusk4job1" path="res://Visual/Ui/Icon/ability3.png" id="6_m7vp1"]
 [ext_resource type="Texture2D" uid="uid://6w71rmh4rjdc" path="res://Visual/Ui/Icon/ability4.png" id="7_ytta3"]
@@ -16,13 +15,42 @@ font_color = Color(1, 1, 1, 0.811765)
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
-[sub_resource type="Shortcut" id="Shortcut_47g48"]
-events = [ExtResource("4_fx40d")]
+[sub_resource type="InputEventKey" id="InputEventKey_o15c0"]
+device = -1
+keycode = 65
+unicode = 97
+
+[sub_resource type="Shortcut" id="Shortcut_bnpmx"]
+events = [SubResource("InputEventKey_o15c0")]
 
 [sub_resource type="LabelSettings" id="LabelSettings_wqw4v"]
 font_size = 64
 outline_size = 16
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="InputEventKey" id="InputEventKey_v6ktt"]
+device = -1
+keycode = 90
+unicode = 122
+
+[sub_resource type="Shortcut" id="Shortcut_t66uu"]
+events = [SubResource("InputEventKey_v6ktt")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_6uqg4"]
+device = -1
+keycode = 69
+unicode = 101
+
+[sub_resource type="Shortcut" id="Shortcut_sov78"]
+events = [SubResource("InputEventKey_6uqg4")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_auaf6"]
+device = -1
+keycode = 82
+unicode = 114
+
+[sub_resource type="Shortcut" id="Shortcut_yflvq"]
+events = [SubResource("InputEventKey_auaf6")]
 
 [node name="PlayerUI" type="Control"]
 layout_mode = 3
@@ -64,7 +92,7 @@ offset_left = 25.0
 offset_top = 25.0
 offset_right = 125.0
 offset_bottom = 125.0
-shortcut = SubResource("Shortcut_47g48")
+shortcut = SubResource("Shortcut_bnpmx")
 icon = ExtResource("4_2lp2a")
 expand_icon = true
 
@@ -84,6 +112,7 @@ offset_left = 150.0
 offset_top = 25.0
 offset_right = 250.0
 offset_bottom = 125.0
+shortcut = SubResource("Shortcut_t66uu")
 icon = ExtResource("5_xvn8f")
 expand_icon = true
 
@@ -103,6 +132,7 @@ offset_left = 275.0
 offset_top = 25.0
 offset_right = 375.0
 offset_bottom = 125.0
+shortcut = SubResource("Shortcut_sov78")
 icon = ExtResource("6_m7vp1")
 expand_icon = true
 
@@ -122,6 +152,7 @@ offset_left = 400.0
 offset_top = 25.0
 offset_right = 500.0
 offset_bottom = 125.0
+shortcut = SubResource("Shortcut_yflvq")
 icon = ExtResource("7_ytta3")
 expand_icon = true
 
@@ -134,3 +165,8 @@ text = "999
 label_settings = SubResource("LabelSettings_wqw4v")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton1" to="BottomBar/AbilityUI" method="_on_ability_button_1_pressed"]
+[connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton2" to="BottomBar/AbilityUI" method="_on_ability_button_2_pressed"]
+[connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton3" to="BottomBar/AbilityUI" method="_on_ability_button_3_pressed"]
+[connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton4" to="BottomBar/AbilityUI" method="_on_ability_button_4_pressed"]
