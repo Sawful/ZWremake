@@ -2,7 +2,7 @@ using Godot;
 using System;
 public partial class Enemy : Entity
 {
-	public MoveAndAttack Player;
+	public Player Player;
     private Vector3 PlayerPos;
 
     // States
@@ -12,11 +12,9 @@ public partial class Enemy : Entity
     public override void _Ready()
 	{
         // Stats
-        
-
         base._Ready();
 
-        Player = GetTree().Root.GetNode("Main").GetNode<MoveAndAttack>("Player");
+        Player = GetTree().Root.GetNode("Main").GetNode<Player>("Player");
 
         // Initialise states
         MoveState = true;

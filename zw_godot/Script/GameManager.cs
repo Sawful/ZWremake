@@ -6,6 +6,7 @@ public partial class GameManager : Node3D
     [Export] public Marker3D SpawnLocation;
     PackedScene EnemyScene;
     PackedScene TankEnemyScene;
+
     Vector3 SpawnPosition;
     Control PlayerUI;
     Entity Player;
@@ -17,7 +18,7 @@ public partial class GameManager : Node3D
 
     public override void _Ready()
     {
-        Player = GetNode<MoveAndAttack>("Player");
+        Player = GetNode<Player>("Player");
         PlayerUI = GetNode<Control>("PlayerUI");
         TimeDisplay = PlayerUI.GetNode<CenterContainer>("TopBarDisplay").GetNode<Label>("TimeDisplay");
         TimeDisplay.Text = TimeSeconds.ToString();
@@ -26,6 +27,7 @@ public partial class GameManager : Node3D
 
         EnemyScene = (PackedScene)ResourceLoader.Load("res://Scene/Prefabs/enemy.tscn");
         TankEnemyScene = (PackedScene)ResourceLoader.Load("res://Scene/Prefabs/tankenemy.tscn");
+
 
         Round1();
     }

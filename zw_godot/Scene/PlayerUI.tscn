@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://bl0rsh88rppk"]
+[gd_scene load_steps=12 format=3 uid="uid://bl0rsh88rppk"]
 
 [ext_resource type="FontFile" uid="uid://d1b0osrg7ontx" path="res://Visual/Ui/Font/The Macabre.otf" id="1_51u4j"]
 [ext_resource type="Theme" uid="uid://bxe73ibnjartc" path="res://Visual/Theme/PlayerUITheme.tres" id="2_v3j47"]
-[ext_resource type="Script" path="res://Scene/AbilityUI.cs" id="3_gjk6g"]
+[ext_resource type="Script" path="res://Script/AbilityUI.cs" id="3_8qh8h"]
 [ext_resource type="Texture2D" uid="uid://b4x3fwa61578y" path="res://Visual/Ui/Icon/ability1.png" id="4_2lp2a"]
+[ext_resource type="InputEventKey" uid="uid://dcmnaw7c525y8" path="res://AbilityKey1.tres" id="4_fx40d"]
 [ext_resource type="Texture2D" uid="uid://cd8cp4s5o0cj5" path="res://Visual/Ui/Icon/ability2.png" id="5_xvn8f"]
 [ext_resource type="Texture2D" uid="uid://ch5ydusk4job1" path="res://Visual/Ui/Icon/ability3.png" id="6_m7vp1"]
 [ext_resource type="Texture2D" uid="uid://6w71rmh4rjdc" path="res://Visual/Ui/Icon/ability4.png" id="7_ytta3"]
@@ -14,6 +15,9 @@ font_size = 48
 font_color = Color(1, 1, 1, 0.811765)
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Shortcut" id="Shortcut_47g48"]
+events = [ExtResource("4_fx40d")]
 
 [sub_resource type="LabelSettings" id="LabelSettings_wqw4v"]
 font_size = 64
@@ -39,7 +43,7 @@ text = "Time
 "
 label_settings = SubResource("LabelSettings_fh17m")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="BottomBar" type="PanelContainer" parent="."]
 layout_mode = 0
 offset_left = 480.0
 offset_top = 750.0
@@ -48,22 +52,23 @@ offset_bottom = 900.0
 scale = Vector2(0.8, 0.8)
 theme = ExtResource("2_v3j47")
 
-[node name="ItemList" type="ItemList" parent="PanelContainer"]
+[node name="AbilityUI" type="ItemList" parent="BottomBar"]
 layout_mode = 2
 max_columns = 4
 same_column_width = true
-script = ExtResource("3_gjk6g")
+script = ExtResource("3_8qh8h")
 
-[node name="AbilityButton1" type="Button" parent="PanelContainer/ItemList"]
+[node name="AbilityButton1" type="Button" parent="BottomBar/AbilityUI"]
 layout_mode = 0
 offset_left = 25.0
 offset_top = 25.0
 offset_right = 125.0
 offset_bottom = 125.0
+shortcut = SubResource("Shortcut_47g48")
 icon = ExtResource("4_2lp2a")
 expand_icon = true
 
-[node name="AbilityCooldownText1" type="Label" parent="PanelContainer/ItemList/AbilityButton1"]
+[node name="AbilityCooldownText1" type="Label" parent="BottomBar/AbilityUI/AbilityButton1"]
 layout_mode = 0
 offset_right = 100.0
 offset_bottom = 100.0
@@ -73,7 +78,7 @@ label_settings = SubResource("LabelSettings_wqw4v")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AbilityButton2" type="Button" parent="PanelContainer/ItemList"]
+[node name="AbilityButton2" type="Button" parent="BottomBar/AbilityUI"]
 layout_mode = 0
 offset_left = 150.0
 offset_top = 25.0
@@ -82,7 +87,7 @@ offset_bottom = 125.0
 icon = ExtResource("5_xvn8f")
 expand_icon = true
 
-[node name="AbilityCooldownText2" type="Label" parent="PanelContainer/ItemList/AbilityButton2"]
+[node name="AbilityCooldownText2" type="Label" parent="BottomBar/AbilityUI/AbilityButton2"]
 layout_mode = 0
 offset_right = 100.0
 offset_bottom = 100.0
@@ -92,7 +97,7 @@ label_settings = SubResource("LabelSettings_wqw4v")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AbilityButton3" type="Button" parent="PanelContainer/ItemList"]
+[node name="AbilityButton3" type="Button" parent="BottomBar/AbilityUI"]
 layout_mode = 0
 offset_left = 275.0
 offset_top = 25.0
@@ -101,7 +106,7 @@ offset_bottom = 125.0
 icon = ExtResource("6_m7vp1")
 expand_icon = true
 
-[node name="AbilityCooldownText3" type="Label" parent="PanelContainer/ItemList/AbilityButton3"]
+[node name="AbilityCooldownText3" type="Label" parent="BottomBar/AbilityUI/AbilityButton3"]
 layout_mode = 0
 offset_right = 100.0
 offset_bottom = 100.0
@@ -111,7 +116,7 @@ label_settings = SubResource("LabelSettings_wqw4v")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AbilityButton4" type="Button" parent="PanelContainer/ItemList"]
+[node name="AbilityButton4" type="Button" parent="BottomBar/AbilityUI"]
 layout_mode = 0
 offset_left = 400.0
 offset_top = 25.0
@@ -120,7 +125,7 @@ offset_bottom = 125.0
 icon = ExtResource("7_ytta3")
 expand_icon = true
 
-[node name="AbilityCooldownText4" type="Label" parent="PanelContainer/ItemList/AbilityButton4"]
+[node name="AbilityCooldownText4" type="Label" parent="BottomBar/AbilityUI/AbilityButton4"]
 layout_mode = 0
 offset_right = 100.0
 offset_bottom = 100.0
