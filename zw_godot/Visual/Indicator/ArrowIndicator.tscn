@@ -6,6 +6,7 @@
 [node name="ArrowIndicator" type="Node3D"]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.1, 0, 0, 0)
 script = ExtResource("1_4xwnk")
+MouseColliderLayers = 4
 
 [node name="ArrowIndicatorSprite" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.4, 5)

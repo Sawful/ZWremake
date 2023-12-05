@@ -119,9 +119,7 @@ public partial class AbilityUI : ItemList
 
     public void _on_ability_button_3_pressed()
     {
-        AbilityButton3.Disabled = true;
-        Player.isAbility3Cooldown = true;
-        Player.CurrentAbilityCooldown3 = Player.AbilityCooldown3;
+        Player.Abilities.Call(Player.Ability3, Player);
     }
 
     public void SetAbility3Cooldown()

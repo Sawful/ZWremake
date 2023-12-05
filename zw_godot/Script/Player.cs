@@ -31,6 +31,7 @@ public partial class Player : Entity
     public Ability Abilities;
     public string Ability1;
     public string Ability2;
+    public string Ability3;
 
     public float AbilityCooldown1 = 6;
     public float AbilityCooldown2 = 10;
@@ -62,6 +63,7 @@ public partial class Player : Entity
         Abilities = GetNode<Ability>("Abilities");
         Ability1 = "Overstrike";
         Ability2 = "Flamestorm";
+        Ability3 = "Arrowshot";
 
         // Stats
         MaxHealth = 200;

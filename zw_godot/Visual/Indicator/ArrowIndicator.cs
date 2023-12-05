@@ -22,7 +22,8 @@ public partial class ArrowIndicator : Node3D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-        var newRotationY = Mathf.Atan2(AbilityIndicatorRaycast().X - Position.X, AbilityIndicatorRaycast().Z - Position.Z);
+        SupposedPosition = AbilityIndicatorRaycast();
+        var newRotationY = Mathf.Atan2(SupposedPosition.X - Position.X, SupposedPosition.Z - Position.Z);
         Rotation = new Vector3(Rotation.X, newRotationY, Rotation.Z);
 		Position = Player.Position; 
     }

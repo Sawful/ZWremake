@@ -15,6 +15,7 @@ public partial class Ability : Node
     private AbilityUI AbilityUI;
 
     PackedScene AreaIndicator;
+    PackedScene ArrowIndicator;
 
     public CancellationTokenSource cancellationTokenSource;
 
@@ -33,6 +34,7 @@ public partial class Ability : Node
     public override void _Ready()
 	{
         AreaIndicator = (PackedScene)ResourceLoader.Load("res://Visual/Indicator/AreaIndicator.tscn");
+        ArrowIndicator = (PackedScene)ResourceLoader.Load("res://Visual/Indicator/ArrowIndicator.tscn");
 
         Player = GetParent<Player>();
         Camera3D = Player.Camera3D;
@@ -156,6 +158,36 @@ public partial class Ability : Node
         else
         {
             AreaIndic.QueueFree();
+            // Cursor goes back to normal
+            GD.Print("Flamestorm cancelled");
+            AbilityCast = new TaskCompletionSource<bool>();
+        }
+    }
+
+    public async void Arrowshot(Entity caster)
+    {
+        // Change cursor
+
+        AbilityCast.SetResult(false);
+        AbilityCast = new TaskCompletionSource<bool>();
+        Casting = true;
+
+        ArrowIndicator ArrowIndic = (ArrowIndicator)ArrowIndicator.Instantiate();
+        Main.AddChild(ArrowIndic);
+
+        if (await AbilityCast.Task == true)
+        {
+            ArrowIndic.QueueFree();
+            // Cursor goes back to normal
+            GD.Print("Flamestorm casted");
+            AbilityCast = new TaskCompletionSource<bool>();
+
+            AbilityUI.Call("SetAbility3Cooldown");
+
+        }
+        else
+        {
+            ArrowIndic.QueueFree();
             // Cursor goes back to normal
             GD.Print("Flamestorm cancelled");
             AbilityCast = new TaskCompletionSource<bool>();

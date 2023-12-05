@@ -31,9 +31,7 @@ public partial class AreaIndicator : Node3D
 	public override void _Process(double delta)
 	{
         SupposedPosition = AbilityIndicatorRaycast();
-
         Position = Player.Position + (SupposedPosition - Player.Position).Normalized() * Mathf.Min(SupposedPosition.DistanceTo(Player.Position), range);
-        //Position = new Vector3 (Math.Clamp(AbilityIndicatorRaycast().X, Player.Position.X - range, Player.Position.X + range), 0.0f, Math.Clamp(AbilityIndicatorRaycast().Z, Player.Position.Z - range, Player.Position.Z + range));
     }
 
 
