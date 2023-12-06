@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cunm7mu63qeb4"]
+[gd_scene load_steps=7 format=3 uid="uid://cunm7mu63qeb4"]
 
 [ext_resource type="Material" uid="uid://dgvs2u6xv5acv" path="res://Visual/Material/ground.tres" id="1_1vpj4"]
 
@@ -6,18 +6,43 @@
 size = Vector3(100, 2, 100)
 
 [sub_resource type="BoxMesh" id="BoxMesh_nghuh"]
-size = Vector3(100, 50, 100)
+size = Vector3(100, 49.5, 100)
+
+[sub_resource type="PrismMesh" id="PrismMesh_qjyxs"]
+material = ExtResource("1_1vpj4")
+left_to_right = 1.0
+size = Vector3(0.04, 0.53, 0.035)
+
+[sub_resource type="MultiMesh" id="MultiMesh_bk2hd"]
+transform_format = 1
+visible_instance_count = 0
+mesh = SubResource("PrismMesh_qjyxs")
+
+[sub_resource type="BoxMesh" id="BoxMesh_788ea"]
+size = Vector3(100, 0.5, 100)
 
 [node name="Ground" type="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 collision_layer = 4
 collision_mask = 3
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="GroundCollision" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_q4en3")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -24, 0)
+[node name="GroundMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -24.25, 0)
 layers = 4
-material_override = ExtResource("1_1vpj4")
 mesh = SubResource("BoxMesh_nghuh")
+
+[node name="GrassMultiMesh" type="MultiMeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+multimesh = SubResource("MultiMesh_bk2hd")
+
+[node name="GrassMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("PrismMesh_qjyxs")
+
+[node name="GroundSurfaceMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+material_override = ExtResource("1_1vpj4")
+mesh = SubResource("BoxMesh_788ea")
+skeleton = NodePath("../GrassMesh")

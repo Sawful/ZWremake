@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://dwd24efr0b0m7"]
+
+[ext_resource type="Script" path="res://Visual/Indicator/AreaIndicator.cs" id="1_2r0bs"]
+[ext_resource type="Texture2D" uid="uid://bjdvdv2w18rfp" path="res://Visual/Ui/Indicator/AreaIndicator.png" id="2_eud17"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_uo2lj"]
+height = 0.2
+
+[node name="AreaIndicator" type="Node3D"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+script = ExtResource("1_2r0bs")
+MouseColliderLayers = 4
+
+[node name="AreaIndicatorSprite" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.4, 0)
+layers = 8
+texture = ExtResource("2_eud17")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CylinderShape3D_uo2lj")
