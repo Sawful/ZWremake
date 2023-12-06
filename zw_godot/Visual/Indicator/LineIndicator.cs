@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class ArrowIndicator : Node3D
+public partial class LineIndicator : Node3D
 {
     [Export(PropertyHint.Layers3DPhysics)] public uint MouseColliderLayers;
 

@@ -1,8 +1,10 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 //using System.Collections;
 //using System.Collections.Generic;
 
@@ -32,6 +34,7 @@ public partial class Player : Entity
     public string Ability1;
     public string Ability2;
     public string Ability3;
+    public string Ability4;
 
     public float AbilityCooldown1 = 6;
     public float AbilityCooldown2 = 10;
@@ -64,6 +67,7 @@ public partial class Player : Entity
         Ability1 = "Overstrike";
         Ability2 = "Flamestorm";
         Ability3 = "Arrowshot";
+        Ability4 = "Cone";
 
         // Stats
         MaxHealth = 200;
@@ -103,21 +107,10 @@ public partial class Player : Entity
         // Attack state
         else if (Attacking)
         {
-            EnemyPos = EnemyClicked.Position;
 
-            if (Range > Position.DistanceTo(EnemyPos))
+            if (WalkUpAttack(Range, EnemyClicked, delta, Damage, AttackReload))
             {
-                RotateTo(EnemyPos, RotationWeight);
-                if (AttackReload <= 0)
-                {
-                    DealDamage(EnemyClicked, Damage);
-                    AttackReload = 1 / AttackSpeed;
-                }
-            }
-
-            else
-            {
-                MoveTo(delta, EnemyPos);
+                AttackReload = 1 / AttackSpeed;
             }
         }
     }
@@ -171,13 +164,25 @@ public partial class Player : Entity
         }
     }
 
-    //public async void WalkUpAttack(float range, Vector3 target, double delta)
-    //{
-    //    while (Position.DistanceTo(target) >= range)
-    //    {
-    //        MoveTo(delta, EnemyPos);
-    //    }
+    public virtual bool WalkUpAttack(float range, Enemy target, double delta, int damage, double attackreload)
+    {
+        if (Position.DistanceTo(target.Position) >= range)
+        {
+            MoveTo(delta, target.Position);
+            return false;
+        }
 
+        else 
+        {
+            RotateTo(EnemyPos, RotationWeight);
 
-    //}
+            if (attackreload <= 0)
+            {
+                DealDamage(target, damage);
+                return true;
+            }
+
+            return false;
+        }
+    }
 }

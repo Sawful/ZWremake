@@ -93,7 +93,7 @@ public partial class AbilityUI : ItemList
         }
     }
 
-    public void _on_ability_button_1_pressed()
+    public void OnAbilityButton1Pressed()
     {
         Player.Abilities.Call(Player.Ability1, Player);
     }
@@ -105,7 +105,7 @@ public partial class AbilityUI : ItemList
         Player.CurrentAbilityCooldown1 = Player.AbilityCooldown1;
     }
 
-    public void _on_ability_button_2_pressed()
+    public void OnAbilityButton2Pressed()
     {
         Player.Abilities.Call(Player.Ability2, Player);
     }
@@ -117,7 +117,7 @@ public partial class AbilityUI : ItemList
         Player.CurrentAbilityCooldown2 = Player.AbilityCooldown2;
     }
 
-    public void _on_ability_button_3_pressed()
+    public void OnAbilityButton3Pressed()
     {
         Player.Abilities.Call(Player.Ability3, Player);
     }
@@ -129,11 +129,9 @@ public partial class AbilityUI : ItemList
         Player.CurrentAbilityCooldown3 = Player.AbilityCooldown3;
     }
 
-    public void _on_ability_button_4_pressed()
+    public void OnAbilityButton4Pressed()
     {
-        AbilityButton4.Disabled = true;
-        Player.isAbility4Cooldown = true;
-        Player.CurrentAbilityCooldown4 = Player.AbilityCooldown4;
+        Player.Abilities.Call(Player.Ability4, Player);
     }
 
     public void SetAbility4Cooldown()

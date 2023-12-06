@@ -16,6 +16,7 @@ public partial class Ability : Node
 
     PackedScene AreaIndicator;
     PackedScene ArrowIndicator;
+    PackedScene ConeIndicator;
 
     public CancellationTokenSource cancellationTokenSource;
 
@@ -28,13 +29,14 @@ public partial class Ability : Node
 
     public Player Player;
 
-    public TaskCompletionSource<bool> AbilityCast = new TaskCompletionSource<bool>();
+    public TaskCompletionSource<bool> AbilityCast = new();
 
 
     public override void _Ready()
 	{
         AreaIndicator = (PackedScene)ResourceLoader.Load("res://Visual/Indicator/AreaIndicator.tscn");
         ArrowIndicator = (PackedScene)ResourceLoader.Load("res://Visual/Indicator/ArrowIndicator.tscn");
+        ConeIndicator = (PackedScene)ResourceLoader.Load("res://Visual/Indicator/ConeIndicator.tscn");
 
         Player = GetParent<Player>();
         Camera3D = Player.Camera3D;
@@ -109,8 +111,6 @@ public partial class Ability : Node
 
                 if (AbilityRaycast() is Enemy enemyHit)
                 {
-                    Vector3 EnemyPos = enemyHit.Position;
-
                     GD.Print("enemy found");
 
                     caster.DealDamage(enemyHit, caster.Damage * 10);
@@ -172,14 +172,14 @@ public partial class Ability : Node
         AbilityCast = new TaskCompletionSource<bool>();
         Casting = true;
 
-        ArrowIndicator ArrowIndic = (ArrowIndicator)ArrowIndicator.Instantiate();
+        LineIndicator ArrowIndic = (LineIndicator)ArrowIndicator.Instantiate();
         Main.AddChild(ArrowIndic);
 
         if (await AbilityCast.Task == true)
         {
             ArrowIndic.QueueFree();
             // Cursor goes back to normal
-            GD.Print("Flamestorm casted");
+            GD.Print("Arrowshot casted");
             AbilityCast = new TaskCompletionSource<bool>();
 
             AbilityUI.Call("SetAbility3Cooldown");
@@ -189,10 +189,42 @@ public partial class Ability : Node
         {
             ArrowIndic.QueueFree();
             // Cursor goes back to normal
-            GD.Print("Flamestorm cancelled");
+            GD.Print("Arrowshot cancelled");
             AbilityCast = new TaskCompletionSource<bool>();
         }
     }
+
+
+    public async void Cone(Entity caster)
+    {
+        // Change cursor
+
+        AbilityCast.SetResult(false);
+        AbilityCast = new TaskCompletionSource<bool>();
+        Casting = true;
+
+        LineIndicator ConeIndic = (LineIndicator)ConeIndicator.Instantiate();
+        Main.AddChild(ConeIndic);
+
+        if (await AbilityCast.Task == true)
+        {
+            ConeIndic.QueueFree();
+            // Cursor goes back to normal
+            GD.Print("Cone casted");
+            AbilityCast = new TaskCompletionSource<bool>();
+
+            AbilityUI.Call("SetAbility4Cooldown");
+
+        }
+        else
+        {
+            ConeIndic.QueueFree();
+            // Cursor goes back to normal
+            GD.Print("Cone cancelled");
+            AbilityCast = new TaskCompletionSource<bool>();
+        }
+    }
+
 
     public async void AbilityStructure()
     {

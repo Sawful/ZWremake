@@ -166,7 +166,7 @@ label_settings = SubResource("LabelSettings_wqw4v")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton1" to="BottomBar/AbilityUI" method="_on_ability_button_1_pressed"]
-[connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton2" to="BottomBar/AbilityUI" method="_on_ability_button_2_pressed"]
-[connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton3" to="BottomBar/AbilityUI" method="_on_ability_button_3_pressed"]
-[connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton4" to="BottomBar/AbilityUI" method="_on_ability_button_4_pressed"]
+[connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton1" to="BottomBar/AbilityUI" method="OnAbilityButton1Pressed"]
+[connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton2" to="BottomBar/AbilityUI" method="OnAbilityButton2Pressed"]
+[connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton3" to="BottomBar/AbilityUI" method="OnAbilityButton3Pressed"]
+[connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton4" to="BottomBar/AbilityUI" method="OnAbilityButton4Pressed"]
