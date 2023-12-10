@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=3 uid="uid://jv2jsrirhn8u"]
+
+[ext_resource type="Script" path="res://Player/PlayerStateMachine.cs" id="1_mai0j"]
+[ext_resource type="Script" path="res://Player/MovingState.cs" id="2_xkjnu"]
+[ext_resource type="Script" path="res://Player/AttackingState.cs" id="3_q7xgh"]
+[ext_resource type="Script" path="res://Player/AttackMoveState.cs" id="4_hdxoq"]
+[ext_resource type="Script" path="res://Script/StateMachine/IdleState.cs" id="5_8oimm"]
+
+[node name="PlayerStateMachine" type="Node"]
+script = ExtResource("1_mai0j")
+
+[node name="States" type="Node" parent="."]
+
+[node name="MovingState" type="Node" parent="States"]
+script = ExtResource("2_xkjnu")
+
+[node name="AttackingState" type="Node" parent="States"]
+script = ExtResource("3_q7xgh")
+
+[node name="AttackMoveState" type="Node" parent="States"]
+script = ExtResource("4_hdxoq")
+
+[node name="IdleState" type="Node" parent="States"]
+script = ExtResource("5_8oimm")
