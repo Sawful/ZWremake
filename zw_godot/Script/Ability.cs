@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
+using System.Collections.Generic;
 
 public partial class Ability : Node
 {
@@ -21,6 +22,7 @@ public partial class Ability : Node
     public CancellationTokenSource cancellationTokenSource;
 
     public bool Casting = false;
+    public bool AttackMoving = false;
 
     private const float RayLength = 1000.0f;
 
@@ -30,6 +32,7 @@ public partial class Ability : Node
     public Player Player;
 
     public TaskCompletionSource<bool> AbilityCast = new();
+    public TaskCompletionSource<bool> AttackMoveContinue = new();
 
 
     public override void _Ready()
@@ -46,10 +49,16 @@ public partial class Ability : Node
         Main = Player.GetParent<Node3D>();
     }
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+        if ((Casting | Player.ClosestTarget != null) & AttackMoving) 
+        {
+            AttackMoveContinue.SetResult(true);
+            AttackMoving = false;
+        }
+            
+    }
 
     public override void _Input(InputEvent @event)
     {
@@ -60,7 +69,7 @@ public partial class Ability : Node
 
     }
 
-    public virtual Node3D AbilityRaycast()
+    public virtual Dictionary<string, object> AbilityRaycast()
     {
         Vector2 mouse_pos = GetViewport().GetMousePosition();
         // Raycast
@@ -77,18 +86,96 @@ public partial class Ability : Node
         if (hitDictionary.Count > 0)
         {
             var objectHit = hitDictionary["collider"].Obj;
+            var positionHit = hitDictionary["position"].Obj;
+
+            Dictionary<string, object> info = new()
+                {
+                    { "objectHit", objectHit },
+                    { "positionHit", positionHit }
+                };
+            
 
             if  (objectHit == Ground)
             {
-                return (StaticBody3D)objectHit;
+                return info;
             }
 
             else if (objectHit is Enemy enemyHit)
             {
-                return enemyHit;
+                return info;
             }
         }
         return null;
+    }
+
+    public async void AttackMove()
+    {
+        // Change cursor
+        AbilityCast.SetResult(false); // Cancel other abilities
+
+        AbilityCast = new TaskCompletionSource<bool>(); // Reset task to await cast confirmation
+        Casting = true;
+
+        if (await AbilityCast.Task == true) // Ability casted
+        {
+            // Cursor goes back to normal
+            Casting = false; // Reset casting boolean
+            AbilityCast = new TaskCompletionSource<bool>(); // Reset task
+            AttackMoveContinue = new();
+            AttackMoveContinue.SetResult(false);
+            AttackMoveContinue = new();
+            AttackMoving = true;
+
+            Vector3 movePoint = (Vector3)AbilityRaycast()["positionHit"];
+
+            Dictionary<string, object> message = new()
+            {
+                {"MovePoint",  movePoint}
+            };
+
+            Player.PlayerStateMachine.ChangeState("MovingState", message);
+
+            if (await AttackMoveContinue.Task == true)
+            {
+
+                if (Casting)
+                {
+                    GD.Print("AttackMove cancel because of alternate casting.");
+                    AttackMoveContinue = new();
+                    AttackMoving = false;
+                    return;
+                }
+
+                else if (Player.ClosestTarget != null)
+                {
+                    GD.Print("Player entered detection range and starts attack");
+                    Dictionary<string, object> message2 = new()
+                {
+                    {"Target", Player.ClosestTarget}
+                };
+                    Player.PlayerStateMachine.ChangeState("AttackingState", message2);
+                    AttackMoving = false;
+                }
+            }
+            
+            else
+            {
+                GD.Print("AttackMove cancel because of alternate casting of AttackMove.");
+                AttackMoveContinue = new();
+                AttackMoving = false;
+                return;
+            }
+        }
+
+        else // Ability canceled
+        {
+            // Cursor goes back to normal
+
+            AbilityCast = new TaskCompletionSource<bool>(); // Reset task
+            Casting = false; // Reset casting boolean
+            AttackMoveContinue = new();
+            AttackMoving = false;
+        }
     }
 
     public async void Overstrike(Entity caster)
@@ -103,13 +190,13 @@ public partial class Ability : Node
 
         if (await AbilityCast.Task == true)
         {
-            Node3D node = AbilityRaycast();
+            Node3D node = (Node3D)AbilityRaycast()["objectHit"];
 
             if (node != null)
             {
                 GD.Print("Mouse at: " + node.Position.ToString());
 
-                if (AbilityRaycast() is Enemy enemyHit)
+                if ((Node3D)AbilityRaycast()["objectHit"] is Enemy enemyHit)
                 {
                     GD.Print("enemy found");
 
@@ -153,6 +240,7 @@ public partial class Ability : Node
             AbilityCast = new TaskCompletionSource<bool>();
 
             AbilityUI.Call("SetAbility2Cooldown");
+            Player.PlayerStateMachine.ChangeState("IdleState");
 
         }
         else
@@ -183,6 +271,7 @@ public partial class Ability : Node
             AbilityCast = new TaskCompletionSource<bool>();
 
             AbilityUI.Call("SetAbility3Cooldown");
+            Player.PlayerStateMachine.ChangeState("IdleState");
 
         }
         else
@@ -214,6 +303,7 @@ public partial class Ability : Node
             AbilityCast = new TaskCompletionSource<bool>();
 
             AbilityUI.Call("SetAbility4Cooldown");
+            Player.PlayerStateMachine.ChangeState("IdleState");
 
         }
         else

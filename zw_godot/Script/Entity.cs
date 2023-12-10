@@ -20,11 +20,6 @@ public partial class Entity : RigidBody3D
         Health = MaxHealth;
     }
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
     public void RotateTo(Vector3 rotationPoint, float rotationWeight)
     {
         var newRotationY = Mathf.LerpAngle(Rotation.Y, Mathf.Atan2(rotationPoint.X - Position.X, rotationPoint.Z - Position.Z), rotationWeight);

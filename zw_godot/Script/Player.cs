@@ -17,7 +17,11 @@ public partial class Player : Entity
     [Export] public Camera3D Camera3D;
     [Export] public StaticBody3D Ground;
     [Export] private Enemy EnemyClicked;
+    [Export] public SimpleStateMachine PlayerStateMachine;
+    public Node3D ClosestTarget;
     AbilityUI AbilityUI;
+    Area3D Area3D;
+    public Godot.Collections.Array<Node3D> OverlappingBodies;
 
     // Ranged attack
     [Export] private bool RangedAttack;
@@ -28,6 +32,9 @@ public partial class Player : Entity
 
     // Raycast lenght
     private const float RayLength = 1000.0f;
+
+
+    public CollisionObject3D[] possibleTargets;
 
     // Abilities
     public Ability Abilities;
@@ -57,8 +64,8 @@ public partial class Player : Entity
     private Vector3 EnemyPos;
 
     // Player States
-    private bool Moving = false;
-    private bool Attacking = false;
+    private bool ReadyAttackMove = false;
+    private bool AttackMove = false;
 
     public override void _Ready()
     {
@@ -77,41 +84,36 @@ public partial class Player : Entity
         AttackSpeed = 1;
 
         base._Ready();
-
-        // Overstrike = (Overstrike)LoadAbility("Overstrike");
-
-
+        PlayerStateMachine = (SimpleStateMachine)GetNode("PlayerStateMachine");
+        Area3D = GetNode<Area3D>("Area3D");
         // Camera initialisation
         CameraLocalStartingPosition = ToLocal(Camera3D.GlobalPosition);
+    }
+
+    public override void _Process(double delta)
+    {
+        
+
+        if (Input.IsActionJustPressed("x_key"))
+        {
+            Abilities.Call("AttackMove");
+        }
+
+        if (Input.IsMouseButtonPressed((MouseButton)1) & ReadyAttackMove)
+        {
+            PlayerStateMachine.ChangeState("AttackMoveState");
+        }
     }
 
     public override void _PhysicsProcess(double delta)
     {
         AttackReload -= delta;
 
-        // If enemy is dead or disappears, stop attacking
-        if (Attacking && !IsInstanceValid(EnemyClicked))
-        {
-            Attacking = false;
-        }
+        GetEnemies();
 
-        // Basic movement
-        if (Moving)
+        if (AttackMove)
         {
             MoveTo(delta, AnchorPoint);
-            if (Position == AnchorPoint)
-            {
-                Moving = false;
-            }
-        }
-        // Attack state
-        else if (Attacking)
-        {
-
-            if (WalkUpAttack(Range, EnemyClicked, delta, Damage, AttackReload))
-            {
-                AttackReload = 1 / AttackSpeed;
-            }
         }
     }
 
@@ -119,11 +121,11 @@ public partial class Player : Entity
     {
         if (@event is InputEventMouseButton eventMouseButton && eventMouseButton.Pressed && eventMouseButton.ButtonIndex == MouseButton.Right)
         {
-            RayCast(eventMouseButton);
+            RightClickRaycast(eventMouseButton);
         }
     }
 
-    public void RayCast(InputEventMouseButton rClick)
+    public void RightClickRaycast(InputEventMouseButton rClick)
     {
         // Raycast
         PhysicsRayQueryParameters3D query = new()
@@ -147,42 +149,50 @@ public partial class Player : Entity
 
             if (objectHit == Ground)
             {
-                Moving = true;
-                Attacking = false;
                 AnchorPoint = (Vector3)hitDictionary["position"];
-                GlobalPosition.DirectionTo(AnchorPoint);
+                Dictionary<string, object> message = new()
+                {
+                    { "MovePoint", AnchorPoint }
+                };
+
+                PlayerStateMachine.ChangeState("MovingState", message);
+
             }
             
             else if (objectHit is Enemy enemyHit)
             {
-                Moving = false;
-                Attacking = true;
-                AnchorPoint = (Vector3)hitDictionary["position"];
                 EnemyClicked = enemyHit;
-                
+                Dictionary<string, object> message = new()
+                {
+                    { "Target", EnemyClicked }
+                };
+                PlayerStateMachine.ChangeState("AttackingState", message);
             }
         }
     }
 
-    public virtual bool WalkUpAttack(float range, Enemy target, double delta, int damage, double attackreload)
+    public void GetEnemies()
     {
-        if (Position.DistanceTo(target.Position) >= range)
-        {
-            MoveTo(delta, target.Position);
-            return false;
-        }
-
-        else 
-        {
-            RotateTo(EnemyPos, RotationWeight);
-
-            if (attackreload <= 0)
-            {
-                DealDamage(target, damage);
-                return true;
-            }
-
-            return false;
-        }
+        OverlappingBodies = Area3D.GetOverlappingBodies();
+        ClosestTarget = GetClosest(OverlappingBodies);
     }
+
+    public virtual Node3D GetClosest(Godot.Collections.Array<Node3D> nodeArray)
+    {
+        Node3D closest = null;
+        double closestDistance = 99999;
+
+        foreach (Node3D node in nodeArray)
+        {
+            double distance = Position.DistanceTo(node.Position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closest = node;
+            }
+        }
+        return closest;
+    }
+
+
 }
