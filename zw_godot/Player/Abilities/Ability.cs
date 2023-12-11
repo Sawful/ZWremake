@@ -86,22 +86,16 @@ public partial class Ability : Node
         if (hitDictionary.Count > 0)
         {
             var objectHit = hitDictionary["collider"].Obj;
-            var positionHit = hitDictionary["position"].Obj;
+            var positionHit = hitDictionary["position"].Obj; 
 
-            Dictionary<string, object> info = new()
+            if  (objectHit == Ground | objectHit is Enemy)
+            {
+                Dictionary<string, object> info = new()
                 {
                     { "objectHit", objectHit },
                     { "positionHit", positionHit }
                 };
-            
 
-            if  (objectHit == Ground)
-            {
-                return info;
-            }
-
-            else if (objectHit is Enemy enemyHit)
-            {
                 return info;
             }
         }
@@ -150,10 +144,17 @@ public partial class Ability : Node
                 {
                     GD.Print("Player entered detection range and starts attack");
                     Dictionary<string, object> message2 = new()
-                {
-                    {"Target", Player.ClosestTarget}
-                };
+                    {
+                        {"Target", Player.ClosestTarget},
+                        {"Projectile Speed" ,  Player.ProjectileSpeed}
+                    };
+                    
+                if (Player.RangedAttack)
+                    Player.PlayerStateMachine.ChangeState("RangeAttackingState", message2);
+
+                else
                     Player.PlayerStateMachine.ChangeState("AttackingState", message2);
+
                     AttackMoving = false;
                 }
             }

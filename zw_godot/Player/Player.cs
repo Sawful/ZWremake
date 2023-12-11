@@ -28,8 +28,8 @@ public partial class Player : Entity
     public Godot.Collections.Array<Node3D> OverlappingBodies;
 
     // Ranged attack
-    [Export] private bool RangedAttack;
-    [Export] private float ProjectileSpeed = 10;
+    [Export] public bool RangedAttack;
+    [Export] public float ProjectileSpeed = 10;
 
     // Raycast layers
     [Export(PropertyHint.Layers3DPhysics)] public uint MouseColliderLayers;
@@ -75,6 +75,8 @@ public partial class Player : Entity
 
     public override void _Ready()
     {
+        RangedAttack = true;
+
         PlayerUI = GetTree().Root.GetNode("Main").GetNode<Control>("PlayerUI");
         AbilityUI = PlayerUI.GetNode<PanelContainer>("BottomBar").GetNode<AbilityUI>("AbilityUI");
         HealthBar = PlayerUI.GetNode<ProgressBar>("HealthBar");
@@ -122,11 +124,6 @@ public partial class Player : Entity
         {
             AbilityScript.Call("AttackMove");
         }
-
-        if (Input.IsMouseButtonPressed((MouseButton)1) & ReadyAttackMove)
-        {
-            PlayerStateMachine.ChangeState("AttackMoveState");
-        }
     }
 
     public override void _PhysicsProcess(double delta)
@@ -135,10 +132,6 @@ public partial class Player : Entity
 
         GetEnemies();
 
-        if (AttackMove)
-        {
-            MoveTo(delta, AnchorPoint);
-        }
     }
 
     public override void _Input(InputEvent @event)
@@ -188,9 +181,18 @@ public partial class Player : Entity
                 EnemyClicked = enemyHit;
                 Dictionary<string, object> message = new()
                 {
-                    { "Target", EnemyClicked }
+                    { "Target", EnemyClicked },
+                    { "Projectile Speed", ProjectileSpeed }
                 };
-                PlayerStateMachine.ChangeState("AttackingState", message);
+
+                if (RangedAttack) 
+                {
+                    GD.Print("Range attack works");
+                    PlayerStateMachine.ChangeState("RangeAttackingState", message);
+                }
+                    
+                else
+                    PlayerStateMachine.ChangeState("AttackingState", message);
             }
         }
     }
