@@ -4,6 +4,7 @@ public partial class Enemy : Entity
 {
 	public Player Player;
     private Vector3 PlayerPos;
+    HealthBar3D HealthBar;
 
     // States
     private bool MoveState;
@@ -15,6 +16,8 @@ public partial class Enemy : Entity
         base._Ready();
 
         Player = GetTree().Root.GetNode("Main").GetNode<Player>("Player");
+        HealthBar = GetNode<HealthBar3D>("HealthBar3D");
+        HealthBar.Update(Health, MaxHealth);
 
         // Initialise states
         MoveState = true;
@@ -62,5 +65,11 @@ public partial class Enemy : Entity
             MoveState = true;
             AttackState = false;
         }
+    }
+
+    public override void TakeDamage(Entity attacker, int damageAmount)
+    {
+        base.TakeDamage(attacker, damageAmount);
+        HealthBar.Update(Health, MaxHealth);
     }
 }

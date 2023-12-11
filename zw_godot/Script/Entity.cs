@@ -44,11 +44,9 @@ public partial class Entity : RigidBody3D
         target.TakeDamage(this, damageAmount);
     }
 
-    public void TakeDamage(Entity attacker, int damageAmount)
+    public virtual void TakeDamage(Entity attacker, int damageAmount)
     {
         Health -= damageAmount;
-        GD.Print(attacker.ToString() + "dealt: " + damageAmount.ToString() + " damage.");
-        GD.Print("Current health:" + Health.ToString());
         CheckIfDead();
     }
 
@@ -56,7 +54,7 @@ public partial class Entity : RigidBody3D
     {
         if (Health <= 0)
         {
-            this.QueueFree();
+            QueueFree();
         }
     }
 
