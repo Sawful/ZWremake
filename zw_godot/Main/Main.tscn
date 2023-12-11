@@ -16,19 +16,17 @@ volumetric_fog_detail_spread = 0.5
 adjustment_enabled = true
 adjustment_brightness = 0.95
 
-[node name="Main" type="Node3D"]
+[node name="Main" type="Node3D" node_paths=PackedStringArray("SpawnLocation")]
 script = ExtResource("1_8bxkj")
-SpawnLocation = Object(Marker3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"gizmo_extents":0.25,"script":null)
-
+SpawnLocation = NodePath("")
 
 [node name="Player" parent="." node_paths=PackedStringArray("Camera3D", "Ground") instance=ExtResource("3_a0wd3")]
 Camera3D = NodePath("../CameraScript/MainCamera")
 Ground = NodePath("../Ground")
 
-[node name="CameraScript" type="Node3D" parent="." node_paths=PackedStringArray("camera3D")]
+[node name="CameraScript" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0)
 script = ExtResource("3_a6c6b")
-camera3D = NodePath("MainCamera")
 
 [node name="MainCamera" type="Camera3D" parent="CameraScript"]
 

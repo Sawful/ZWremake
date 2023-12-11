@@ -46,7 +46,6 @@ public partial class Enemy : Entity
             {
                 DealDamage(Player, Damage);
                 AttackReload = 1 / AttackSpeed;
-                GD.Print("Damage");
             }
         }
         #endregion

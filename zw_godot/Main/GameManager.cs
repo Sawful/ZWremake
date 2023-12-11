@@ -21,6 +21,7 @@ public partial class GameManager : Node3D
     {
         Player = GetNode<Player>("Player");
         PlayerUI = GetNode<Control>("PlayerUI");
+        SpawnLocation = GetNode<Marker3D>("SpawnLocation");
         HealthBar = PlayerUI.GetNode<ProgressBar>("HealthBar");
         TimeDisplay = PlayerUI.GetNode<CenterContainer>("TopBarDisplay").GetNode<Label>("TimeDisplay");
         TimeDisplay.Text = TimeSeconds.ToString();

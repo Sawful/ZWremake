@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 public partial class CameraScript : Node3D
 {
-    [Export] public Camera3D MainCamera;
+    public Camera3D MainCamera;
 
     private float cameraZoom = 70;
     private float cameraZoomTo = 70;
@@ -19,6 +19,7 @@ public partial class CameraScript : Node3D
     private int winHeight;
     public override void _Ready()
 	{
+        MainCamera = GetNode<Camera3D>("MainCamera");
         winWidth = (int)GetViewport().GetVisibleRect().Size.X;
         winHeight = (int)GetViewport().GetVisibleRect().Size.Y;
     }
