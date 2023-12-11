@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://gmulwpesr1pt"]
-
-[ext_resource type="Script" path="res://Scene/Abilities/Overstrike/Overstrike.cs" id="1_y56ru"]
-
-[node name="Overstrike" type="Node"]
-script = ExtResource("1_y56ru")
