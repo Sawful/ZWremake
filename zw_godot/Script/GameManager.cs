@@ -10,6 +10,7 @@ public partial class GameManager : Node3D
     Vector3 SpawnPosition;
     Control PlayerUI;
     Entity Player;
+    ProgressBar HealthBar;
 
     public bool IsPlayerDead = false;
 
@@ -20,6 +21,7 @@ public partial class GameManager : Node3D
     {
         Player = GetNode<Player>("Player");
         PlayerUI = GetNode<Control>("PlayerUI");
+        HealthBar = PlayerUI.GetNode<ProgressBar>("HealthBar");
         TimeDisplay = PlayerUI.GetNode<CenterContainer>("TopBarDisplay").GetNode<Label>("TimeDisplay");
         TimeDisplay.Text = TimeSeconds.ToString();
 

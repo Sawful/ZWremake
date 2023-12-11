@@ -20,6 +20,10 @@ public partial class Player : Entity
     [Export] public SimpleStateMachine PlayerStateMachine;
     public Node3D ClosestTarget;
     AbilityUI AbilityUI;
+    Control PlayerUI;
+    ProgressBar HealthBar;
+    Label HealthBarText;
+
     Area3D Area3D;
     public Godot.Collections.Array<Node3D> OverlappingBodies;
 
@@ -69,8 +73,12 @@ public partial class Player : Entity
 
     public override void _Ready()
     {
-        AbilityUI = GetTree().Root.GetNode("Main").GetNode<Control>("PlayerUI").GetNode<PanelContainer>("BottomBar").GetNode<AbilityUI>("AbilityUI");
+        PlayerUI = GetTree().Root.GetNode("Main").GetNode<Control>("PlayerUI");
+        AbilityUI = PlayerUI.GetNode<PanelContainer>("BottomBar").GetNode<AbilityUI>("AbilityUI");
+        HealthBar = PlayerUI.GetNode<ProgressBar>("HealthBar");
+        HealthBarText = HealthBar.GetNode<Label>("HealthBarText");
         Abilities = GetNode<Ability>("Abilities");
+
         Ability1 = "Overstrike";
         Ability2 = "Flamestorm";
         Ability3 = "Arrowshot";
@@ -84,6 +92,10 @@ public partial class Player : Entity
         AttackSpeed = 1;
 
         base._Ready();
+
+        HealthBar.MaxValue = MaxHealth;
+        HealthBar.Value = Health;
+
         PlayerStateMachine = (SimpleStateMachine)GetNode("PlayerStateMachine");
         Area3D = GetNode<Area3D>("Area3D");
         // Camera initialisation
@@ -92,7 +104,9 @@ public partial class Player : Entity
 
     public override void _Process(double delta)
     {
-        
+        HealthBar.MaxValue = MaxHealth;
+        HealthBar.Value = Mathf.Lerp(HealthBar.Value, Health, 0.25);
+        HealthBarText.Text = Health.ToString() + " / " + MaxHealth.ToString();
 
         if (Input.IsActionJustPressed("x_key"))
         {
