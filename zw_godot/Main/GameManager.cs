@@ -67,7 +67,7 @@ public partial class GameManager : Node3D
         new_enemy.AttackSpeed = attackSpeed;
     }
 
-    void _on_seconds_timeout()
+    void OnSecondsTimeout()
     {
         TimeSeconds++;
         TimeDisplay.Text = TimeSeconds.ToString();

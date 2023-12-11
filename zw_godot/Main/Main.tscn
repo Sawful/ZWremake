@@ -16,11 +16,11 @@ volumetric_fog_detail_spread = 0.5
 adjustment_enabled = true
 adjustment_brightness = 0.95
 
-[node name="Main" type="Node3D" node_paths=PackedStringArray("SpawnLocation")]
+[node name="Main" type="Node3D"]
 script = ExtResource("1_8bxkj")
-SpawnLocation = NodePath("")
 
 [node name="Player" parent="." node_paths=PackedStringArray("Camera3D", "Ground") instance=ExtResource("3_a0wd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.327, 0.349674, -1.07185)
 Camera3D = NodePath("../CameraScript/MainCamera")
 Ground = NodePath("../Ground")
 
@@ -49,4 +49,4 @@ autostart = true
 
 [node name="PlayerUI" parent="." instance=ExtResource("5_npj1m")]
 
-[connection signal="timeout" from="Seconds" to="." method="_on_seconds_timeout"]
+[connection signal="timeout" from="Seconds" to="." method="OnSecondsTimeout"]
