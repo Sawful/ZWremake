@@ -10,6 +10,9 @@ public partial class Enemy : Entity
     private bool MoveState;
     private bool AttackState;
 
+    int RessourceOnDeath = 1;
+    int ExperienceOnDeath = 1;
+
     public override void _Ready()
 	{
         // Stats
@@ -70,5 +73,16 @@ public partial class Enemy : Entity
     {
         base.TakeDamage(attacker, damageAmount);
         HealthBar.Update(Health, MaxHealth);
+    }
+
+    public override void Die()
+    {
+        GiveReward();
+        base.Die();
+    }
+
+    private void GiveReward()
+    {
+        Player.GetRewards(RessourceOnDeath, ExperienceOnDeath);
     }
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bl0rsh88rppk"]
+[gd_scene load_steps=22 format=3 uid="uid://bl0rsh88rppk"]
 
 [ext_resource type="FontFile" uid="uid://d1b0osrg7ontx" path="res://Visual/Ui/Font/The Macabre.otf" id="1_51u4j"]
 [ext_resource type="Theme" uid="uid://bxe73ibnjartc" path="res://Visual/Theme/PlayerUITheme.tres" id="2_v3j47"]
@@ -54,6 +54,21 @@ events = [SubResource("InputEventKey_auaf6")]
 
 [sub_resource type="LabelSettings" id="LabelSettings_3rqkr"]
 font_size = 24
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_e6tux"]
+font_size = 32
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_nhhdy"]
+font_size = 32
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3cauu"]
+font_size = 32
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
@@ -191,6 +206,31 @@ text = "999 / 999"
 label_settings = SubResource("LabelSettings_3rqkr")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="TopLeftDisplay" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 310.0
+offset_bottom = 160.0
+
+[node name="LevelText" type="Label" parent="TopLeftDisplay"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_v3j47")
+label_settings = SubResource("LabelSettings_e6tux")
+
+[node name="ExperienceText" type="Label" parent="TopLeftDisplay"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_v3j47")
+label_settings = SubResource("LabelSettings_nhhdy")
+
+[node name="RessourceText" type="Label" parent="TopLeftDisplay"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_v3j47")
+label_settings = SubResource("LabelSettings_3cauu")
 
 [connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton1" to="BottomBar/AbilityUI" method="OnAbilityButton1Pressed"]
 [connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton2" to="BottomBar/AbilityUI" method="OnAbilityButton2Pressed"]

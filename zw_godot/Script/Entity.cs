@@ -54,8 +54,13 @@ public partial class Entity : RigidBody3D
     {
         if (Health <= 0)
         {
-            QueueFree();
+            Die();
         }
+    }
+
+    public virtual void Die()
+    {
+        QueueFree();
     }
 
     public virtual Node LoadAbility(string name)
