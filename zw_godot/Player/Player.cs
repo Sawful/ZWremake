@@ -21,6 +21,10 @@ public partial class Player : Entity
     public Node3D ClosestTarget;
     AbilityUI AbilityUI;
     Control PlayerUI;
+    VBoxContainer TopLeftDisplay;
+    Label LevelText;
+    Label ExperienceText;
+    Label RessourceText;
     ProgressBar HealthBar;
     Label HealthBarText;
 
@@ -69,9 +73,10 @@ public partial class Player : Entity
     private Vector3 CameraLocalStartingPosition;
     private Vector3 EnemyPos;
 
-    // Player States
-    private bool ReadyAttackMove = false;
-    private bool AttackMove = false;
+    private int Experience;
+    private int Level = 1;
+    private int ExperienceToLevelUp;
+    private int Ressource;
 
     public override void _Ready()
     {
@@ -82,6 +87,16 @@ public partial class Player : Entity
         HealthBar = PlayerUI.GetNode<ProgressBar>("HealthBar");
         HealthBarText = HealthBar.GetNode<Label>("HealthBarText");
         AbilityScript = GetNode<Ability>("Abilities");
+
+        TopLeftDisplay = PlayerUI.GetNode<VBoxContainer>("TopLeftDisplay");
+        LevelText = TopLeftDisplay.GetNode<Label>("LevelText");
+        ExperienceText = TopLeftDisplay.GetNode<Label>("ExperienceText");
+        RessourceText = TopLeftDisplay.GetNode<Label>("RessourceText");
+
+        LevelText.Text = "Level: " + Level.ToString();
+        ExperienceText.Text = "Exp: " + Experience.ToString();
+        RessourceText.Text = "Ressource: " + Ressource.ToString();
+        ExperienceToLevelUp = 5;
 
         Ability1 = "Overstrike";
         Ability2 = "Flamestorm";
@@ -220,5 +235,19 @@ public partial class Player : Entity
         return closest;
     }
 
+    public void GetRewards(int ressource, int experience)
+    {
+        Ressource += ressource;
+        Experience += experience;
 
+        while (Experience >= ExperienceToLevelUp)
+        {
+            Experience -= ExperienceToLevelUp;
+            Level += 1;
+        }
+
+        LevelText.Text = "Level: " + Level.ToString();
+        ExperienceText.Text = "Exp: " + Experience.ToString();
+        RessourceText.Text = "Ressource: " + Ressource.ToString();
+    }
 }
