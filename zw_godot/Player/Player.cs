@@ -41,7 +41,6 @@ public partial class Player : Entity
     // Raycast lenght
     private const float RayLength = 1000.0f;
 
-
     public CollisionObject3D[] possibleTargets;
 
     // Abilities
@@ -87,6 +86,8 @@ public partial class Player : Entity
         HealthBar = PlayerUI.GetNode<ProgressBar>("HealthBar");
         HealthBarText = HealthBar.GetNode<Label>("HealthBarText");
         AbilityScript = GetNode<Ability>("Abilities");
+
+        
 
         TopLeftDisplay = PlayerUI.GetNode<VBoxContainer>("TopLeftDisplay");
         LevelText = TopLeftDisplay.GetNode<Label>("LevelText");
