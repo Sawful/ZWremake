@@ -20,7 +20,6 @@ adjustment_brightness = 0.95
 script = ExtResource("1_8bxkj")
 
 [node name="Player" parent="." node_paths=PackedStringArray("Camera3D", "Ground") instance=ExtResource("3_a0wd3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.327, 0.349674, -1.07185)
 Camera3D = NodePath("../CameraScript/MainCamera")
 Ground = NodePath("../Ground")
 

@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://brcirxmnagh7v"]
+
+[ext_resource type="PackedScene" uid="uid://b3tish432qq7" path="res://Visual/VFX/click.blend" id="1_hc677"]
+[ext_resource type="Script" path="res://Visual/VFX/Click.cs" id="2_vlvhx"]
+
+[node name="click" instance=ExtResource("1_hc677")]
+script = ExtResource("2_vlvhx")
+
+[node name="AnimationPlayer" parent="." index="1"]
+autoplay = "TorusAction"
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="OnAnimationFinished"]

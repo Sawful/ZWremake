@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdw734bjunpv0"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_k4rqi"]
+spread = 180.0
+gravity = Vector3(0, -4, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 2.0
+angle_min = -360.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_os1ql"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[node name="DeathParticles" type="GPUParticles3D"]
+layers = 16
+emitting = false
+amount = 10
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_k4rqi")
+draw_pass_1 = SubResource("BoxMesh_os1ql")
