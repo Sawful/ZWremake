@@ -60,10 +60,6 @@ public partial class AbilityUI : ItemList
 
     public override void _Input(InputEvent @event) 
     {
-        if (@event.IsActionPressed("a_key"))
-        {
-            AbilityButton1.ButtonPressed = true;
-        }
     }
     
 
