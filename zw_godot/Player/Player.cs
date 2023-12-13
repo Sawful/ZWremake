@@ -136,7 +136,7 @@ public partial class Player : Entity
         HealthBar.Value = Mathf.Lerp(HealthBar.Value, Health, 0.25);
         HealthBarText.Text = Health.ToString() + " / " + MaxHealth.ToString();
 
-        if (Input.IsActionJustPressed("x_key"))
+        if (Input.IsActionJustPressed("AttackMoveKey"))
         {
             AbilityScript.Call("AttackMove");
         }

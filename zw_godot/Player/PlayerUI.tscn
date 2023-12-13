@@ -15,42 +15,34 @@ font_color = Color(1, 1, 1, 0.811765)
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
-[sub_resource type="InputEventKey" id="InputEventKey_o15c0"]
-device = -1
-keycode = 65
-unicode = 97
+[sub_resource type="InputEventAction" id="InputEventAction_yamjj"]
+action = &"AbilityKey1"
 
 [sub_resource type="Shortcut" id="Shortcut_bnpmx"]
-events = [SubResource("InputEventKey_o15c0")]
+events = [SubResource("InputEventAction_yamjj")]
 
 [sub_resource type="LabelSettings" id="LabelSettings_wqw4v"]
 font_size = 64
 outline_size = 16
 outline_color = Color(0, 0, 0, 1)
 
-[sub_resource type="InputEventKey" id="InputEventKey_v6ktt"]
-device = -1
-keycode = 90
-unicode = 122
+[sub_resource type="InputEventAction" id="InputEventAction_tuuxr"]
+action = &"AbilityKey2"
 
 [sub_resource type="Shortcut" id="Shortcut_t66uu"]
-events = [SubResource("InputEventKey_v6ktt")]
+events = [SubResource("InputEventAction_tuuxr")]
 
-[sub_resource type="InputEventKey" id="InputEventKey_6uqg4"]
-device = -1
-keycode = 69
-unicode = 101
+[sub_resource type="InputEventAction" id="InputEventAction_nlat2"]
+action = &"AbilityKey3"
 
 [sub_resource type="Shortcut" id="Shortcut_sov78"]
-events = [SubResource("InputEventKey_6uqg4")]
+events = [SubResource("InputEventAction_nlat2")]
 
-[sub_resource type="InputEventKey" id="InputEventKey_auaf6"]
-device = -1
-keycode = 82
-unicode = 114
+[sub_resource type="InputEventAction" id="InputEventAction_5dmq4"]
+action = &"AbilityKey4"
 
 [sub_resource type="Shortcut" id="Shortcut_yflvq"]
-events = [SubResource("InputEventKey_auaf6")]
+events = [SubResource("InputEventAction_5dmq4")]
 
 [sub_resource type="LabelSettings" id="LabelSettings_3rqkr"]
 font_size = 24

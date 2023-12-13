@@ -32,32 +32,32 @@ public partial class CameraScript : Node3D
         cameraZoom = Mathf.Lerp(cameraZoom, cameraZoomTo, smoothTime);
         MainCamera.Fov = cameraZoom;
 
-        if (Input.IsActionJustReleased("scroll_up"))
+        if (Input.IsActionJustReleased("ScrollUp"))
 
         {
             cameraZoomTo = Mathf.Clamp(cameraZoomTo - cameraZoomStrenght, cameraZoomMin, cameraZoomMax);
 		}
 
-        else if (Input.IsActionJustReleased("scroll_down"))
+        else if (Input.IsActionJustReleased("ScrollDown"))
         {
             cameraZoomTo = Mathf.Clamp(cameraZoomTo + cameraZoomStrenght, cameraZoomMin, cameraZoomMax);
         }
         #endregion
         #region CameraKeyMovement
         mousePosition = GetViewport().GetMousePosition();
-        if (Input.IsActionPressed("left") || mousePosition.X <= winWidth * 0.02)
+        if (Input.IsActionPressed("Left") || mousePosition.X <= winWidth * 0.02)
         {
             MainCamera.Translate(Vector3.Left * cameraMoveSpeed);
         }
-        if (Input.IsActionPressed("right") || mousePosition.X >= winWidth * 0.98)
+        if (Input.IsActionPressed("Right") || mousePosition.X >= winWidth * 0.98)
         {
             MainCamera.Translate(Vector3.Right * cameraMoveSpeed);
         }
-        if (Input.IsActionPressed("up") || mousePosition.Y <= winHeight * 0.02)
+        if (Input.IsActionPressed("Up") || mousePosition.Y <= winHeight * 0.02)
         {
             MainCamera.Translate(Vector3.Up * cameraMoveSpeed);
         }
-        if (Input.IsActionPressed("down") || mousePosition.Y >= winHeight * 0.98)
+        if (Input.IsActionPressed("Down") || mousePosition.Y >= winHeight * 0.98)
         {
             MainCamera.Translate(Vector3.Down * cameraMoveSpeed);
         }
