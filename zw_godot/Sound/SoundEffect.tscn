@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bap5xii0dfrlx"]
+
+[ext_resource type="Script" path="res://HitSound.cs" id="1_milrb"]
+
+[node name="SoundEffect" type="AudioStreamPlayer"]
+autoplay = true
+script = ExtResource("1_milrb")
+
+[connection signal="finished" from="." to="." method="OnFinished"]

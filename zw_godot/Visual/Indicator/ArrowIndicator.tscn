@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://sg8qkkkie3a6"]
+
+[ext_resource type="Script" path="res://Visual/Indicator/LineIndicator.cs" id="1_eley8"]
+[ext_resource type="Texture2D" uid="uid://diqlk2snms2xc" path="res://Visual/Indicator/ArrowIndicator.png" id="2_iw55d"]
+
+[node name="ArrowIndicator" type="Node3D"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.1, 0, 0, 0)
+script = ExtResource("1_eley8")
+MouseColliderLayers = 4
+
+[node name="ArrowIndicatorSprite" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.4, 5)
+layers = 8
+texture = ExtResource("2_iw55d")

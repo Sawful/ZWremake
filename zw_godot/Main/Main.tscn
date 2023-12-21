@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://btk08876ggvce"]
+
+[ext_resource type="Script" path="res://Main/GameManager.cs" id="1_8bxkj"]
+[ext_resource type="PackedScene" uid="uid://cunm7mu63qeb4" path="res://Main/MainScenePrefabs/ground.tscn" id="2_4n4u5"]
+[ext_resource type="PackedScene" uid="uid://xjh6b4khdnpy" path="res://Player/PlayerScene/player.tscn" id="3_a0wd3"]
+[ext_resource type="Script" path="res://Main/CameraScript.cs" id="3_a6c6b"]
+[ext_resource type="PackedScene" uid="uid://bl0rsh88rppk" path="res://Player/PlayerUI.tscn" id="5_npj1m"]
+
+[sub_resource type="Environment" id="Environment_v8m81"]
+background_mode = 1
+background_color = Color(0.403922, 0.737255, 0.870588, 1)
+fog_light_energy = 0.95
+volumetric_fog_density = 0.02
+volumetric_fog_albedo = Color(0, 0, 0, 1)
+volumetric_fog_detail_spread = 0.5
+adjustment_enabled = true
+adjustment_brightness = 0.95
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_8bxkj")
+
+[node name="Player" parent="." node_paths=PackedStringArray("Camera3D", "Ground") instance=ExtResource("3_a0wd3")]
+Camera3D = NodePath("../CameraScript/MainCamera")
+Ground = NodePath("../Ground")
+
+[node name="CameraScript" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0)
+script = ExtResource("3_a6c6b")
+
+[node name="MainCamera" type="Camera3D" parent="CameraScript"]
+
+[node name="Ground" parent="." instance=ExtResource("2_4n4u5")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_v8m81")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, -50, 0)
+layers = 0
+light_energy = 0.8
+shadow_enabled = true
+
+[node name="SpawnLocation" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
+
+[node name="Seconds" type="Timer" parent="."]
+autostart = true
+
+[node name="PlayerUI" parent="." instance=ExtResource("5_npj1m")]
+
+[connection signal="timeout" from="Seconds" to="." method="OnSecondsTimeout"]

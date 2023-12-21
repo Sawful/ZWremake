@@ -1,0 +1,22 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://bxe73ibnjartc"]
+
+[ext_resource type="Texture2D" uid="uid://bqe5qk1ref52i" path="res://Visual/Ui/dark-green-and-red-stone-dark-abstract-black-perspective-structure-surface-texture-free-photo.jpg" id="1_oetgc"]
+[ext_resource type="FontFile" uid="uid://d1b0osrg7ontx" path="res://Visual/Ui/Font/The Macabre.otf" id="1_ug8f7"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sxpa2"]
+texture = ExtResource("1_oetgc")
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+modulate_color = Color(0.792157, 0.207843, 0.129412, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b40c3"]
+bg_color = Color(0.2, 0.027451, 0.0509804, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s8fnm"]
+bg_color = Color(0.776471, 0.0745098, 0, 1)
+
+[resource]
+default_font = ExtResource("1_ug8f7")
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_sxpa2")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_b40c3")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_s8fnm")

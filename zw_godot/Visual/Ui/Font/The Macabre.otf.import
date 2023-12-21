@@ -1,0 +1,33 @@
+[remap]
+
+importer="font_data_dynamic"
+type="FontFile"
+uid="uid://d1b0osrg7ontx"
+path="res://.godot/imported/The Macabre.otf-8e1931724107a981386981410635a5a2.fontdata"
+
+[deps]
+
+source_file="res://Visual/Ui/Font/The Macabre.otf"
+dest_files=["res://.godot/imported/The Macabre.otf-8e1931724107a981386981410635a5a2.fontdata"]
+
+[params]
+
+Rendering=null
+antialiasing=1
+generate_mipmaps=false
+multichannel_signed_distance_field=false
+msdf_pixel_range=8
+msdf_size=48
+allow_system_fallback=true
+force_autohinter=false
+hinting=1
+subpixel_positioning=1
+oversampling=0.0
+Fallbacks=null
+fallbacks=[]
+Compress=null
+compress=true
+preload=[]
+language_support={}
+script_support={}
+opentype_features={}
