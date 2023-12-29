@@ -47,30 +47,16 @@ public partial class Player : Entity
     public Ability AbilityScript;
 
     public Dictionary<string, string> Ability;
-    public string Ability1;
-    public string Ability2;
-    public string Ability3;
-    public string Ability4;
-
-    public float AbilityCooldown1 = 6;
-    public float AbilityCooldown2 = 10;
-    public float AbilityCooldown3 = 8;
-    public float AbilityCooldown4 = 12;
-
-    public float CurrentAbilityCooldown1;
-    public float CurrentAbilityCooldown2;
-    public float CurrentAbilityCooldown3;
-    public float CurrentAbilityCooldown4;
-
-    public bool isAbility1Cooldown = false;
-    public bool isAbility2Cooldown = false;
-    public bool isAbility3Cooldown = false;
-    public bool isAbility4Cooldown = false;
+    public Dictionary<string, float> AbilityCooldown;
+    public Dictionary<string, float> CurrentAbilityCooldown;
+    public Dictionary<string, bool> IsAbilityCooldown;
 
     // Vectors
     private Vector3 AnchorPoint = Vector3.Zero;
     private Vector3 CameraLocalStartingPosition;
     private Vector3 EnemyPos;
+
+    public Dictionary<string, int> StatsLevel;
 
     private int Experience;
     private int Level = 1;
@@ -87,8 +73,6 @@ public partial class Player : Entity
         HealthBarText = HealthBar.GetNode<Label>("HealthBarText");
         AbilityScript = GetNode<Ability>("Abilities");
 
-        
-
         TopLeftDisplay = PlayerUI.GetNode<VBoxContainer>("TopLeftDisplay");
         LevelText = TopLeftDisplay.GetNode<Label>("LevelText");
         ExperienceText = TopLeftDisplay.GetNode<Label>("ExperienceText");
@@ -99,10 +83,14 @@ public partial class Player : Entity
         RessourceText.Text = "Ressource: " + Ressource.ToString();
         ExperienceToLevelUp = 5;
 
-        Ability1 = "Overstrike";
-        Ability2 = "Flamestorm";
-        Ability3 = "Arrowshot";
-        Ability4 = "Cone";
+        StatsLevel = new()
+        {
+            {"Damage", 0},
+            {"AttackSpeed", 0},
+            {"MovementSpeed", 0},
+            {"Health", 0},
+            {"AbilityCooldown", 0}
+        };
 
         Ability = new()
         {
@@ -110,6 +98,27 @@ public partial class Player : Entity
             {"Ability2", "Flamestorm"},
             {"Ability3", "Arrowshot"},
             {"Ability4", "Cone"}
+        };
+        AbilityCooldown = new()
+        {
+            {"Ability1", 6},
+            {"Ability2", 10},
+            {"Ability3", 8},
+            {"Ability4", 12}
+        };
+        CurrentAbilityCooldown = new()
+        {
+            {"Ability1", 0},
+            {"Ability2", 0},
+            {"Ability3", 0},
+            {"Ability4", 0}
+        };
+        IsAbilityCooldown = new()
+        {
+            {"Ability1", false},
+            {"Ability2", false},
+            {"Ability3", false},
+            {"Ability4", false}
         };
 
         // Stats
