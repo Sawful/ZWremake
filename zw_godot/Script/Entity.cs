@@ -3,6 +3,7 @@ using System;
 
 public partial class Entity : RigidBody3D
 {
+
     [Export] public int MaxHealth;
     [Export] public int Health;
     [Export] public int Damage;
@@ -10,6 +11,7 @@ public partial class Entity : RigidBody3D
     [Export] public float Speed;
     [Export] public double AttackSpeed;
     [Export] public double AttackReload;
+    [Export] public int AbilityHaste;
 
     public const float RotationWeight = 0.1f;
 

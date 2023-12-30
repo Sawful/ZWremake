@@ -201,7 +201,7 @@ public partial class Ability : Node
 
                     caster.DealDamage(enemyHit, caster.Damage * 10);
 
-                    AbilityUI.Call("SetAbility1Cooldown");
+                    AbilityUI.SetAbilityCooldown("Ability1");
                 }
             }
 
@@ -238,7 +238,7 @@ public partial class Ability : Node
             GD.Print("Flamestorm casted");
             AbilityCast = new TaskCompletionSource<bool>();
 
-            AbilityUI.Call("SetAbility2Cooldown");
+            AbilityUI.SetAbilityCooldown("Ability2");
             Player.PlayerStateMachine.ChangeState("IdleState");
 
         }
@@ -269,7 +269,7 @@ public partial class Ability : Node
             GD.Print("Arrowshot casted");
             AbilityCast = new TaskCompletionSource<bool>();
 
-            AbilityUI.Call("SetAbility3Cooldown");
+            AbilityUI.SetAbilityCooldown("Ability3");
             Player.PlayerStateMachine.ChangeState("IdleState");
 
         }
@@ -301,7 +301,7 @@ public partial class Ability : Node
             GD.Print("Cone casted");
             AbilityCast = new TaskCompletionSource<bool>();
 
-            AbilityUI.Call("SetAbility4Cooldown");
+            AbilityUI.SetAbilityCooldown("Ability4");
             Player.PlayerStateMachine.ChangeState("IdleState");
 
         }

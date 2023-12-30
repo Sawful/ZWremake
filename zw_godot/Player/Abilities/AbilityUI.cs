@@ -6,21 +6,14 @@ public partial class AbilityUI : ItemList
 {
     const int MaxCooldown = 999;
 
-    public Button AbilityButton1;
-    public Button AbilityButton2;
-    public Button AbilityButton3;
-    public Button AbilityButton4;
-    public Button[] AbilityButtons;
+    public Dictionary<string, Button> AbilityButton;
 
     public CompressedTexture2D abilityImage1;
     public CompressedTexture2D abilityImage2;
     public CompressedTexture2D abilityImage3;
     public CompressedTexture2D abilityImage4;
 
-    public Label AbilityCooldownText1;
-    public Label AbilityCooldownText2;
-    public Label AbilityCooldownText3;
-    public Label AbilityCooldownText4;
+    public Dictionary<string, Label> AbilityCooldownText;
 
     public Player Player;
 
@@ -28,20 +21,26 @@ public partial class AbilityUI : ItemList
 	{
         Player = GetTree().Root.GetNode("Main").GetNode<Player>("Player");
 
-        AbilityButton1 = GetNode<Button>("AbilityButton1");
-        AbilityButton2 = GetNode<Button>("AbilityButton2");
-        AbilityButton3 = GetNode<Button>("AbilityButton3");
-        AbilityButton4 = GetNode<Button>("AbilityButton4");
+        AbilityButton = new()
+        {
+            {"Ability1", GetNode<Button>("AbilityButton1")},
+            {"Ability2", GetNode<Button>("AbilityButton2")},
+            {"Ability3", GetNode<Button>("AbilityButton3")},
+            {"Ability4", GetNode<Button>("AbilityButton4")},
+        };
 
-        AbilityCooldownText1 = AbilityButton1.GetNode<Label>("AbilityCooldownText1");
-        AbilityCooldownText2 = AbilityButton2.GetNode<Label>("AbilityCooldownText2");
-        AbilityCooldownText3 = AbilityButton3.GetNode<Label>("AbilityCooldownText3");
-        AbilityCooldownText4 = AbilityButton4.GetNode<Label>("AbilityCooldownText4");
+        AbilityCooldownText = new()
+        {
+            {"Ability1", AbilityButton["Ability1"].GetNode<Label>("AbilityCooldownText1")},
+            {"Ability2", AbilityButton["Ability2"].GetNode<Label>("AbilityCooldownText2")},
+            {"Ability3", AbilityButton["Ability3"].GetNode<Label>("AbilityCooldownText3")},
+            {"Ability4", AbilityButton["Ability4"].GetNode<Label>("AbilityCooldownText4")},
+        };
 
-        AbilityCooldownText1.Text = "";
-        AbilityCooldownText2.Text = "";
-        AbilityCooldownText3.Text = "";
-        AbilityCooldownText4.Text = "";
+        AbilityCooldownText["Ability1"].Text = "";
+        AbilityCooldownText["Ability2"].Text = "";
+        AbilityCooldownText["Ability3"].Text = "";
+        AbilityCooldownText["Ability4"].Text = "";
 
         abilityImage1 = (CompressedTexture2D)ResourceLoader.Load("res://Visual/Ui/Icon/ability1.png");
         abilityImage2 = (CompressedTexture2D)ResourceLoader.Load("res://Visual/Ui/Icon/ability2.png");
@@ -52,41 +51,44 @@ public partial class AbilityUI : ItemList
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
-        AbilityCooldown(ref Player.CurrentAbilityCooldown1, ref Player.isAbility1Cooldown, AbilityCooldownText1, AbilityButton1, delta);
-        AbilityCooldown(ref Player.CurrentAbilityCooldown2, ref Player.isAbility2Cooldown, AbilityCooldownText2, AbilityButton2, delta);
-        AbilityCooldown(ref Player.CurrentAbilityCooldown3, ref Player.isAbility3Cooldown, AbilityCooldownText3, AbilityButton3, delta);
-        AbilityCooldown(ref Player.CurrentAbilityCooldown4, ref Player.isAbility4Cooldown, AbilityCooldownText4, AbilityButton4, delta);
-    }
-
-    public override void _Input(InputEvent @event) 
-    {
-    }
-    
-
-    private static void AbilityCooldown(ref float currentCooldown, ref bool isCooldown, Label skillText, Button abilityButton, double delta)
-    {
-        if (isCooldown)
+        for (int i = 1; i < 5; i++)
         {
-            currentCooldown = Math.Clamp(currentCooldown - (float)delta, 0, MaxCooldown);
+            string currentAbility = "Ability" + i.ToString();
 
-            if (currentCooldown <= 0)
+            AbilityCooldown(currentAbility, delta);
+        }
+    }
+
+    private void AbilityCooldown(string ability, double delta)
+    {
+        if (Player.IsAbilityCooldown[ability])
+        {
+
+            Player.CurrentAbilityCooldown[ability] = Math.Clamp(Player.CurrentAbilityCooldown[ability] - (float)delta, 0, MaxCooldown);
+            if (Player.CurrentAbilityCooldown[ability] == 0)
             {
-                abilityButton.Disabled = false;
-                isCooldown = false;
-                currentCooldown = 0;
-                if (skillText != null)
+                AbilityButton[ability].Disabled = false;
+                Player.IsAbilityCooldown[ability] = false;
+                if (AbilityCooldownText[ability] != null)
                 {
-                    skillText.Text = "";
+                    AbilityCooldownText[ability].Text = "";
                 }
             }
             else
             {
-                if (skillText != null)
+                if (AbilityCooldownText[ability] != null)
                 {
-                    skillText.Text = Mathf.Ceil(currentCooldown).ToString();
+                    AbilityCooldownText[ability].Text = Mathf.Ceil(Player.CurrentAbilityCooldown[ability]).ToString();
                 }
             }
         }
+    }
+
+    public void SetAbilityCooldown(string ability)
+    {
+        AbilityButton[ability].Disabled = true;
+        Player.IsAbilityCooldown[ability] = true;
+        Player.CurrentAbilityCooldown[ability] = Player.AbilityCooldown[ability];
     }
 
     public void OnAbilityButton1Pressed()
@@ -94,23 +96,9 @@ public partial class AbilityUI : ItemList
         Player.AbilityScript.Call(Player.Ability["Ability1"], Player);
     }
 
-    public void SetAbility1Cooldown()
-    {
-        AbilityButton1.Disabled = true;
-        Player.isAbility1Cooldown = true;
-        Player.CurrentAbilityCooldown1 = Player.AbilityCooldown1;
-    }
-
     public void OnAbilityButton2Pressed()
     {
         Player.AbilityScript.Call(Player.Ability["Ability2"], Player);
-    }
-
-    public void SetAbility2Cooldown()
-    {
-        AbilityButton2.Disabled = true;
-        Player.isAbility2Cooldown = true;
-        Player.CurrentAbilityCooldown2 = Player.AbilityCooldown2;
     }
 
     public void OnAbilityButton3Pressed()
@@ -118,23 +106,9 @@ public partial class AbilityUI : ItemList
         Player.AbilityScript.Call(Player.Ability["Ability3"], Player);
     }
 
-    public void SetAbility3Cooldown()
-    {
-        AbilityButton3.Disabled = true;
-        Player.isAbility3Cooldown = true;
-        Player.CurrentAbilityCooldown3 = Player.AbilityCooldown3;
-    }
-
     public void OnAbilityButton4Pressed()
     {
         Player.AbilityScript.Call(Player.Ability["Ability4"], Player);
-    }
-
-    public void SetAbility4Cooldown()
-    {
-        AbilityButton4.Disabled = true;
-        Player.isAbility4Cooldown = true;
-        Player.CurrentAbilityCooldown4 = Player.AbilityCooldown4;
     }
 
 }

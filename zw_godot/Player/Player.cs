@@ -19,12 +19,18 @@ public partial class Player : Entity
     [Export] private Enemy EnemyClicked;
     [Export] public SimpleStateMachine PlayerStateMachine;
     public Node3D ClosestTarget;
+
     AbilityUI AbilityUI;
-    Control PlayerUI;
+    GameUI GameUI;
+
     VBoxContainer TopLeftDisplay;
     Label LevelText;
     Label ExperienceText;
     Label RessourceText;
+    Label DamageText;
+    Label AttackSpeedText;
+    Label AbilityHasteText;
+
     ProgressBar HealthBar;
     Label HealthBarText;
 
@@ -47,30 +53,16 @@ public partial class Player : Entity
     public Ability AbilityScript;
 
     public Dictionary<string, string> Ability;
-    public string Ability1;
-    public string Ability2;
-    public string Ability3;
-    public string Ability4;
-
-    public float AbilityCooldown1 = 6;
-    public float AbilityCooldown2 = 10;
-    public float AbilityCooldown3 = 8;
-    public float AbilityCooldown4 = 12;
-
-    public float CurrentAbilityCooldown1;
-    public float CurrentAbilityCooldown2;
-    public float CurrentAbilityCooldown3;
-    public float CurrentAbilityCooldown4;
-
-    public bool isAbility1Cooldown = false;
-    public bool isAbility2Cooldown = false;
-    public bool isAbility3Cooldown = false;
-    public bool isAbility4Cooldown = false;
+    public Dictionary<string, float> AbilityCooldown;
+    public Dictionary<string, float> CurrentAbilityCooldown;
+    public Dictionary<string, bool> IsAbilityCooldown;
 
     // Vectors
     private Vector3 AnchorPoint = Vector3.Zero;
     private Vector3 CameraLocalStartingPosition;
     private Vector3 EnemyPos;
+
+    public Dictionary<string, int> StatsLevel;
 
     private int Experience;
     private int Level = 1;
@@ -81,28 +73,33 @@ public partial class Player : Entity
     {
         RangedAttack = true;
 
-        PlayerUI = GetTree().Root.GetNode("Main").GetNode<Control>("PlayerUI");
-        AbilityUI = PlayerUI.GetNode<PanelContainer>("BottomBar").GetNode<AbilityUI>("AbilityUI");
-        HealthBar = PlayerUI.GetNode<ProgressBar>("HealthBar");
+        GameUI = GetTree().Root.GetNode("Main").GetNode<GameUI>("PlayerUI");
+        AbilityUI = GameUI.GetNode<PanelContainer>("BottomBar").GetNode<AbilityUI>("AbilityUI");
+        HealthBar = GameUI.GetNode<ProgressBar>("HealthBar");
         HealthBarText = HealthBar.GetNode<Label>("HealthBarText");
         AbilityScript = GetNode<Ability>("Abilities");
 
-        
-
-        TopLeftDisplay = PlayerUI.GetNode<VBoxContainer>("TopLeftDisplay");
+        TopLeftDisplay = GameUI.GetNode<VBoxContainer>("TopLeftDisplay");
         LevelText = TopLeftDisplay.GetNode<Label>("LevelText");
         ExperienceText = TopLeftDisplay.GetNode<Label>("ExperienceText");
         RessourceText = TopLeftDisplay.GetNode<Label>("RessourceText");
+        DamageText = TopLeftDisplay.GetNode<Label>("DamageText");
+        AttackSpeedText = TopLeftDisplay.GetNode<Label>("AttackSpeedText");
+        AbilityHasteText = TopLeftDisplay.GetNode<Label>("AbilityHasteText");
 
         LevelText.Text = "Level: " + Level.ToString();
         ExperienceText.Text = "Exp: " + Experience.ToString();
         RessourceText.Text = "Ressource: " + Ressource.ToString();
         ExperienceToLevelUp = 5;
 
-        Ability1 = "Overstrike";
-        Ability2 = "Flamestorm";
-        Ability3 = "Arrowshot";
-        Ability4 = "Cone";
+        StatsLevel = new()
+        {
+            {"Damage", 0},
+            {"AttackSpeed", 0},
+            {"MovementSpeed", 0},
+            {"MaxHealth", 0},
+            {"AbilityHaste", 0}
+        };
 
         Ability = new()
         {
@@ -111,13 +108,30 @@ public partial class Player : Entity
             {"Ability3", "Arrowshot"},
             {"Ability4", "Cone"}
         };
+        AbilityCooldown = new()
+        {
+            {"Ability1", 6},
+            {"Ability2", 10},
+            {"Ability3", 8},
+            {"Ability4", 12}
+        };
+        CurrentAbilityCooldown = new()
+        {
+            {"Ability1", 0},
+            {"Ability2", 0},
+            {"Ability3", 0},
+            {"Ability4", 0}
+        };
+        IsAbilityCooldown = new()
+        {
+            {"Ability1", false},
+            {"Ability2", false},
+            {"Ability3", false},
+            {"Ability4", false}
+        };
 
-        // Stats
-        MaxHealth = 200;
-        Damage = 10;
         Range = 4;
-        Speed = 4;
-        AttackSpeed = 1;
+        UpdateStats();
 
         base._Ready();
 
@@ -243,12 +257,32 @@ public partial class Player : Entity
 
         while (Experience >= ExperienceToLevelUp)
         {
-            Experience -= ExperienceToLevelUp;
-            Level += 1;
+            LevelUp();
         }
 
         LevelText.Text = "Level: " + Level.ToString();
         ExperienceText.Text = "Exp: " + Experience.ToString();
         RessourceText.Text = "Ressource: " + Ressource.ToString();
+    }
+
+    public void UpdateStats()
+    {
+        MaxHealth = 200 + 10 * StatsLevel["MaxHealth"];
+        Damage = 10 + 3 * StatsLevel["Damage"];
+        Speed = 4 + 0.5f * StatsLevel["MovementSpeed"];
+        AttackSpeed = 1 + 0.2 * StatsLevel["AttackSpeed"];
+        AbilityHaste = 0 + 3 * StatsLevel["AbilityHaste"];
+
+        DamageText.Text = "Damage: " + Damage.ToString();
+        AttackSpeedText.Text = "Attack Speed: " + AttackSpeed.ToString();
+        AbilityHasteText.Text = "Ability Haste: " + AbilityHaste.ToString();
+    }
+
+    public void LevelUp()
+    {
+        Experience -= ExperienceToLevelUp;
+        Level += 1;
+        GameUI.UpgradePoint += 1;
+        GameUI.UpgradePointCounter.Text = "Upgrade Points: " + GameUI.UpgradePoint.ToString();
     }
 }

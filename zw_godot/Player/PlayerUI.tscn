@@ -1,6 +1,7 @@
-[gd_scene load_steps=22 format=3 uid="uid://bl0rsh88rppk"]
+[gd_scene load_steps=23 format=3 uid="uid://bl0rsh88rppk"]
 
 [ext_resource type="FontFile" uid="uid://d1b0osrg7ontx" path="res://Visual/Ui/Font/The Macabre.otf" id="1_51u4j"]
+[ext_resource type="Script" path="res://Player/GameUI.cs" id="2_g4yvb"]
 [ext_resource type="Theme" uid="uid://bxe73ibnjartc" path="res://Visual/Theme/PlayerUITheme.tres" id="2_v3j47"]
 [ext_resource type="Script" path="res://Player/Abilities/AbilityUI.cs" id="3_8qh8h"]
 [ext_resource type="Texture2D" uid="uid://b4x3fwa61578y" path="res://Visual/Ui/Icon/ability1.png" id="4_2lp2a"]
@@ -71,6 +72,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_v3j47")
+script = ExtResource("2_g4yvb")
 
 [node name="TopBarDisplay" type="CenterContainer" parent="."]
 layout_mode = 0
@@ -204,7 +207,7 @@ layout_mode = 0
 offset_left = 10.0
 offset_top = 10.0
 offset_right = 310.0
-offset_bottom = 160.0
+offset_bottom = 355.0
 
 [node name="LevelText" type="Label" parent="TopLeftDisplay"]
 layout_mode = 2
@@ -224,7 +227,67 @@ size_flags_vertical = 3
 theme = ExtResource("2_v3j47")
 label_settings = SubResource("LabelSettings_3cauu")
 
+[node name="DamageText" type="Label" parent="TopLeftDisplay"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_v3j47")
+label_settings = SubResource("LabelSettings_3cauu")
+
+[node name="AttackSpeedText" type="Label" parent="TopLeftDisplay"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_v3j47")
+label_settings = SubResource("LabelSettings_3cauu")
+
+[node name="AbilityHasteText" type="Label" parent="TopLeftDisplay"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_v3j47")
+label_settings = SubResource("LabelSettings_3cauu")
+
+[node name="TopRightDisplay" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 1275.0
+offset_top = 25.0
+offset_right = 1575.0
+offset_bottom = 249.0
+
+[node name="UpgradePointCounter" type="Label" parent="TopRightDisplay"]
+layout_mode = 2
+text = "Upgrade Points: "
+horizontal_alignment = 1
+
+[node name="UpgradeDamageButton" type="Button" parent="TopRightDisplay"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Upgrade Damage"
+
+[node name="UpgradeAttackSpeedButton" type="Button" parent="TopRightDisplay"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Upgrade Attack Speed"
+
+[node name="UpgradeMovementSpeedButton" type="Button" parent="TopRightDisplay"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Upgrade Movement Speed"
+
+[node name="UpgradeMaxHealthButton" type="Button" parent="TopRightDisplay"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Upgrade Max Health"
+
+[node name="UpgradeAbilityHasteButton" type="Button" parent="TopRightDisplay"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Upgrade Ability Haste"
+
 [connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton1" to="BottomBar/AbilityUI" method="OnAbilityButton1Pressed"]
 [connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton2" to="BottomBar/AbilityUI" method="OnAbilityButton2Pressed"]
 [connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton3" to="BottomBar/AbilityUI" method="OnAbilityButton3Pressed"]
 [connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton4" to="BottomBar/AbilityUI" method="OnAbilityButton4Pressed"]
+[connection signal="pressed" from="TopRightDisplay/UpgradeDamageButton" to="." method="UpgradeStats" binds= ["Damage"]]
+[connection signal="pressed" from="TopRightDisplay/UpgradeAttackSpeedButton" to="." method="UpgradeStats" binds= ["AttackSpeed"]]
+[connection signal="pressed" from="TopRightDisplay/UpgradeMovementSpeedButton" to="." method="UpgradeStats" binds= ["MovementSpeed"]]
+[connection signal="pressed" from="TopRightDisplay/UpgradeMaxHealthButton" to="." method="UpgradeStats" binds= ["MaxHealth"]]
+[connection signal="pressed" from="TopRightDisplay/UpgradeAbilityHasteButton" to="." method="UpgradeStats" binds= ["AbilityHaste"]]
