@@ -88,7 +88,7 @@ public partial class Player : Entity
             {"Damage", 0},
             {"AttackSpeed", 0},
             {"MovementSpeed", 0},
-            {"Health", 0},
+            {"MaxHealth", 0},
             {"AbilityCooldown", 0}
         };
 
@@ -259,5 +259,14 @@ public partial class Player : Entity
         LevelText.Text = "Level: " + Level.ToString();
         ExperienceText.Text = "Exp: " + Experience.ToString();
         RessourceText.Text = "Ressource: " + Ressource.ToString();
+    }
+
+    public void UpdateStats()
+    {
+        MaxHealth = 200 + 10 * StatsLevel["MaxHealth"];
+        Damage = 10 + 3 * StatsLevel["Damage"];
+        Speed = 4 + 0.5f * StatsLevel["Speed"];
+        AttackSpeed = 1 + 0.2 * StatsLevel["AttackSpeed"];
+        AbilityHaste = 0 + 3 * StatsLevel["AbilityHaste"];
     }
 }
