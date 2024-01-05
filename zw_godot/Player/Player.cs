@@ -11,9 +11,10 @@ using static System.Net.Mime.MediaTypeNames;
 
 public partial class Player : Entity
 {
-    
+
 
     // Nodes
+    public Node Main;
     [Export] public Camera3D Camera3D;
     [Export] public StaticBody3D Ground;
     [Export] private Enemy EnemyClicked;
@@ -36,6 +37,9 @@ public partial class Player : Entity
 
     Area3D Area3D;
     public Godot.Collections.Array<Node3D> OverlappingBodies;
+
+    public PackedScene SoundEffectPlayer;
+    public AudioStreamWav AttackSound;
 
     // Ranged attack
     [Export] public bool RangedAttack;
@@ -72,6 +76,7 @@ public partial class Player : Entity
     public override void _Ready()
     {
         RangedAttack = true;
+        Main = GetTree().Root.GetNode("Main");
 
         GameUI = GetTree().Root.GetNode("Main").GetNode<GameUI>("PlayerUI");
         AbilityUI = GameUI.GetNode<PanelContainer>("BottomBar").GetNode<AbilityUI>("AbilityUI");
@@ -134,6 +139,9 @@ public partial class Player : Entity
         UpdateStats();
 
         base._Ready();
+
+        SoundEffectPlayer = (PackedScene)ResourceLoader.Load("res://Sound/SoundEffect.tscn");
+        AttackSound = (AudioStreamWav)ResourceLoader.Load("res://Sound/hitsound.wav");
 
         HealthBar.MaxValue = MaxHealth;
         HealthBar.Value = Health;
