@@ -1,0 +1,19 @@
+Marchand 
+	Evolution de spells (post lvl 10)
+
+Cimetierre
+	Call les morts pour combat de mobs --> peu d'exp et bcp d'or
+	Après invasion: Encore plus ig
+
+Lac de lave --> Volcan
+	Call esprit de feu (ig) pour combat de semi boss --> peu d'or et bcp d'exp
+	Après invasion: Volcan, un esprit plus puissant + éruption après (dégats si proche du volcan)
+	
+
+Champ de fleur
+	En restant dans le champ de fleur, moins de mobs, moins de ressources
+	Peut arracher les fleurs pour augmenter le taux de spawn pour les 3 prochaines minutes --> puis les fleurs repoussent
+	Après invasion: Rester dans le champ détruit augmente le taux de spawn grandement
+
+5min: 3 totems à détruire --> chacun augmentent le niveau de difficulté
+

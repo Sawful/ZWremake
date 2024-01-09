@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://HitSound.cs" id="1_milrb"]
 
-[node name="SoundEffect" type="AudioStreamPlayer"]
+[node name="SoundEffectPlayer" type="AudioStreamPlayer"]
 autoplay = true
 script = ExtResource("1_milrb")
 

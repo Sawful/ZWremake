@@ -1,13 +1,21 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 public partial class GameManager : Node3D
 {
     
     [Export] public Marker3D SpawnLocation;
-    PackedScene EnemyScene;
+    PackedScene BaseEnemyScene;
     PackedScene TankEnemyScene;
+    PackedScene RangeEnemyScene;
 
     Vector3 SpawnPosition;
+    Vector3 TopLeft;
+    Vector3 TopRight;
+    Vector3 BottomLeft;
+    Vector3 BottomRight;
+    List<Vector3> NaturalSpawnPos;
+
     Control PlayerUI;
     Entity Player;
     ProgressBar HealthBar;
@@ -28,11 +36,18 @@ public partial class GameManager : Node3D
 
         SpawnPosition = SpawnLocation.Position;
 
-        EnemyScene = (PackedScene)ResourceLoader.Load("res://Enemies/Prefabs/enemy.tscn");
-        TankEnemyScene = (PackedScene)ResourceLoader.Load("res://Enemies/Prefabs/tankenemy.tscn");
+        TopLeft = new(40, 0, -40);
+        TopRight = new(40, 0, 40);
+        BottomLeft = new(-40, 0, -40);
+        BottomRight = new(-40, 0, 40);
 
+        
 
-        Round1();
+        BaseEnemyScene = (PackedScene)ResourceLoader.Load("res://Enemies/Type/BaseEnemy/BaseEnemy.tscn");
+        TankEnemyScene = (PackedScene)ResourceLoader.Load("res://Enemies/Type/TankEnemy/TankEnemy.tscn");
+        RangeEnemyScene = (PackedScene)ResourceLoader.Load("res://Enemies/Type/RangeEnemy/RangeEnemy.tscn");
+
+        Start();
     }
     public override void _Process(double delta)
     {
@@ -47,24 +62,27 @@ public partial class GameManager : Node3D
 
             Enemy new_enemy = (Enemy)obj.Instantiate();
 
-
-            InitializeEnemy(new_enemy, 30, 5, 2, 2, 1);
+            InitializeEnemy(new_enemy, 1);
 
             new_enemy.Position = pos + new Vector3((float)rand.NextDouble(), 0, (float)rand.NextDouble());
-
-
 
             AddChild(new_enemy);
         }
     }
 
-    static void InitializeEnemy(Enemy new_enemy, int maxHealth, int damage, float Range, float speed, double attackSpeed) 
+    void SpawnObjectCorners(PackedScene obj,  int number)
     {
-        new_enemy.MaxHealth = maxHealth;
-        new_enemy.Damage = damage;
-        new_enemy.Range = Range;
-        new_enemy.Speed = speed;
-        new_enemy.AttackSpeed = attackSpeed;
+        SpawnObject(obj, TopLeft, number);
+        SpawnObject(obj, TopRight, number);
+        SpawnObject(obj, BottomLeft, number);
+        SpawnObject(obj, BottomRight, number);
+    }
+
+    static void InitializeEnemy(Enemy new_enemy, float multiplier) 
+    {
+        new_enemy.MaxHealth = (int)Math.Floor(new_enemy.MaxHealth * multiplier);
+        new_enemy.Damage = (int)Math.Floor(new_enemy.Damage * multiplier);
+        new_enemy.Speed = (new_enemy.Speed * 0.9f) + (new_enemy.Speed * 0.1f * multiplier);
     }
 
     void OnSecondsTimeout()
@@ -73,16 +91,270 @@ public partial class GameManager : Node3D
         TimeDisplay.Text = TimeSeconds.ToString();
     }
 
-    async void Round1()
+    async void Start()
     {
-        SpawnObject(EnemyScene, SpawnPosition, 5);
+        #region Round 1
+
+        
+        await ToSignal(GetTree().CreateTimer(5), "timeout");
+
+        SpawnObjectCorners(BaseEnemyScene, 4);
+
+        await ToSignal(GetTree().CreateTimer(25), "timeout");
+
+        #endregion
+
+        #region Round 2
+
+        SpawnObjectCorners(BaseEnemyScene, 1);
 
         await ToSignal(GetTree().CreateTimer(5), "timeout");
 
-        SpawnObject(EnemyScene, SpawnPosition, 5);
+        SpawnObjectCorners(BaseEnemyScene, 1);
 
         await ToSignal(GetTree().CreateTimer(5), "timeout");
 
-        SpawnObject(TankEnemyScene, SpawnPosition, 1);
+        SpawnObjectCorners(RangeEnemyScene, 1);
+        SpawnObjectCorners(BaseEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(10), "timeout");
+
+        SpawnObjectCorners(RangeEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(10), "timeout");
+
+        #endregion
+
+        #region Round 3
+
+        SpawnObjectCorners(BaseEnemyScene, 2);
+
+        await ToSignal(GetTree().CreateTimer(25), "timeout");
+
+        SpawnObjectCorners(TankEnemyScene, 1);
+        SpawnObjectCorners(RangeEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(5), "timeout");
+        #endregion
+
+        #region Round 4
+        SpawnObjectCorners(BaseEnemyScene, 2);
+
+        await ToSignal(GetTree().CreateTimer(15), "timeout");
+
+        SpawnObjectCorners(BaseEnemyScene, 2);
+
+        await ToSignal(GetTree().CreateTimer(15), "timeout");
+        #endregion
+
+        #region Round 5
+
+        SpawnObjectCorners(TankEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(15), "timeout");
+
+        SpawnObjectCorners(BaseEnemyScene, 2);
+        SpawnObjectCorners(TankEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(15), "timeout");
+        #endregion
+
+        #region Round 6
+
+
+        await ToSignal(GetTree().CreateTimer(5), "timeout");
+
+        SpawnObjectCorners(BaseEnemyScene, 4);
+
+        await ToSignal(GetTree().CreateTimer(25), "timeout");
+
+        #endregion
+
+        #region Round 7
+
+        SpawnObjectCorners(BaseEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(5), "timeout");
+
+        SpawnObjectCorners(BaseEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(5), "timeout");
+
+        SpawnObjectCorners(RangeEnemyScene, 1);
+        SpawnObjectCorners(BaseEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(10), "timeout");
+
+        SpawnObjectCorners(RangeEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(10), "timeout");
+
+        #endregion
+
+        #region Round 8
+
+        SpawnObjectCorners(BaseEnemyScene, 2);
+
+        await ToSignal(GetTree().CreateTimer(25), "timeout");
+
+        SpawnObjectCorners(TankEnemyScene, 1);
+        SpawnObjectCorners(RangeEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(5), "timeout");
+        #endregion
+
+        #region Round 9
+        SpawnObjectCorners(BaseEnemyScene, 2);
+
+        await ToSignal(GetTree().CreateTimer(15), "timeout");
+
+        SpawnObjectCorners(BaseEnemyScene, 2);
+
+        await ToSignal(GetTree().CreateTimer(15), "timeout");
+        #endregion
+
+        #region Round 10
+
+        SpawnObjectCorners(TankEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(15), "timeout");
+
+        SpawnObjectCorners(BaseEnemyScene, 2);
+        SpawnObjectCorners(TankEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(15), "timeout");
+        #endregion
+
+        #region Round 11
+
+
+        await ToSignal(GetTree().CreateTimer(5), "timeout");
+
+        SpawnObjectCorners(BaseEnemyScene, 4);
+
+        await ToSignal(GetTree().CreateTimer(25), "timeout");
+
+        #endregion
+
+        #region Round 12
+
+        SpawnObjectCorners(BaseEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(5), "timeout");
+
+        SpawnObjectCorners(BaseEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(5), "timeout");
+
+        SpawnObjectCorners(RangeEnemyScene, 1);
+        SpawnObjectCorners(BaseEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(10), "timeout");
+
+        SpawnObjectCorners(RangeEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(10), "timeout");
+
+        #endregion
+
+        #region Round 13
+
+        SpawnObjectCorners(BaseEnemyScene, 2);
+
+        await ToSignal(GetTree().CreateTimer(25), "timeout");
+
+        SpawnObjectCorners(TankEnemyScene, 1);
+        SpawnObjectCorners(RangeEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(5), "timeout");
+        #endregion
+
+        #region Round 14
+        SpawnObjectCorners(BaseEnemyScene, 2);
+
+        await ToSignal(GetTree().CreateTimer(15), "timeout");
+
+        SpawnObjectCorners(BaseEnemyScene, 2);
+
+        await ToSignal(GetTree().CreateTimer(15), "timeout");
+        #endregion
+
+        #region Round 15
+
+        SpawnObjectCorners(TankEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(15), "timeout");
+
+        SpawnObjectCorners(BaseEnemyScene, 2);
+        SpawnObjectCorners(TankEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(15), "timeout");
+        #endregion
+
+        #region Round 16
+
+
+        await ToSignal(GetTree().CreateTimer(5), "timeout");
+
+        SpawnObjectCorners(BaseEnemyScene, 4);
+
+        await ToSignal(GetTree().CreateTimer(25), "timeout");
+
+        #endregion
+
+        #region Round 17
+
+        SpawnObjectCorners(BaseEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(5), "timeout");
+
+        SpawnObjectCorners(BaseEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(5), "timeout");
+
+        SpawnObjectCorners(RangeEnemyScene, 1);
+        SpawnObjectCorners(BaseEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(10), "timeout");
+
+        SpawnObjectCorners(RangeEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(10), "timeout");
+
+        #endregion
+
+        #region Round 18
+
+        SpawnObjectCorners(BaseEnemyScene, 2);
+
+        await ToSignal(GetTree().CreateTimer(25), "timeout");
+
+        SpawnObjectCorners(TankEnemyScene, 1);
+        SpawnObjectCorners(RangeEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(5), "timeout");
+        #endregion
+
+        #region Round 19
+        SpawnObjectCorners(BaseEnemyScene, 2);
+
+        await ToSignal(GetTree().CreateTimer(15), "timeout");
+
+        SpawnObjectCorners(BaseEnemyScene, 2);
+
+        await ToSignal(GetTree().CreateTimer(15), "timeout");
+        #endregion
+
+        #region Round 20
+
+        SpawnObjectCorners(TankEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(15), "timeout");
+
+        SpawnObjectCorners(BaseEnemyScene, 2);
+        SpawnObjectCorners(TankEnemyScene, 1);
+
+        await ToSignal(GetTree().CreateTimer(15), "timeout");
+        #endregion
     }
 }

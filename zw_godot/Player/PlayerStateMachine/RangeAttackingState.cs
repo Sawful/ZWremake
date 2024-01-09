@@ -52,6 +52,10 @@ public partial class RangeAttackingState : SimpleState
                 {
                     InstanciateProjectile();
                     Player.AttackReload = 1 / Player.AttackSpeed;
+
+                    AudioStreamPlayer soundEffect = (AudioStreamPlayer)Player.SoundEffectPlayer.Instantiate();
+                    soundEffect.Stream = Player.AttackSound;
+                    Player.Main.AddChild(soundEffect);
                 }
             }
         }
