@@ -4,11 +4,14 @@
 [ext_resource type="Texture2D" uid="uid://caarxilgdih48" path="res://Visual/Indicator/ConeIndicator.png" id="2_chgcf"]
 
 [node name="ConeIndicator" type="Node3D"]
-transform = Transform3D(0.1, 0, 0, 0, 0.2, 0, 0, 0, 0.15, 0, 0, 0)
 script = ExtResource("1_qgkr3")
 MouseColliderLayers = 4
 
 [node name="ConeIndicatorSprite" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.4, 5)
-layers = 8
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.4, 1)
+pixel_size = 0.001
 texture = ExtResource("2_chgcf")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]

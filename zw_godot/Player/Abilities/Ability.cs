@@ -199,9 +199,14 @@ public partial class Ability : Node
                 {
                     GD.Print("enemy found");
 
-                    caster.DealDamage(enemyHit, caster.Damage * 10);
+                    Dictionary<string, object> message = new()
+                    {
+                        {"Target",  enemyHit},
+                        {"Ability", "Overstrike"}
+                    };
+                    Player.PlayerStateMachine.ChangeState("AttackingState", message);
 
-                    AbilityUI.SetAbilityCooldown("Ability1");
+                    
                 }
             }
 
