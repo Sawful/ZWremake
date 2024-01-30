@@ -5,6 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 using System.Collections.Generic;
+using Godot.Collections;
+
 
 public partial class Ability : Node
 {
@@ -18,6 +20,9 @@ public partial class Ability : Node
     PackedScene AreaIndicator;
     PackedScene ArrowIndicator;
     PackedScene ConeIndicator;
+
+    PackedScene AreaHitbox;
+    PackedScene RectangleHitbox;
 
     public CancellationTokenSource cancellationTokenSource;
 
@@ -40,6 +45,8 @@ public partial class Ability : Node
         AreaIndicator = (PackedScene)ResourceLoader.Load("res://Visual/Indicator/AreaIndicator.tscn");
         ArrowIndicator = (PackedScene)ResourceLoader.Load("res://Visual/Indicator/ArrowIndicator.tscn");
         ConeIndicator = (PackedScene)ResourceLoader.Load("res://Visual/Indicator/ConeIndicator.tscn");
+        AreaHitbox = (PackedScene)ResourceLoader.Load("res://Player/Abilities/CircleHitbox.tscn");
+        RectangleHitbox = (PackedScene)ResourceLoader.Load("res://Player/Abilities/RectangleHitbox.tscn");
 
         Player = GetParent<Player>();
         Camera3D = Player.Camera3D;
@@ -69,7 +76,7 @@ public partial class Ability : Node
 
     }
 
-    public virtual Dictionary<string, object> AbilityRaycast()
+    public virtual System.Collections.Generic.Dictionary<string, object> AbilityRaycast()
     {
         Vector2 mouse_pos = GetViewport().GetMousePosition();
         // Raycast
@@ -90,7 +97,7 @@ public partial class Ability : Node
 
             if  (objectHit == Ground | objectHit is Enemy)
             {
-                Dictionary<string, object> info = new()
+                System.Collections.Generic.Dictionary<string, object> info = new()
                 {
                     { "objectHit", objectHit },
                     { "positionHit", positionHit }
@@ -122,7 +129,7 @@ public partial class Ability : Node
 
             Vector3 movePoint = (Vector3)AbilityRaycast()["positionHit"];
 
-            Dictionary<string, object> message = new()
+            System.Collections.Generic.Dictionary<string, object> message = new()
             {
                 {"MovePoint",  movePoint}
             };
@@ -143,7 +150,7 @@ public partial class Ability : Node
                 else if (Player.ClosestTarget != null)
                 {
                     GD.Print("Player entered detection range and starts attack");
-                    Dictionary<string, object> message2 = new()
+                    System.Collections.Generic.Dictionary<string, object> message2 = new()
                     {
                         {"Target", Player.ClosestTarget},
                         {"Projectile Speed" ,  Player.ProjectileSpeed}
@@ -199,7 +206,7 @@ public partial class Ability : Node
                 {
                     GD.Print("enemy found");
 
-                    Dictionary<string, object> message = new()
+                    System.Collections.Generic.Dictionary<string, object> message = new()
                     {
                         {"Target",  enemyHit},
                         {"Ability", "Overstrike"}
@@ -232,15 +239,30 @@ public partial class Ability : Node
         AbilityCast.SetResult(false);
         AbilityCast = new TaskCompletionSource<bool>();
         Casting = true;
+        float radius = 2;
 
         AreaIndicator AreaIndic = (AreaIndicator)AreaIndicator.Instantiate();
+        AreaIndic.Scale = 2 * radius * Vector3.One;
         Main.AddChild(AreaIndic);
+        CircleHitbox AreaHB = (CircleHitbox)AreaHitbox.Instantiate();
+        AreaHB.Scale = 2 * radius * Vector3.One;
+        Main.AddChild(AreaHB);
 
         if (await AbilityCast.Task == true)
         {
             AreaIndic.QueueFree();
             // Cursor goes back to normal
             GD.Print("Flamestorm casted");
+            
+            Array<Node3D> targets = AreaHB.GetOverlappingBodies();
+            foreach (Entity target in targets)
+            {
+                caster.DealDamage(target, caster.Damage);
+
+                GD.Print("enemy hit");
+            }
+
+            AreaHB.QueueFree();
             AbilityCast = new TaskCompletionSource<bool>();
 
             AbilityUI.SetAbilityCooldown("Ability2");
@@ -250,6 +272,7 @@ public partial class Ability : Node
         else
         {
             AreaIndic.QueueFree();
+            AreaHB.QueueFree();
             // Cursor goes back to normal
             GD.Print("Flamestorm cancelled");
             AbilityCast = new TaskCompletionSource<bool>();
