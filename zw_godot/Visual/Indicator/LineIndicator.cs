@@ -22,13 +22,10 @@ public partial class LineIndicator : Node3D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-        SupposedPosition = AbilityIndicatorRaycast();
-        var newRotationY = Mathf.Atan2(SupposedPosition.X - Position.X, SupposedPosition.Z - Position.Z);
-        Rotation = new Vector3(Rotation.X, newRotationY, Rotation.Z);
-		Position = Player.Position; 
+        SetPosition();
     }
 
-    public virtual Vector3 AbilityIndicatorRaycast()
+    public void SetPosition()
     {
         Vector2 mouse_pos = GetViewport().GetMousePosition();
         // Raycast
@@ -46,6 +43,9 @@ public partial class LineIndicator : Node3D
         {
             PointHit = (Vector3)hitDictionary["position"];
         }
-        return PointHit;
+
+        var newRotationY = Mathf.Atan2(PointHit.X - Position.X, PointHit.Z - Position.Z);
+        Rotation = new Vector3(Rotation.X, newRotationY, Rotation.Z);
+        Position = Player.Position;
     }
 }

@@ -22,7 +22,7 @@ public partial class Ability : Node
     PackedScene ConeIndicator;
 
     PackedScene AreaHitbox;
-    PackedScene RectangleHitbox;
+    PackedScene ArrowHitbox;
 
     public CancellationTokenSource cancellationTokenSource;
 
@@ -45,8 +45,8 @@ public partial class Ability : Node
         AreaIndicator = (PackedScene)ResourceLoader.Load("res://Visual/Indicator/AreaIndicator.tscn");
         ArrowIndicator = (PackedScene)ResourceLoader.Load("res://Visual/Indicator/ArrowIndicator.tscn");
         ConeIndicator = (PackedScene)ResourceLoader.Load("res://Visual/Indicator/ConeIndicator.tscn");
-        AreaHitbox = (PackedScene)ResourceLoader.Load("res://Player/Abilities/CircleHitbox.tscn");
-        RectangleHitbox = (PackedScene)ResourceLoader.Load("res://Player/Abilities/RectangleHitbox.tscn");
+        AreaHitbox = (PackedScene)ResourceLoader.Load("res://Player/Abilities/AreaHitbox.tscn");
+        ArrowHitbox = (PackedScene)ResourceLoader.Load("res://Player/Abilities/ArrowHitbox.tscn");
 
         Player = GetParent<Player>();
         Camera3D = Player.Camera3D;
@@ -244,7 +244,7 @@ public partial class Ability : Node
         AreaIndicator AreaIndic = (AreaIndicator)AreaIndicator.Instantiate();
         AreaIndic.Scale = 2 * radius * Vector3.One;
         Main.AddChild(AreaIndic);
-        CircleHitbox AreaHB = (CircleHitbox)AreaHitbox.Instantiate();
+        AreaHitbox AreaHB = (AreaHitbox)AreaHitbox.Instantiate();
         AreaHB.Scale = 2 * radius * Vector3.One;
         Main.AddChild(AreaHB);
 
@@ -258,8 +258,6 @@ public partial class Ability : Node
             foreach (Entity target in targets)
             {
                 caster.DealDamage(target, caster.Damage);
-
-                GD.Print("enemy hit");
             }
 
             AreaHB.QueueFree();
@@ -287,14 +285,34 @@ public partial class Ability : Node
         AbilityCast = new TaskCompletionSource<bool>();
         Casting = true;
 
+        float length = 4;
+        float width = 1;
+
         LineIndicator ArrowIndic = (LineIndicator)ArrowIndicator.Instantiate();
+        ArrowIndic.Scale = Vector3.Right * width + Vector3.Back * length + Vector3.Up;
         Main.AddChild(ArrowIndic);
+
+        ArrowHitbox ArrowHB = (ArrowHitbox)ArrowHitbox.Instantiate();
+        ArrowHB.Scale = Vector3.Right * width + Vector3.Back * length + Vector3.Up;
+        Main.AddChild(ArrowHB);
 
         if (await AbilityCast.Task == true)
         {
-            ArrowIndic.QueueFree();
             // Cursor goes back to normal
             GD.Print("Arrowshot casted");
+
+            Array<Node3D> targets = ArrowHB.GetOverlappingBodies();
+            GD.Print(targets);
+            foreach (Entity target in targets)
+            {
+                caster.DealDamage(target, caster.Damage);
+
+                GD.Print("enemy hit with arrowshot");
+            }
+
+            ArrowIndic.QueueFree();
+            ArrowHB.QueueFree();
+
             AbilityCast = new TaskCompletionSource<bool>();
 
             AbilityUI.SetAbilityCooldown("Ability3");
