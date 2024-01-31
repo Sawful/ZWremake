@@ -23,8 +23,6 @@ public partial class AreaIndicator : Node3D
         Camera3D = GetTree().Root.GetNode("Main").GetNode<Node3D>("CameraScript").GetNode<Camera3D>("MainCamera");
 
         range = 4;
-
-
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://ds02kpodamj53"]
+
+[ext_resource type="Script" path="res://Player/Abilities/AreaHitbox.cs" id="1_7lhn5"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_0te8x"]
+height = 1.0
+
+[node name="Area3D" type="Area3D"]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_7lhn5")
+MouseColliderLayers = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_0te8x")
