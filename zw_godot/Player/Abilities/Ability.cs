@@ -337,14 +337,29 @@ public partial class Ability : Node
         AbilityCast = new TaskCompletionSource<bool>();
         Casting = true;
 
+        float length = 4;
+        float width = 3;
+
         LineIndicator ConeIndic = (LineIndicator)ConeIndicator.Instantiate();
+        ConeIndic.Scale = Vector3.Right * width + Vector3.Back * length + Vector3.Up;
         Main.AddChild(ConeIndic);
+
+        ArrowHitbox ConeHB = (ArrowHitbox)ArrowHitbox.Instantiate();
+        ConeHB.Scale = Vector3.Right * width + Vector3.Back * length + Vector3.Up;
+        Main.AddChild(ConeHB);
 
         if (await AbilityCast.Task == true)
         {
             ConeIndic.QueueFree();
             // Cursor goes back to normal
             GD.Print("Cone casted");
+
+            Array<Node3D> targets = ConeHB.GetOverlappingBodies();
+            foreach (Entity target in targets)
+            {
+                caster.DealDamage(target, caster.Damage);
+            }
+
             AbilityCast = new TaskCompletionSource<bool>();
 
             AbilityUI.SetAbilityCooldown("Ability4");

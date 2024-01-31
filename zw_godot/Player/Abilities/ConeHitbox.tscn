@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://dylauq4320wip"]
+
+[ext_resource type="Script" path="res://Player/Abilities/ArrowHitbox.cs" id="1_o0nhf"]
+
+[node name="Area3D" type="Area3D"]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_o0nhf")
+MouseColliderLayers = 4
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, 0, 0.5, 0)
+polygon = PackedVector2Array(1, 0, 0.8, -0.5, 0, 0, 0.8, 0.5)
