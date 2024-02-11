@@ -13,6 +13,7 @@ height = 0.8
 radius = 0.4
 
 [sub_resource type="BoxMesh" id="BoxMesh_hld2k"]
+size = Vector3(0.75, 0.75, 0.75)
 
 [node name="BaseEnemy" type="RigidBody3D"]
 collision_layer = 2
