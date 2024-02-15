@@ -9,11 +9,15 @@ public partial class AttackingState : SimpleState
     Player Player;
     Dictionary<string, object> Message;
     private AbilityUI AbilityUI;
+    PackedScene TargetCircle;
+    Node3D TargetCircleObject;
     public override void _Ready()
 	{
         StateMachine = (SimpleStateMachine)GetParent().GetParent();
         Player = (Player)StateMachine.GetParent();
         AbilityUI = GetTree().Root.GetNode("Main").GetNode("PlayerUI").GetNode("BottomBar").GetNode<AbilityUI>("AbilityUI");
+
+        TargetCircle = (PackedScene)ResourceLoader.Load("res://Enemies/TargetCircle.tscn");
     }
 
     public override void OnStart(Dictionary<string, object> message)
@@ -21,12 +25,16 @@ public partial class AttackingState : SimpleState
         base.OnStart(message);
         Message = message;
         Target = (Enemy)Message["Target"];
+        TargetCircleObject = (Node3D)TargetCircle.Instantiate();
+        Target.AddChild(TargetCircleObject);
     }
 
     
     public override void UpdateState(double dt)
     {
         base.UpdateState(dt);
+
+        GD.Print(TargetCircleObject);
         
         if (!IsInstanceValid(Target))
         {
@@ -68,5 +76,15 @@ public partial class AttackingState : SimpleState
                 }
             }
         }
+    }
+
+    public override void OnExit(string NextState)
+    {
+        if (IsInstanceValid(Target))
+        {
+            TargetCircleObject.QueueFree();
+        }
+
+        base.OnExit(NextState);
     }
 }

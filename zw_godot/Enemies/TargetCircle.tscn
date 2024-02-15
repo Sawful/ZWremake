@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://sbgs6kpaqrlh"]
+
+[sub_resource type="TorusMesh" id="TorusMesh_jwcye"]
+outer_radius = 0.7
+
+[node name="Node3D" type="Node3D"]
+transform = Transform3D(0.8, 0, 0, 0, 0.2, 0, 0, 0, 0.8, 0, 0.1, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("TorusMesh_jwcye")
