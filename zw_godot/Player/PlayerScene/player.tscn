@@ -1,12 +1,19 @@
-[gd_scene load_steps=8 format=3 uid="uid://xjh6b4khdnpy"]
+[gd_scene load_steps=9 format=3 uid="uid://xjh6b4khdnpy"]
 
 [ext_resource type="Script" path="res://Player/Player.cs" id="1_5n8ii"]
-[ext_resource type="Material" uid="uid://c311djjji0ny6" path="res://Visual/Material/player.tres" id="2_ofnkf"]
+[ext_resource type="Shader" path="res://Visual/Shaders/player.gdshader" id="2_13mig"]
 [ext_resource type="Script" path="res://Player/Abilities/Ability.cs" id="3_ifiaf"]
 [ext_resource type="PackedScene" uid="uid://jv2jsrirhn8u" path="res://Player/PlayerStateMachine/PlayerStateMachine.tscn" id="4_x4kkh"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ah6sg"]
 height = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nkeww"]
+render_priority = 0
+shader = ExtResource("2_13mig")
+shader_parameter/albedo = Color(0.305882, 0.447059, 1, 1)
+shader_parameter/metallic = 0.0
+shader_parameter/roughness = 0.02
 
 [sub_resource type="BoxMesh" id="BoxMesh_fhn0w"]
 
@@ -25,7 +32,7 @@ shape = SubResource("CylinderShape3D_ah6sg")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-material_override = ExtResource("2_ofnkf")
+material_override = SubResource("ShaderMaterial_nkeww")
 mesh = SubResource("BoxMesh_fhn0w")
 
 [node name="Abilities" type="Node3D" parent="."]

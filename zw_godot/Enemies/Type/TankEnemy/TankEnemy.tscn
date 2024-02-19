@@ -1,8 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://bob3jsqpqi4be"]
+[gd_scene load_steps=11 format=3 uid="uid://bob3jsqpqi4be"]
 
 [ext_resource type="Script" path="res://Enemies/Type/TankEnemy/TankEnemy.cs" id="1_noiav"]
 [ext_resource type="PackedScene" uid="uid://dpuxn46ahh05a" path="res://Enemies/EnemyStateMachine/EnemyStateMachine.tscn" id="2_nlmc8"]
-[ext_resource type="Material" uid="uid://jl6c73t8fc87" path="res://Visual/Material/Blue.tres" id="3_xs44q"]
+[ext_resource type="Shader" path="res://Visual/Shaders/TankEnemy.gdshader" id="3_iqyq2"]
 [ext_resource type="Texture2D" uid="uid://cqkyjskhhei7y" path="res://Enemies/Healthbar/HealthUI.png" id="4_05sxy"]
 [ext_resource type="Script" path="res://Enemies/Healthbar/HealthBar3D.cs" id="4_hvhqu"]
 [ext_resource type="Texture2D" uid="uid://xkfr6hxojfkv" path="res://Enemies/Healthbar/HealthBar.png" id="5_wyh2n"]
@@ -11,6 +11,10 @@
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_2md15"]
 height = 0.8
 radius = 0.4
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oibqj"]
+render_priority = 0
+shader = ExtResource("3_iqyq2")
 
 [sub_resource type="BoxMesh" id="BoxMesh_hld2k"]
 size = Vector3(0.75, 0.75, 0.75)
@@ -31,7 +35,7 @@ shape = SubResource("CylinderShape3D_2md15")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0.4, 0)
 layers = 2
-material_override = ExtResource("3_xs44q")
+material_override = SubResource("ShaderMaterial_oibqj")
 mesh = SubResource("BoxMesh_hld2k")
 
 [node name="HealthBar3D" type="Sprite3D" parent="."]
