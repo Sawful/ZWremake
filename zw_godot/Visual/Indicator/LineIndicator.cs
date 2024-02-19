@@ -17,6 +17,7 @@ public partial class LineIndicator : Node3D
 	{
         Player = GetTree().Root.GetNode("Main").GetNode<Player>("Player");
         Camera3D = GetTree().Root.GetNode("Main").GetNode<Node3D>("CameraScript").GetNode<Camera3D>("MainCamera");
+        SetPosition();
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

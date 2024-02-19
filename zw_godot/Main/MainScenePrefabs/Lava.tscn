@@ -1,0 +1,60 @@
+[gd_scene load_steps=11 format=3 uid="uid://dko6sq3ex8lui"]
+
+[ext_resource type="Shader" path="res://Visual/Shaders/Lava.gdshader" id="1_di7w0"]
+[ext_resource type="Shader" path="res://Visual/Shaders/LavaGlow.gdshader" id="2_o2yac"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ifqrv"]
+noise_type = 5
+seed = 10
+frequency = 0.014
+fractal_octaves = 3
+fractal_lacunarity = 1.5
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lh2fl"]
+seamless = true
+as_normal_map = true
+bump_strength = 64.0
+noise = SubResource("FastNoiseLite_ifqrv")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7h7cp"]
+noise_type = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_063yw"]
+seamless = true
+as_normal_map = true
+bump_strength = 64.0
+noise = SubResource("FastNoiseLite_7h7cp")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g62ap"]
+render_priority = 0
+shader = ExtResource("1_di7w0")
+shader_parameter/albedo = Color(0.537255, 0.160784, 0.0156863, 1)
+shader_parameter/metallic = 0.0
+shader_parameter/roughness = 0.0
+shader_parameter/wave_direction = Vector2(2, 0)
+shader_parameter/wave_direction2 = Vector2(0, 1)
+shader_parameter/time_scale = 0.025
+shader_parameter/texture_normal = SubResource("NoiseTexture2D_lh2fl")
+shader_parameter/texture_normal2 = SubResource("NoiseTexture2D_063yw")
+
+[sub_resource type="QuadMesh" id="QuadMesh_3ycxy"]
+subdivide_width = 200
+subdivide_depth = 200
+orientation = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xjx41"]
+render_priority = 0
+shader = ExtResource("2_o2yac")
+
+[sub_resource type="QuadMesh" id="QuadMesh_ipmog"]
+orientation = 1
+
+[node name="MeshInstance3D" type="MeshInstance3D"]
+layers = 16
+material_override = SubResource("ShaderMaterial_g62ap")
+mesh = SubResource("QuadMesh_3ycxy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
+material_override = SubResource("ShaderMaterial_xjx41")
+mesh = SubResource("QuadMesh_ipmog")
