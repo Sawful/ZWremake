@@ -6,9 +6,9 @@ uniform float roughness : hint_range(0.0, 1.0) = 0;
 uniform sampler2D texture_normal;
 
 void fragment() {
-	vec3 normal_blend = texture(texture_normal, UV).rgb;
+	vec3 normal = texture(texture_normal, UV).rgb;
 	ALBEDO = albedo;
 	METALLIC = metallic;
 	ROUGHNESS = roughness;
-	NORMAL_MAP = normal_blend;
+	NORMAL_MAP = normal;
 }

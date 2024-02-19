@@ -16,6 +16,7 @@ public partial class ArrowHitbox : Area3D
     {
         Player = GetTree().Root.GetNode("Main").GetNode<Player>("Player");
         Camera3D = GetTree().Root.GetNode("Main").GetNode<Node3D>("CameraScript").GetNode<Camera3D>("MainCamera");
+        SetPosition();
     }
 
     public override void _PhysicsProcess(double delta)

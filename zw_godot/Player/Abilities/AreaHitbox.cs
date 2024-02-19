@@ -20,6 +20,7 @@ public partial class AreaHitbox : Area3D
         Camera3D = GetTree().Root.GetNode("Main").GetNode<Node3D>("CameraScript").GetNode<Camera3D>("MainCamera");
 
         range = 4;
+        SetPosition();
     }
 
     public override void _PhysicsProcess(double delta)

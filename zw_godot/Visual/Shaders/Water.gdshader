@@ -5,8 +5,9 @@ uniform float metallic : hint_range(0.0, 1.0) = 0;
 uniform float roughness : hint_range(0.0, 1.0) = 0.02;
 uniform sampler2D texture_normal;
 uniform sampler2D texture_normal2;
-uniform vec2 wave_direction = vec2(2.0, 0.0);
-uniform vec2 wave_direction2 = vec2(0.0, 1.0);
+
+uniform vec2 wave_direction = vec2(4.0, 0.0);
+uniform vec2 wave_direction2 = vec2(1.0, 2.0);
 uniform float time_scale : hint_range(0.0, 0.2, 0.005) = 0.025;
 
 void fragment() {
