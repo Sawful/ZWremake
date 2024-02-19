@@ -33,8 +33,6 @@ public partial class AttackingState : SimpleState
     public override void UpdateState(double dt)
     {
         base.UpdateState(dt);
-
-        GD.Print(TargetCircleObject);
         
         if (!IsInstanceValid(Target))
         {
