@@ -17,13 +17,17 @@ public partial class GameManager : Node3D
     List<Vector3> NaturalSpawnPos;
 
     Control PlayerUI;
-    Entity Player;
+    Player Player;
     ProgressBar HealthBar;
 
     public bool IsPlayerDead = false;
 
     public int TimeSeconds = 0;
     Label TimeDisplay;
+
+    Variant Content;
+    Variant Content2;
+
 
     public override void _Ready()
     {
@@ -47,6 +51,9 @@ public partial class GameManager : Node3D
         TankEnemyScene = (PackedScene)ResourceLoader.Load("res://Enemies/Type/TankEnemy/TankEnemy.tscn");
         RangeEnemyScene = (PackedScene)ResourceLoader.Load("res://Enemies/Type/RangeEnemy/RangeEnemy.tscn");
 
+        Content = "GaMiNg";
+        Content2 = "don't feel like gaming rn";
+        Load();
         Start();
     }
     public override void _Process(double delta)
@@ -133,6 +140,9 @@ public partial class GameManager : Node3D
 
         SpawnObjectCorners(TankEnemyScene, 1);
         SpawnObjectCorners(RangeEnemyScene, 1);
+
+        Save();
+        GD.Print(Load());
 
         await ToSignal(GetTree().CreateTimer(5), "timeout");
         #endregion
@@ -356,5 +366,29 @@ public partial class GameManager : Node3D
 
         await ToSignal(GetTree().CreateTimer(15), "timeout");
         #endregion
+    }
+
+    public void Save()
+    {
+        using var file = FileAccess.Open("user://save_game.dat", FileAccess.ModeFlags.Write);
+        file.StoreVar(Player.GetLevel());
+        file.StoreVar(Player.GetExperience());
+
+    }
+
+    public Variant Load()
+    {
+        using var file = FileAccess.Open("user://save_game.dat", FileAccess.ModeFlags.Read);
+        Variant level = file.GetVar();
+        Variant experience = file.GetVar();
+
+        int levelInt = (int)level.AsInt64();
+        int experienceInt = (int)experience.AsInt64();
+
+
+        Player.SetLevel(levelInt);
+        Player.SetExperience(experienceInt);
+
+        return level.ToString() + experience.ToString();
     }
 }

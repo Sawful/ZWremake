@@ -293,4 +293,24 @@ public partial class Player : Entity
         GameUI.UpgradePoint += 1;
         GameUI.UpgradePointCounter.Text = "Upgrade Points: " + GameUI.UpgradePoint.ToString();
     }
+
+    public int GetLevel()
+    {
+        return Level;
+    }
+
+    public int GetExperience()
+    {
+        return Experience;
+    }
+
+    public void SetLevel(int level)
+    {
+        Level = level;
+    }
+
+    public void SetExperience(int experience)
+    {
+        Experience = experience;
+    }
 }
