@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://ut3dfals7iew"]
+[gd_scene load_steps=8 format=3 uid="uid://ut3dfals7iew"]
 
 [ext_resource type="Theme" uid="uid://c6s6l1snyrcqd" path="res://Visual/Theme/TalentTree.tres" id="1_rffop"]
-[ext_resource type="Texture2D" uid="uid://b4x3fwa61578y" path="res://Visual/Ui/Icon/ability1.png" id="2_6nuc8"]
 [ext_resource type="Script" path="res://WarriorBranch.cs" id="2_8vr3k"]
+[ext_resource type="Texture2D" uid="uid://crgfffdd5swcr" path="res://Visual/Ui/Icon/slash.png" id="3_4qv44"]
 [ext_resource type="Script" path="res://ArcherBranch.cs" id="3_deglo"]
 [ext_resource type="Script" path="res://SorcererBranch.cs" id="4_ojrf8"]
+[ext_resource type="Texture2D" uid="uid://mijjpmxenvbc" path="res://Visual/Ui/Icon/FireBall.png" id="6_tx3fb"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_4oj3d"]
 
@@ -26,12 +27,14 @@ offset_bottom = 120.0
 script = ExtResource("2_8vr3k")
 
 [node name="Node5" type="Button" parent="WarriorBranch"]
+layout_mode = 0
 offset_left = 760.0
 offset_top = 60.0
 offset_right = 840.0
 offset_bottom = 140.0
 toggle_mode = true
 icon = SubResource("CanvasTexture_4oj3d")
+expand_icon = true
 
 [node name="Node4_2" type="Button" parent="WarriorBranch"]
 layout_mode = 2
@@ -41,46 +44,57 @@ offset_right = 1000.0
 offset_bottom = 280.0
 toggle_mode = true
 icon = SubResource("CanvasTexture_4oj3d")
+expand_icon = true
 
 [node name="Node4_1" type="Button" parent="WarriorBranch"]
+layout_mode = 0
 offset_left = 600.0
 offset_top = 200.0
 offset_right = 680.0
 offset_bottom = 280.0
 toggle_mode = true
 icon = SubResource("CanvasTexture_4oj3d")
+expand_icon = true
 
 [node name="Node3_2" type="Button" parent="WarriorBranch"]
+layout_mode = 0
 offset_left = 920.0
 offset_top = 340.0
 offset_right = 1000.0
 offset_bottom = 420.0
 toggle_mode = true
 icon = SubResource("CanvasTexture_4oj3d")
+expand_icon = true
 
 [node name="Node3_1" type="Button" parent="WarriorBranch"]
+layout_mode = 0
 offset_left = 600.0
 offset_top = 340.0
 offset_right = 680.0
 offset_bottom = 420.0
 toggle_mode = true
 icon = SubResource("CanvasTexture_4oj3d")
+expand_icon = true
 
 [node name="Node2" type="Button" parent="WarriorBranch"]
+layout_mode = 0
 offset_left = 760.0
 offset_top = 480.0
 offset_right = 840.0
 offset_bottom = 560.0
 toggle_mode = true
 icon = SubResource("CanvasTexture_4oj3d")
+expand_icon = true
 
 [node name="Node1" type="Button" parent="WarriorBranch"]
+layout_mode = 0
 offset_left = 760.0
 offset_top = 620.0
 offset_right = 840.0
 offset_bottom = 700.0
 toggle_mode = true
-icon = SubResource("CanvasTexture_4oj3d")
+icon = ExtResource("3_4qv44")
+expand_icon = true
 
 [node name="ArcherBranch" type="Control" parent="."]
 layout_mode = 3
@@ -92,12 +106,14 @@ offset_bottom = 120.0
 script = ExtResource("3_deglo")
 
 [node name="Node5" type="Button" parent="ArcherBranch"]
+layout_mode = 0
 offset_left = 760.0
 offset_top = 60.0
 offset_right = 840.0
 offset_bottom = 140.0
 toggle_mode = true
 icon = SubResource("CanvasTexture_4oj3d")
+expand_icon = true
 
 [node name="Node4_2" type="Button" parent="ArcherBranch"]
 layout_mode = 2
@@ -107,46 +123,57 @@ offset_right = 1000.0
 offset_bottom = 280.0
 toggle_mode = true
 icon = SubResource("CanvasTexture_4oj3d")
+expand_icon = true
 
 [node name="Node4_1" type="Button" parent="ArcherBranch"]
+layout_mode = 0
 offset_left = 600.0
 offset_top = 200.0
 offset_right = 680.0
 offset_bottom = 280.0
 toggle_mode = true
 icon = SubResource("CanvasTexture_4oj3d")
+expand_icon = true
 
 [node name="Node3_2" type="Button" parent="ArcherBranch"]
+layout_mode = 0
 offset_left = 920.0
 offset_top = 340.0
 offset_right = 1000.0
 offset_bottom = 420.0
 toggle_mode = true
 icon = SubResource("CanvasTexture_4oj3d")
+expand_icon = true
 
 [node name="Node3_1" type="Button" parent="ArcherBranch"]
+layout_mode = 0
 offset_left = 600.0
 offset_top = 340.0
 offset_right = 680.0
 offset_bottom = 420.0
 toggle_mode = true
 icon = SubResource("CanvasTexture_4oj3d")
+expand_icon = true
 
 [node name="Node2" type="Button" parent="ArcherBranch"]
+layout_mode = 0
 offset_left = 760.0
 offset_top = 480.0
 offset_right = 840.0
 offset_bottom = 560.0
 toggle_mode = true
 icon = SubResource("CanvasTexture_4oj3d")
+expand_icon = true
 
 [node name="Node1" type="Button" parent="ArcherBranch"]
+layout_mode = 0
 offset_left = 760.0
 offset_top = 620.0
 offset_right = 840.0
 offset_bottom = 700.0
 toggle_mode = true
 icon = SubResource("CanvasTexture_4oj3d")
+expand_icon = true
 
 [node name="SorcererBranch" type="Control" parent="."]
 layout_mode = 3
@@ -157,12 +184,14 @@ offset_bottom = 120.0
 script = ExtResource("4_ojrf8")
 
 [node name="Node5" type="Button" parent="SorcererBranch"]
+layout_mode = 0
 offset_left = 760.0
 offset_top = 60.0
 offset_right = 840.0
 offset_bottom = 140.0
 toggle_mode = true
 icon = SubResource("CanvasTexture_4oj3d")
+expand_icon = true
 
 [node name="Node4_2" type="Button" parent="SorcererBranch"]
 layout_mode = 2
@@ -172,46 +201,56 @@ offset_right = 1000.0
 offset_bottom = 280.0
 toggle_mode = true
 icon = SubResource("CanvasTexture_4oj3d")
+expand_icon = true
 
 [node name="Node4_1" type="Button" parent="SorcererBranch"]
+layout_mode = 0
 offset_left = 600.0
 offset_top = 200.0
 offset_right = 680.0
 offset_bottom = 280.0
 toggle_mode = true
 icon = SubResource("CanvasTexture_4oj3d")
+expand_icon = true
 
 [node name="Node3_2" type="Button" parent="SorcererBranch"]
+layout_mode = 0
 offset_left = 920.0
 offset_top = 340.0
 offset_right = 1000.0
 offset_bottom = 420.0
 toggle_mode = true
 icon = SubResource("CanvasTexture_4oj3d")
+expand_icon = true
 
 [node name="Node3_1" type="Button" parent="SorcererBranch"]
+layout_mode = 0
 offset_left = 600.0
 offset_top = 340.0
 offset_right = 680.0
 offset_bottom = 420.0
 toggle_mode = true
 icon = SubResource("CanvasTexture_4oj3d")
+expand_icon = true
 
 [node name="Node2" type="Button" parent="SorcererBranch"]
+layout_mode = 0
 offset_left = 760.0
 offset_top = 480.0
 offset_right = 840.0
 offset_bottom = 560.0
 toggle_mode = true
 icon = SubResource("CanvasTexture_4oj3d")
+expand_icon = true
 
 [node name="Node1" type="Button" parent="SorcererBranch"]
+layout_mode = 0
 offset_left = 760.0
 offset_top = 620.0
 offset_right = 840.0
 offset_bottom = 700.0
 toggle_mode = true
-icon = ExtResource("2_6nuc8")
+icon = ExtResource("6_tx3fb")
 expand_icon = true
 
 [node name="WarriorLabel" type="Label" parent="."]
@@ -224,6 +263,7 @@ scale = Vector2(2, 2)
 text = "Warrior"
 
 [node name="SorcererLabel" type="Label" parent="."]
+layout_mode = 0
 offset_left = 740.0
 offset_top = 20.0
 offset_right = 806.0
@@ -232,6 +272,7 @@ scale = Vector2(2, 2)
 text = "Sorcerer"
 
 [node name="ArcherLabel" type="Label" parent="."]
+layout_mode = 0
 offset_left = 250.0
 offset_top = 20.0
 offset_right = 310.0
