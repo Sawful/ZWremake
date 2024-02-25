@@ -20,7 +20,7 @@ public partial class AreaIndicator : Node3D
     public override void _Ready()
 	{
         Player = GetTree().Root.GetNode("Main").GetNode<Player>("Player");
-        Camera3D = GetTree().Root.GetNode("Main").GetNode<Node3D>("CameraScript").GetNode<Camera3D>("MainCamera");
+        Camera3D = GetTree().Root.GetNode("Main").GetNode<Camera3D>("MainCamera");
 
         range = 4;
     }
@@ -40,7 +40,7 @@ public partial class AreaIndicator : Node3D
         PhysicsRayQueryParameters3D query = new()
         {
             From = Camera3D.ProjectRayOrigin(mouse_pos),
-            To = Camera3D.ProjectRayNormal(mouse_pos) * RayLength,
+            To = Camera3D.ProjectRayOrigin(mouse_pos) + Camera3D.ProjectRayNormal(mouse_pos) * RayLength,
             CollideWithAreas = true,
             CollideWithBodies = true,
             CollisionMask = MouseColliderLayers,
