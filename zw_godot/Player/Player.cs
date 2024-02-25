@@ -15,10 +15,10 @@ public partial class Player : Entity
 
     // Nodes
     public Node Main;
-    [Export] public Camera3D Camera3D;
+    public Camera3D MainCamera;
     [Export] public StaticBody3D Ground;
-    [Export] private Enemy EnemyClicked;
-    [Export] public SimpleStateMachine PlayerStateMachine;
+    private Enemy EnemyClicked;
+    public SimpleStateMachine PlayerStateMachine;
     public Node3D ClosestTarget;
 
     AbilityUI AbilityUI;
@@ -43,12 +43,12 @@ public partial class Player : Entity
 
     // Ranged attack
     [Export] public bool RangedAttack;
-    [Export] public float ProjectileSpeed = 10;
+    public const float ProjectileSpeed = 10;
 
     // Raycast layers
     [Export(PropertyHint.Layers3DPhysics)] public uint MouseColliderLayers;
 
-    // Raycast lenght
+    // Raycast length
     private const float RayLength = 1000.0f;
 
     public CollisionObject3D[] possibleTargets;
@@ -82,8 +82,6 @@ public partial class Player : Entity
         AbilityUI = GameUI.GetNode<PanelContainer>("BottomBar").GetNode<AbilityUI>("AbilityUI");
         HealthBar = GameUI.GetNode<ProgressBar>("HealthBar");
         HealthBarText = HealthBar.GetNode<Label>("HealthBarText");
-        AbilityScript = GetNode<Ability>("Abilities");
-
         TopLeftDisplay = GameUI.GetNode<VBoxContainer>("TopLeftDisplay");
         LevelText = TopLeftDisplay.GetNode<Label>("LevelText");
         ExperienceText = TopLeftDisplay.GetNode<Label>("ExperienceText");
@@ -91,10 +89,16 @@ public partial class Player : Entity
         DamageText = TopLeftDisplay.GetNode<Label>("DamageText");
         AttackSpeedText = TopLeftDisplay.GetNode<Label>("AttackSpeedText");
         AbilityHasteText = TopLeftDisplay.GetNode<Label>("AbilityHasteText");
-
         LevelText.Text = "Level: " + Level.ToString();
         ExperienceText.Text = "Exp: " + Experience.ToString();
         RessourceText.Text = "Ressource: " + Ressource.ToString();
+
+        AbilityScript = GetNode<Ability>("Abilities");
+
+        MainCamera = GetTree().Root.GetNode("Main").GetNode<CameraScript>("MainCamera");
+        AbilityScript.MainCamera = MainCamera;
+
+
         ExperienceToLevelUp = 5;
 
         StatsLevel = new()
@@ -149,7 +153,7 @@ public partial class Player : Entity
         PlayerStateMachine = (SimpleStateMachine)GetNode("PlayerStateMachine");
         Area3D = GetNode<Area3D>("Area3D");
         // Camera initialisation
-        CameraLocalStartingPosition = ToLocal(Camera3D.GlobalPosition);
+        CameraLocalStartingPosition = ToLocal(MainCamera.GlobalPosition);
     }
 
     public override void _Process(double delta)
@@ -185,8 +189,8 @@ public partial class Player : Entity
         // Raycast
         PhysicsRayQueryParameters3D query = new()
         {
-            From = Camera3D.ProjectRayOrigin(rClick.Position),
-            To = Camera3D.ProjectRayNormal(rClick.Position) * RayLength,
+            From = MainCamera.ProjectRayOrigin(rClick.Position),
+            To = MainCamera.ProjectRayOrigin(rClick.Position) + MainCamera.ProjectRayNormal(rClick.Position) * RayLength,
             CollideWithAreas = true,
             CollideWithBodies = true,
             CollisionMask = MouseColliderLayers,
@@ -211,7 +215,7 @@ public partial class Player : Entity
                 };
 
                 PlayerStateMachine.ChangeState("MovingState", message);
-
+                GD.Print(AnchorPoint);
             }
             
             else if (objectHit is Enemy enemyHit)

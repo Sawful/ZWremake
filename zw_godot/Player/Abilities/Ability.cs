@@ -11,9 +11,8 @@ using Godot.Collections;
 public partial class Ability : Node
 {
 	public bool Cast = false;
-    [Export] private RayCast3D RayCast3D;
-    [Export] private Camera3D Camera3D;
-    [Export] private StaticBody3D Ground;
+    public Camera3D MainCamera;
+    private StaticBody3D Ground;
     private Node3D Main;
     private AbilityUI AbilityUI;
 
@@ -49,7 +48,7 @@ public partial class Ability : Node
         ArrowHitbox = (PackedScene)ResourceLoader.Load("res://Player/Abilities/ArrowHitbox.tscn");
 
         Player = GetParent<Player>();
-        Camera3D = Player.Camera3D;
+        MainCamera = Player.MainCamera;
         Ground = Player.Ground;
         AbilityUI = GetTree().Root.GetNode("Main").GetNode("PlayerUI").GetNode("BottomBar").GetNode<AbilityUI>("AbilityUI");
 
@@ -82,8 +81,8 @@ public partial class Ability : Node
         // Raycast
         PhysicsRayQueryParameters3D query = new()
         {
-            From = Camera3D.ProjectRayOrigin(mouse_pos),
-            To = Camera3D.ProjectRayNormal(mouse_pos) * RayLength,
+            From = MainCamera.ProjectRayOrigin(mouse_pos),
+            To = MainCamera.ProjectRayOrigin(mouse_pos) + MainCamera.ProjectRayNormal(mouse_pos) * RayLength,
             CollideWithAreas = true,
             CollideWithBodies = true,
             CollisionMask = MouseColliderLayers,
