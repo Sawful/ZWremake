@@ -42,7 +42,7 @@ public partial class Player : Entity
     public AudioStreamWav AttackSound;
 
     // Ranged attack
-    [Export] public bool RangedAttack;
+    public bool RangedAttack;
     public const float ProjectileSpeed = 10;
 
     // Raycast layers
@@ -67,6 +67,12 @@ public partial class Player : Entity
     private Vector3 EnemyPos;
 
     public Dictionary<string, int> StatsLevel;
+
+    public Dictionary<string, double> StatsBonusMult;
+    public Dictionary<string, double> StatsBonusAdd;
+
+
+    public string PlayerClass;
 
     private int Experience;
     private int Level = 1;
@@ -98,6 +104,7 @@ public partial class Player : Entity
         MainCamera = GetTree().Root.GetNode("Main").GetNode<CameraScript>("MainCamera");
         AbilityScript.MainCamera = MainCamera;
 
+        PlayerClass = "Warrior";
 
         ExperienceToLevelUp = 5;
 
@@ -110,13 +117,68 @@ public partial class Player : Entity
             {"AbilityHaste", 0}
         };
 
-        Ability = new()
+        StatsBonusMult = new()
         {
-            {"Ability1", "Overstrike"},
-            {"Ability2", "Flamestorm"},
-            {"Ability3", "Arrowshot"},
-            {"Ability4", "Cone"}
+            {"Damage", 0},
+            {"AttackSpeed", 0},
+            {"MovementSpeed", 0},
+            {"MaxHealth", 0},
+            {"AbilityHaste", 0}
         };
+
+        StatsBonusAdd = new()
+        {
+            {"Damage", 0},
+            {"AttackSpeed", 0},
+            {"MovementSpeed", 0},
+            {"MaxHealth", 0},
+            {"AbilityHaste", 0}
+        };
+
+        if(PlayerClass == "Warrior")
+        {
+            Ability = new()
+            {
+                {"Ability1", "Warrior1"},
+                {"Ability2", "Warrior2"},
+                {"Ability3", "Warrior3"},
+                {"Ability4", "Warrior4"}
+            };
+            Range = 2;
+            RangedAttack = false;
+        }
+
+        else if(PlayerClass == "Sorcerer")
+        {
+            Ability = new()
+            {
+                {"Ability1", "Sorcerer1"},
+                {"Ability2", "Sorcerer2"},
+                {"Ability3", "Sorcerer3"},
+                {"Ability4", "Sorcerer4"}
+            };
+            Range = 4;
+            RangedAttack = true;
+        }
+
+        else if(PlayerClass == "Archer")
+        {
+            Ability = new()
+            {
+                {"Ability1", "Archer1"},
+                {"Ability2", "Archer2"},
+                {"Ability3", "Archer3"},
+                {"Ability4", "Archer4"}
+            };
+            Range = 4;
+            RangedAttack = true;
+        }
+
+        else
+        {
+            GD.Print("Unknown Class");
+        }
+
         AbilityCooldown = new()
         {
             {"Ability1", 6},
@@ -139,7 +201,7 @@ public partial class Player : Entity
             {"Ability4", false}
         };
 
-        Range = 4;
+        
         UpdateStats();
 
         base._Ready();
@@ -279,11 +341,11 @@ public partial class Player : Entity
 
     public void UpdateStats()
     {
-        MaxHealth = 200 + 10 * StatsLevel["MaxHealth"];
-        Damage = 10 + 3 * StatsLevel["Damage"];
-        Speed = 4 + 0.5f * StatsLevel["MovementSpeed"];
-        AttackSpeed = 1 + 0.2 * StatsLevel["AttackSpeed"];
-        AbilityHaste = 0 + 3 * StatsLevel["AbilityHaste"];
+        MaxHealth = (int)Math.Round((200 + StatsBonusAdd["MaxHealth"] + 10 * StatsLevel["MaxHealth"]) * (1 + StatsBonusMult["MaxHealth"]));
+        Damage = (int)Math.Round((10 + StatsBonusAdd["Damage"] + 3 * StatsLevel["Damage"]) * (1 + StatsBonusMult["Damage"]));
+        Speed = (float) (4 + StatsBonusAdd["MovementSpeed"] + 0.5f * StatsLevel["MovementSpeed"]) * (float) (1 + StatsBonusMult["MovementSpeed"]);
+        AttackSpeed = (1 + StatsBonusAdd["AttackSpeed"] + 0.2 * StatsLevel["AttackSpeed"]) * (1 + StatsBonusMult["AttackSpeed"]);
+        AbilityHaste = (int)Math.Round((0 + StatsBonusAdd["AbilityHaste"] + 3 * StatsLevel["AbilityHaste"]) * (1 + StatsBonusMult["AbilityHaste"]));
 
         DamageText.Text = "Damage: " + Damage.ToString();
         AttackSpeedText.Text = "Attack Speed: " + AttackSpeed.ToString();

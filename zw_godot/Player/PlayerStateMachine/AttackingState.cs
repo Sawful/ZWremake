@@ -42,21 +42,23 @@ public partial class AttackingState : SimpleState
         else
         {
             Vector3 targetPosition = Target.Position;
+            
+            // Call a point and click ability
 
-            if (Player.Position.DistanceTo(targetPosition) >= Player.Range)
+            if (Message.ContainsKey("Ability"))
             {
-                Player.MoveTo(dt, targetPosition);
-            }
-
-            else
-            {
-                Player.RotateTo(targetPosition, Entity.RotationWeight);
-
-                if (Message.ContainsKey("Ability"))
+                float range = (float)Message["Range"];
+                if (Player.Position.DistanceTo(targetPosition) >= range)
                 {
+                    Player.MoveTo(dt, targetPosition);
+                }
+
+                else
+                {
+                    Player.RotateTo(targetPosition, Entity.RotationWeight);
                     GD.Print(Message["Ability"] + "GAMING");
                     //Play spell
-                    Player.DealDamage(Target, Player.Damage * 10);
+                    Player.DealDamage(Target, (int) Mathf.Round(Player.Damage * (float)Message["DamageMultiplier"]));
                     AbilityUI.SetAbilityCooldown("Ability1"); // Set Cooldown
 
                     //Reset attack
@@ -66,13 +68,28 @@ public partial class AttackingState : SimpleState
                     };
                     StateMachine.ChangeState("AttackingState", message);
                 }
-
-                else if (Player.AttackReload <= 0)
+                
+            }
+            
+            else
+            {
+                if (Player.Position.DistanceTo(targetPosition) >= Player.Range)
                 {
-                    Player.DealDamage(Target, Player.Damage);
-                    Player.AttackReload = 1 / Player.AttackSpeed;
+                    Player.MoveTo(dt, targetPosition);
+                }
+
+                else
+                {
+                    Player.RotateTo(targetPosition, Entity.RotationWeight);
+
+                    if (Player.AttackReload <= 0)
+                    {
+                        Player.DealDamage(Target, Player.Damage);
+                        Player.AttackReload = 1 / Player.AttackSpeed;
+                    }
                 }
             }
+  
         }
     }
 

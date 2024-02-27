@@ -38,6 +38,7 @@ public partial class Ability : Node
     public TaskCompletionSource<bool> AbilityCast = new();
     public TaskCompletionSource<bool> AttackMoveContinue = new();
 
+    PackedScene StatEffect;
 
     public override void _Ready()
 	{
@@ -46,6 +47,7 @@ public partial class Ability : Node
         ConeIndicator = (PackedScene)ResourceLoader.Load("res://Visual/Indicator/ConeIndicator.tscn");
         AreaHitbox = (PackedScene)ResourceLoader.Load("res://Player/Abilities/AreaHitbox.tscn");
         ArrowHitbox = (PackedScene)ResourceLoader.Load("res://Player/Abilities/ArrowHitbox.tscn");
+        StatEffect = (PackedScene)ResourceLoader.Load("res://Player/Abilities/StatEffect.tscn");
 
         Player = GetParent<Player>();
         MainCamera = Player.MainCamera;
@@ -185,7 +187,7 @@ public partial class Ability : Node
         }
     }
 
-    public async void Overstrike(Entity caster)
+    public async void Warrior1(Entity caster)
     {
         /// <summary>Point and click massive damage.</summary>
 
@@ -208,11 +210,11 @@ public partial class Ability : Node
                     System.Collections.Generic.Dictionary<string, object> message = new()
                     {
                         {"Target",  enemyHit},
-                        {"Ability", "Overstrike"}
+                        {"Ability", "Overstrike"},
+                        {"Range", 2f},
+                        {"DamageMultiplier", 2.5f}
                     };
                     Player.PlayerStateMachine.ChangeState("AttackingState", message);
-
-                    
                 }
             }
 
@@ -229,6 +231,17 @@ public partial class Ability : Node
             AbilityCast = new TaskCompletionSource<bool>();
             Casting = false;
         }
+    }
+
+    public void Warrior2(Entity caster)
+    {
+        CreateStatEffect(5);
+        AbilityUI.SetAbilityCooldown("Ability2");
+    }
+
+    public void Warrior3(Entity caster)
+    {
+        
     }
 
     public async void Flamestorm(Entity caster)
@@ -374,6 +387,17 @@ public partial class Ability : Node
         }
     }
 
+    public void CreateStatEffect(float duration)
+    {
+        StatEffect effect = (StatEffect)StatEffect.Instantiate();
+        effect.Player = Player;
+        effect.Message = new()
+        {
+            {"Duration", duration}
+        };
+
+        Player.AddChild(effect);
+    }
 
     public async void AbilityStructure()
     {
