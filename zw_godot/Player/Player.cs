@@ -238,14 +238,6 @@ public partial class Player : Entity
 
     }
 
-    public override void _Input(InputEvent @event)
-    {
-        if (@event is InputEventMouseButton eventMouseButton && eventMouseButton.Pressed && eventMouseButton.ButtonIndex == MouseButton.Right)
-        {
-            RightClickRaycast(eventMouseButton);
-        }
-    }
-
     public void RightClickRaycast(InputEventMouseButton rClick)
     {
         // Raycast
@@ -277,7 +269,6 @@ public partial class Player : Entity
                 };
 
                 PlayerStateMachine.ChangeState("MovingState", message);
-                GD.Print(AnchorPoint);
             }
             
             else if (objectHit is Enemy enemyHit)
@@ -291,7 +282,6 @@ public partial class Player : Entity
 
                 if (RangedAttack) 
                 {
-                    GD.Print("Range attack works");
                     PlayerStateMachine.ChangeState("RangeAttackingState", message);
                 }
                     

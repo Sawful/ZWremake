@@ -14,7 +14,6 @@ public partial class GameManager : Node3D
     Vector3 TopRight;
     Vector3 BottomLeft;
     Vector3 BottomRight;
-    List<Vector3> NaturalSpawnPos;
 
     Control PlayerUI;
     Player Player;

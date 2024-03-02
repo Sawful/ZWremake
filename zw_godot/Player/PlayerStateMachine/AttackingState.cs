@@ -8,6 +8,7 @@ public partial class AttackingState : SimpleState
     Enemy Target;
     Player Player;
     Dictionary<string, object> Message;
+    private Ability Ability;
     private AbilityUI AbilityUI;
     PackedScene TargetCircle;
     Node3D TargetCircleObject;
@@ -16,6 +17,7 @@ public partial class AttackingState : SimpleState
         StateMachine = (SimpleStateMachine)GetParent().GetParent();
         Player = (Player)StateMachine.GetParent();
         AbilityUI = GetTree().Root.GetNode("Main").GetNode("PlayerUI").GetNode("BottomBar").GetNode<AbilityUI>("AbilityUI");
+        Ability = Player.GetNode<Ability>("Abilities");
 
         TargetCircle = (PackedScene)ResourceLoader.Load("res://Enemies/TargetCircle.tscn");
     }
@@ -47,28 +49,64 @@ public partial class AttackingState : SimpleState
 
             if (Message.ContainsKey("Ability"))
             {
-                float range = (float)Message["Range"];
-                if (Player.Position.DistanceTo(targetPosition) >= range)
+                if ((string)Message["Ability"] == "Warrior1")
                 {
-                    Player.MoveTo(dt, targetPosition);
-                }
-
-                else
-                {
-                    Player.RotateTo(targetPosition, Entity.RotationWeight);
-                    GD.Print(Message["Ability"] + "GAMING");
-                    //Play spell
-                    Player.DealDamage(Target, (int) Mathf.Round(Player.Damage * (float)Message["DamageMultiplier"]));
-                    AbilityUI.SetAbilityCooldown("Ability1"); // Set Cooldown
-
-                    //Reset attack
-                    Dictionary<string, object> message = new()
+                    float range = (float)Message["Range"];
+                    if (Player.Position.DistanceTo(targetPosition) >= range)
                     {
-                        {"Target",  Target},
-                    };
-                    StateMachine.ChangeState("AttackingState", message);
+                        Player.MoveTo(dt, targetPosition);
+                    }
+
+                    else
+                    {
+                        Player.RotateTo(targetPosition, Entity.RotationWeight);
+                        GD.Print(Message["Ability"] + "GAMING");
+                        //Play spell
+                        Player.DealDamage(Target, (int) Mathf.Round(Player.Damage * (float)Message["DamageMultiplier"]));
+                        AbilityUI.SetAbilityCooldown("Ability1", (float)Message["Cooldown"]); // Set Cooldown
+
+                        //Reset attack
+                        Dictionary<string, object> message = new()
+                        {
+                            {"Target",  Target},
+                        };
+                        Player.AttackReload = 0.25;
+                        StateMachine.ChangeState("AttackingState", message);
+                }}
+
+                else if ((string)Message["Ability"] == "Leap")
+                {
+                    float range = (float)Message["Range"];
+                    float leapRange = (float)Message["Leap Range"];
+
+                    if (Player.Position.DistanceTo(targetPosition) >= leapRange)
+                    {
+                        Player.MoveTo(dt, targetPosition);
+                    }
+
+                    else if (Player.Position.DistanceTo(targetPosition) >= range)
+                    {
+                        Player.Position = Player.Position.MoveToward(targetPosition, 10 * Convert.ToSingle(dt));;
+                    }
+
+                    else
+                    {
+                        Player.RotateTo(targetPosition, Entity.RotationWeight);
+                        GD.Print(Message["Ability"] + "GAMING");
+                        //Play spell
+                        Player.DealDamage(Target, (int) Mathf.Round(Player.Damage * (float)Message["DamageMultiplier"]));
+                        AbilityUI.SetAbilityCooldown("Ability4", (int)Message["Cooldown"]); // Set Cooldown
+
+                        //Reset attack
+                        Dictionary<string, object> message = new()
+                        {
+                            {"Target",  Target},
+                        };
+                        Player.AttackReload = 0.25;
+                        StateMachine.ChangeState("AttackingState", message);
+                    }
                 }
-                
+
             }
             
             else
@@ -86,10 +124,20 @@ public partial class AttackingState : SimpleState
                     {
                         Player.DealDamage(Target, Player.Damage);
                         Player.AttackReload = 1 / Player.AttackSpeed;
+
+                        Ability.AutoAttacked();
                     }
                 }
             }
   
+        }
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventMouseButton eventMouseButton && eventMouseButton.Pressed && eventMouseButton.ButtonIndex == MouseButton.Right)
+        {
+            Player.RightClickRaycast(eventMouseButton);
         }
     }
 
