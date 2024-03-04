@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Text;
+using System.Timers;
 using System.Threading;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
@@ -35,9 +36,20 @@ public partial class Ability : Node
 
     public Player Player;
 
+    float CooldownReduction;
+
+    int AutoAttacksLaunched;
+    Godot.Timer AutoAttackEndTimer;
+
+    public List<StatEffect> AttackSpeedEffects;
+
     public TaskCompletionSource<bool> AbilityCast = new();
     public TaskCompletionSource<bool> AttackMoveContinue = new();
 
+    System.Timers.Timer AbilityTimer;
+    public TaskCompletionSource<bool> AbilityTimerFinished = new();
+
+    PackedScene StatEffect;
 
     public override void _Ready()
 	{
@@ -46,6 +58,9 @@ public partial class Ability : Node
         ConeIndicator = (PackedScene)ResourceLoader.Load("res://Visual/Indicator/ConeIndicator.tscn");
         AreaHitbox = (PackedScene)ResourceLoader.Load("res://Player/Abilities/AreaHitbox.tscn");
         ArrowHitbox = (PackedScene)ResourceLoader.Load("res://Player/Abilities/ArrowHitbox.tscn");
+        StatEffect = (PackedScene)ResourceLoader.Load("res://Player/Abilities/StatEffect.tscn");
+
+        AutoAttackEndTimer = GetNode<Godot.Timer>("AutoAttackEndTimer");
 
         Player = GetParent<Player>();
         MainCamera = Player.MainCamera;
@@ -53,6 +68,8 @@ public partial class Ability : Node
         AbilityUI = GetTree().Root.GetNode("Main").GetNode("PlayerUI").GetNode("BottomBar").GetNode<AbilityUI>("AbilityUI");
 
         Main = Player.GetParent<Node3D>();
+
+        AttackSpeedEffects = new();
     }
 
     public override void _Process(double delta)
@@ -63,7 +80,8 @@ public partial class Ability : Node
             AttackMoveContinue.SetResult(true);
             AttackMoving = false;
         }
-            
+
+        CooldownReduction = 1 - (100 - (10000 / (100 + 2 * Player.AbilityHaste))) / 100;
     }
 
     public override void _Input(InputEvent @event)
@@ -185,7 +203,7 @@ public partial class Ability : Node
         }
     }
 
-    public async void Overstrike(Entity caster)
+    public async void Warrior1(Entity caster)
     {
         /// <summary>Point and click massive damage.</summary>
 
@@ -208,11 +226,12 @@ public partial class Ability : Node
                     System.Collections.Generic.Dictionary<string, object> message = new()
                     {
                         {"Target",  enemyHit},
-                        {"Ability", "Overstrike"}
+                        {"Ability", "Warrior1"},
+                        {"Range", 2f},
+                        {"DamageMultiplier", 2.5f},
+                        {"Cooldown", 10 * CooldownReduction}
                     };
                     Player.PlayerStateMachine.ChangeState("AttackingState", message);
-
-                    
                 }
             }
 
@@ -226,6 +245,128 @@ public partial class Ability : Node
         {
             // Cursor goes back to normal
             GD.Print("overstrike cancelled");
+            AbilityCast = new TaskCompletionSource<bool>();
+            Casting = false;
+        }
+    }
+
+    public void Warrior2(Entity caster)
+    {
+        CreateStatEffect(5, "AttackSpeed", 0.5);
+        CreateStatEffect(5, "Damage", 0.2);
+
+        AbilityUI.SetAbilityCooldown("Ability2", 20 * CooldownReduction);
+    }
+
+    public async void Warrior3(Entity caster)
+    {
+        AbilityCast.SetResult(false);
+        AbilityCast = new TaskCompletionSource<bool>();
+        Casting = true;
+
+        float length = 4;
+        float width = 3;
+
+        LineIndicator ConeIndic = (LineIndicator)ConeIndicator.Instantiate();
+        ConeIndic.Scale = Vector3.Right * width + Vector3.Back * length + Vector3.Up;
+        Main.AddChild(ConeIndic);
+
+        ArrowHitbox ConeHB = (ArrowHitbox)ArrowHitbox.Instantiate();
+        ConeHB.Scale = Vector3.Right * width + Vector3.Back * length + Vector3.Up;
+        Main.AddChild(ConeHB);
+
+        if (await AbilityCast.Task == true)
+        {
+            AbilityCast = new TaskCompletionSource<bool>();
+            ConeIndic.QueueFree();
+            // Cursor goes back to normal
+            GD.Print("Warrior 3 casted");
+
+            // loop
+            AbilityTimer = new();
+            AbilityTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+            AbilityTimer.AutoReset = true;
+            AbilityTimer.Interval = 333;
+            AbilityTimer.Enabled = true;
+
+            Player.StatsBonusMult["MovementSpeed"] += -0.5;
+            Player.UpdateStats();
+
+            AbilityUI.SetAbilityCooldown("Ability3", 20 * CooldownReduction);
+            int loopNumber = 0;
+            ConeHB.PositionLocked = true;
+            while (loopNumber != 6)
+            {
+                if (await AbilityTimerFinished.Task == true)
+                {
+                    Array<Node3D> targets = ConeHB.GetOverlappingBodies();
+                    foreach (Entity target in targets)
+                    {
+                        Player.DealDamage(target, (int)Math.Round(Player.Damage * 0.66));
+                    }
+
+                    AbilityTimerFinished = new TaskCompletionSource<bool>();
+
+                    loopNumber ++;
+                }
+            }
+            Player.StatsBonusMult["MovementSpeed"] -= -0.5;
+            Player.UpdateStats();
+
+            AbilityTimer.Enabled = false;
+
+            AbilityCast = new TaskCompletionSource<bool>();
+        }
+        else
+        {
+            ConeIndic.QueueFree();
+            // Cursor goes back to normal
+            GD.Print("Cone cancelled");
+            AbilityCast = new TaskCompletionSource<bool>();
+        }
+    }
+
+    public async void Warrior4(Entity caster)
+    {
+        /// <summary>When 10 aa have been used consecutively, jump on an enemy and deal big damage. Gain 5% attack speed until you drop the aa. No cooldown</summary>
+
+        // Change cursor
+
+        AbilityCast.SetResult(false);
+        AbilityCast = new TaskCompletionSource<bool>();
+        Casting = true;
+
+        if (await AbilityCast.Task == true)
+        {
+            Node3D node = (Node3D)AbilityRaycast()["objectHit"];
+
+            if (node != null)
+            {
+                if ((Node3D)AbilityRaycast()["objectHit"] is Enemy enemyHit)
+                {
+                    System.Collections.Generic.Dictionary<string, object> message = new()
+                    {
+                        {"Target",  enemyHit},
+                        {"Ability", "Leap"},
+                        {"Range", 2f},
+                        {"Leap Range", 10f},
+                        {"DamageMultiplier", 2f},
+                        {"Cooldown", 10}
+                    };
+                    Player.PlayerStateMachine.ChangeState("AttackingState", message);
+                }
+            }
+
+            // Cursor goes back to normal
+            GD.Print("Leap casted");
+            AbilityCast = new TaskCompletionSource<bool>();
+            Casting = false;
+        }
+
+        else
+        {
+            // Cursor goes back to normal
+            GD.Print("Leap cancelled");
             AbilityCast = new TaskCompletionSource<bool>();
             Casting = false;
         }
@@ -262,7 +403,7 @@ public partial class Ability : Node
             AreaHB.QueueFree();
             AbilityCast = new TaskCompletionSource<bool>();
 
-            AbilityUI.SetAbilityCooldown("Ability2");
+            AbilityUI.SetAbilityCooldown("Ability2", 10);
             Player.PlayerStateMachine.ChangeState("IdleState");
 
         }
@@ -314,7 +455,7 @@ public partial class Ability : Node
 
             AbilityCast = new TaskCompletionSource<bool>();
 
-            AbilityUI.SetAbilityCooldown("Ability3");
+            AbilityUI.SetAbilityCooldown("Ability3", 10);
             Player.PlayerStateMachine.ChangeState("IdleState");
 
         }
@@ -326,7 +467,6 @@ public partial class Ability : Node
             AbilityCast = new TaskCompletionSource<bool>();
         }
     }
-
 
     public async void Cone(Entity caster)
     {
@@ -361,7 +501,7 @@ public partial class Ability : Node
 
             AbilityCast = new TaskCompletionSource<bool>();
 
-            AbilityUI.SetAbilityCooldown("Ability4");
+            AbilityUI.SetAbilityCooldown("Ability4", 10);
             Player.PlayerStateMachine.ChangeState("IdleState");
 
         }
@@ -374,6 +514,26 @@ public partial class Ability : Node
         }
     }
 
+    public StatEffect CreateStatEffect(float duration, string statEffect, double effectAmount)
+    {
+        StatEffect effect = (StatEffect)StatEffect.Instantiate();
+        effect.Player = Player;
+        effect.Message = new()
+        {
+            {"Duration", duration},
+            {"StatEffect", statEffect},
+            {"EffectAmount", effectAmount}
+        };
+
+        Player.AddChild(effect);
+        return effect;
+    }
+
+    private void OnTimedEvent(object source, ElapsedEventArgs e)
+    {
+        Console.WriteLine("The Elapsed event was raised at {0:HH:mm:ss.fff}", e.SignalTime);
+        AbilityTimerFinished.SetResult(true);
+    }
 
     public async void AbilityStructure()
     {
@@ -399,5 +559,26 @@ public partial class Ability : Node
             Casting = false; // Reset casting boolean
         }
     }
+
+    public void AutoAttacked()
+    {
+        AutoAttacksLaunched++;
+        AutoAttackEndTimer.WaitTime = 3;
+        AutoAttackEndTimer.Start();
+        AbilityUI.UpdateLeapCooldown("Ability4");
+    }
+
+    public void _on_auto_attack_end_timer_timeout()
+    {
+        GD.Print(AttackSpeedEffects);
+
+        foreach (StatEffect effect in AttackSpeedEffects)
+        {
+            effect.Exit();
+        }
+        AttackSpeedEffects.Clear();
+        AutoAttackEndTimer.Stop();
+    }
+
 }
 

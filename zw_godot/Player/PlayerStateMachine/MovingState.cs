@@ -36,4 +36,12 @@ public partial class MovingState : SimpleState
             StateMachine.ChangeState("IdleState");
         }
     }
+
+        public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventMouseButton eventMouseButton && eventMouseButton.Pressed && eventMouseButton.ButtonIndex == MouseButton.Right)
+        {
+            Player.RightClickRaycast(eventMouseButton);
+        }
+    }
 }

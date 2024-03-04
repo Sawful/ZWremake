@@ -39,6 +39,8 @@ mesh = SubResource("BoxMesh_fhn0w")
 script = ExtResource("3_ifiaf")
 MouseColliderLayers = 6
 
+[node name="AutoAttackEndTimer" type="Timer" parent="Abilities"]
+
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 0
 collision_mask = 2
@@ -48,3 +50,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 shape = SubResource("CylinderShape3D_b4j62")
 
 [node name="PlayerStateMachine" parent="." instance=ExtResource("4_x4kkh")]
+
+[node name="RegenerationTimer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Abilities/AutoAttackEndTimer" to="Abilities" method="_on_auto_attack_end_timer_timeout"]
+[connection signal="timeout" from="RegenerationTimer" to="." method="OnRegenerationTimerTimeout"]

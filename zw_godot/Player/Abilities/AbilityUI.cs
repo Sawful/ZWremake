@@ -17,9 +17,12 @@ public partial class AbilityUI : ItemList
 
     public Player Player;
 
+    int AbilityCooldownNumber = 4;
+
     public override void _Ready()
 	{
         Player = GetTree().Root.GetNode("Main").GetNode<Player>("Player");
+        if(Player.PlayerClass == "Warrior"){ AbilityCooldownNumber = 3;}
 
         AbilityButton = new()
         {
@@ -51,7 +54,7 @@ public partial class AbilityUI : ItemList
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
-        for (int i = 1; i < 5; i++)
+        for (int i = 1; i < 1 + AbilityCooldownNumber; i++)
         {
             string currentAbility = "Ability" + i.ToString();
 
@@ -84,11 +87,31 @@ public partial class AbilityUI : ItemList
         }
     }
 
-    public void SetAbilityCooldown(string ability)
+    public void SetAbilityCooldown(string ability, float cooldownTime)
     {
         AbilityButton[ability].Disabled = true;
         Player.IsAbilityCooldown[ability] = true;
-        Player.CurrentAbilityCooldown[ability] = Player.AbilityCooldown[ability];
+        Player.CurrentAbilityCooldown[ability] = cooldownTime;
+        AbilityCooldownText[ability].Text = Mathf.Ceil(Player.CurrentAbilityCooldown[ability]).ToString();
+    }
+
+    public void UpdateLeapCooldown(string ability)
+    {
+        if(Player.IsAbilityCooldown[ability])
+        {
+            int Number = AbilityCooldownText[ability].Text.ToInt();
+
+            AbilityCooldownText[ability].Text = Math.Max(Number - 1, 0).ToString();
+            if(AbilityCooldownText[ability].Text.ToInt() == 0)
+            {
+                AbilityButton[ability].Disabled = false;
+                Player.IsAbilityCooldown[ability] = false;
+                if (AbilityCooldownText[ability] != null)
+                {
+                    AbilityCooldownText[ability].Text = "";
+                }
+            }
+        }
     }
 
     public void OnAbilityButton1Pressed()

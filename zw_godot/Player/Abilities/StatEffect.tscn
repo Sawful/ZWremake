@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bijoj482l4r1i"]
+
+[ext_resource type="Script" path="res://StatEffect.cs" id="1_aqcww"]
+
+[node name="StatEffect" type="Node"]
+script = ExtResource("1_aqcww")
+
+[node name="EffectTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="EffectTimer" to="." method="_on_effect_timer_timeout"]

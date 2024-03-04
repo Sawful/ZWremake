@@ -12,6 +12,8 @@ public partial class ArrowHitbox : Area3D
     // Raycast lenght
     private const float RayLength = 1000.0f;
 
+    public bool PositionLocked;
+
     public override void _Ready()
     {
         Player = GetTree().Root.GetNode("Main").GetNode<Player>("Player");
@@ -22,7 +24,10 @@ public partial class ArrowHitbox : Area3D
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
-        SetPosition();
+        if (!PositionLocked)
+        {
+            SetPosition();
+        }
     }
 
     public void SetPosition()

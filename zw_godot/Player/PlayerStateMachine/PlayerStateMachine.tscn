@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://jv2jsrirhn8u"]
+[gd_scene load_steps=7 format=3 uid="uid://jv2jsrirhn8u"]
 
 [ext_resource type="Script" path="res://Player/PlayerStateMachine/PlayerStateMachine.cs" id="1_d26oi"]
 [ext_resource type="Script" path="res://Player/PlayerStateMachine/MovingState.cs" id="2_nub37"]
 [ext_resource type="Script" path="res://Player/PlayerStateMachine/AttackingState.cs" id="3_0unef"]
 [ext_resource type="Script" path="res://Player/PlayerStateMachine/IdleState.cs" id="4_tq6ej"]
 [ext_resource type="Script" path="res://Player/PlayerStateMachine/RangeAttackingState.cs" id="5_83djn"]
+[ext_resource type="Script" path="res://Player/PlayerStateMachine/LeapState.cs" id="6_p7gtl"]
 
 [node name="PlayerStateMachine" type="Node"]
 script = ExtResource("1_d26oi")
@@ -22,3 +23,6 @@ script = ExtResource("4_tq6ej")
 
 [node name="RangeAttackingState" type="Node" parent="States"]
 script = ExtResource("5_83djn")
+
+[node name="LeapState" type="Node" parent="States"]
+script = ExtResource("6_p7gtl")
