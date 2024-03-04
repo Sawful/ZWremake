@@ -31,10 +31,8 @@ public partial class Player : Entity
     Label DamageText;
     Label AttackSpeedText;
     Label AbilityHasteText;
-
     ProgressBar HealthBar;
     Label HealthBarText;
-
     Area3D Area3D;
     public Godot.Collections.Array<Node3D> OverlappingBodies;
 
@@ -289,6 +287,12 @@ public partial class Player : Entity
                     PlayerStateMachine.ChangeState("AttackingState", message);
             }
         }
+    }
+
+    public void OnRegenerationTimerTimeout()
+    {
+        Health = Math.Min(Health + 1, MaxHealth);
+        GD.Print("Regened" + Health);
     }
 
     public void GetEnemies()

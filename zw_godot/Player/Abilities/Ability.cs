@@ -39,7 +39,9 @@ public partial class Ability : Node
     float CooldownReduction;
 
     int AutoAttacksLaunched;
-    float TimeSinceAutoAttack;
+    Godot.Timer AutoAttackEndTimer;
+
+    public List<StatEffect> AttackSpeedEffects;
 
     public TaskCompletionSource<bool> AbilityCast = new();
     public TaskCompletionSource<bool> AttackMoveContinue = new();
@@ -58,12 +60,16 @@ public partial class Ability : Node
         ArrowHitbox = (PackedScene)ResourceLoader.Load("res://Player/Abilities/ArrowHitbox.tscn");
         StatEffect = (PackedScene)ResourceLoader.Load("res://Player/Abilities/StatEffect.tscn");
 
+        AutoAttackEndTimer = GetNode<Godot.Timer>("AutoAttackEndTimer");
+
         Player = GetParent<Player>();
         MainCamera = Player.MainCamera;
         Ground = Player.Ground;
         AbilityUI = GetTree().Root.GetNode("Main").GetNode("PlayerUI").GetNode("BottomBar").GetNode<AbilityUI>("AbilityUI");
 
         Main = Player.GetParent<Node3D>();
+
+        AttackSpeedEffects = new();
     }
 
     public override void _Process(double delta)
@@ -76,7 +82,6 @@ public partial class Ability : Node
         }
 
         CooldownReduction = 1 - (100 - (10000 / (100 + 2 * Player.AbilityHaste))) / 100;
-        TimeSinceAutoAttack = Math.Max(TimeSinceAutoAttack - (float)delta, 0);
     }
 
     public override void _Input(InputEvent @event)
@@ -247,7 +252,9 @@ public partial class Ability : Node
 
     public void Warrior2(Entity caster)
     {
-        CreateStatEffect(5);
+        CreateStatEffect(5, "AttackSpeed", 0.5);
+        CreateStatEffect(5, "Damage", 0.2);
+
         AbilityUI.SetAbilityCooldown("Ability2", 20 * CooldownReduction);
     }
 
@@ -507,16 +514,19 @@ public partial class Ability : Node
         }
     }
 
-    public void CreateStatEffect(float duration)
+    public StatEffect CreateStatEffect(float duration, string statEffect, double effectAmount)
     {
         StatEffect effect = (StatEffect)StatEffect.Instantiate();
         effect.Player = Player;
         effect.Message = new()
         {
-            {"Duration", duration}
+            {"Duration", duration},
+            {"StatEffect", statEffect},
+            {"EffectAmount", effectAmount}
         };
 
         Player.AddChild(effect);
+        return effect;
     }
 
     private void OnTimedEvent(object source, ElapsedEventArgs e)
@@ -553,8 +563,22 @@ public partial class Ability : Node
     public void AutoAttacked()
     {
         AutoAttacksLaunched++;
-        TimeSinceAutoAttack = 3;
+        AutoAttackEndTimer.WaitTime = 3;
+        AutoAttackEndTimer.Start();
         AbilityUI.UpdateLeapCooldown("Ability4");
     }
+
+    public void _on_auto_attack_end_timer_timeout()
+    {
+        GD.Print(AttackSpeedEffects);
+
+        foreach (StatEffect effect in AttackSpeedEffects)
+        {
+            effect.Exit();
+        }
+        AttackSpeedEffects.Clear();
+        AutoAttackEndTimer.Stop();
+    }
+
 }
 

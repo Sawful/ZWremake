@@ -6,6 +6,7 @@ public partial class Entity : RigidBody3D
 
     [Export] public int MaxHealth;
     [Export] public int Health;
+    [Export] public double HealthRegeneration;
     [Export] public int Damage;
     [Export] public float Range;
     [Export] public float Speed;

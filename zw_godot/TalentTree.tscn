@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://ut3dfals7iew"]
 
 [ext_resource type="Theme" uid="uid://c6s6l1snyrcqd" path="res://Visual/Theme/TalentTree.tres" id="1_rffop"]
-[ext_resource type="Script" path="res://WarriorBranch.cs" id="2_8vr3k"]
+[ext_resource type="Script" path="res://Script/WarriorBranch.cs" id="2_8vr3k"]
 [ext_resource type="Texture2D" uid="uid://crgfffdd5swcr" path="res://Visual/Ui/Icon/slash.png" id="3_4qv44"]
-[ext_resource type="Script" path="res://ArcherBranch.cs" id="3_deglo"]
-[ext_resource type="Script" path="res://SorcererBranch.cs" id="4_ojrf8"]
+[ext_resource type="Script" path="res://Script/ArcherBranch.cs" id="3_deglo"]
+[ext_resource type="Script" path="res://Script/SorcererBranch.cs" id="4_ojrf8"]
 [ext_resource type="Texture2D" uid="uid://mijjpmxenvbc" path="res://Visual/Ui/Icon/FireBall.png" id="6_tx3fb"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_4oj3d"]

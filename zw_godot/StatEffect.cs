@@ -10,14 +10,9 @@ public partial class StatEffect : Node
 
 	public override void _Ready()
 	{
-		EffectTimer = GetNode<Timer>("EffectTimer");
-		EffectTimer.WaitTime = (float)Message["Duration"];
-		EffectTimer.Start();
+		SetTimer();
 		// Change the stats
-		Player.StatsBonusMult["AttackSpeed"] = 0.5;
-		Player.StatsBonusMult["Damage"] = 0.2;
-		Player.UpdateStats();
-
+		AddEffect();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -26,13 +21,33 @@ public partial class StatEffect : Node
 		Exit();
 	}
 
+	private void SetTimer()
+	{
+		if((float)Message["Duration"] != 0)
+		{
+			EffectTimer = GetNode<Timer>("EffectTimer");
+			EffectTimer.WaitTime = (float)Message["Duration"];
+			EffectTimer.Start();
+		}
+	}
+
 	public void Exit()
 	{
 		// Remove stat changes
-		Player.StatsBonusMult["AttackSpeed"] = 0;
-		Player.StatsBonusMult["Damage"] = 0;
-		Player.UpdateStats();
+		RemoveEffect();
 		// Remove Node
 		QueueFree();
+	}
+
+	private void AddEffect()
+	{
+		Player.StatsBonusMult[(string)Message["StatEffect"]] += (double)Message["EffectAmount"];
+		Player.UpdateStats();
+	}
+
+		private void RemoveEffect()
+	{
+		Player.StatsBonusMult[(string)Message["StatEffect"]] -= (double)Message["EffectAmount"];
+		Player.UpdateStats();
 	}
 }

@@ -27,6 +27,8 @@ public partial class AttackingState : SimpleState
         base.OnStart(message);
         Message = message;
         Target = (Enemy)Message["Target"];
+		GD.Print(Target);
+
         TargetCircleObject = (Node3D)TargetCircle.Instantiate();
         Target.AddChild(TargetCircleObject);
     }
@@ -76,7 +78,6 @@ public partial class AttackingState : SimpleState
 
                 else if ((string)Message["Ability"] == "Leap")
                 {
-                    float range = (float)Message["Range"];
                     float leapRange = (float)Message["Leap Range"];
 
                     if (Player.Position.DistanceTo(targetPosition) >= leapRange)
@@ -84,29 +85,11 @@ public partial class AttackingState : SimpleState
                         Player.MoveTo(dt, targetPosition);
                     }
 
-                    else if (Player.Position.DistanceTo(targetPosition) >= range)
-                    {
-                        Player.Position = Player.Position.MoveToward(targetPosition, 10 * Convert.ToSingle(dt));;
-                    }
-
                     else
                     {
-                        Player.RotateTo(targetPosition, Entity.RotationWeight);
-                        GD.Print(Message["Ability"] + "GAMING");
-                        //Play spell
-                        Player.DealDamage(Target, (int) Mathf.Round(Player.Damage * (float)Message["DamageMultiplier"]));
-                        AbilityUI.SetAbilityCooldown("Ability4", (int)Message["Cooldown"]); // Set Cooldown
-
-                        //Reset attack
-                        Dictionary<string, object> message = new()
-                        {
-                            {"Target",  Target},
-                        };
-                        Player.AttackReload = 0.25;
-                        StateMachine.ChangeState("AttackingState", message);
+                        StateMachine.ChangeState("LeapState", Message);
                     }
                 }
-
             }
             
             else
