@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bl0rsh88rppk"]
+[gd_scene load_steps=24 format=3 uid="uid://bl0rsh88rppk"]
 
 [ext_resource type="FontFile" uid="uid://d1b0osrg7ontx" path="res://Visual/Ui/Font/The Macabre.otf" id="1_51u4j"]
 [ext_resource type="Script" path="res://Player/GameUI.cs" id="2_g4yvb"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cd8cp4s5o0cj5" path="res://Visual/Ui/Icon/ability2.png" id="5_xvn8f"]
 [ext_resource type="Texture2D" uid="uid://ch5ydusk4job1" path="res://Visual/Ui/Icon/ability3.png" id="6_m7vp1"]
 [ext_resource type="Texture2D" uid="uid://6w71rmh4rjdc" path="res://Visual/Ui/Icon/ability4.png" id="7_ytta3"]
+[ext_resource type="Script" path="res://Player/HealthBar.cs" id="9_sd6lq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_fh17m"]
 font = ExtResource("1_51u4j")
@@ -199,6 +200,7 @@ theme = ExtResource("2_v3j47")
 step = 1.0
 value = 100.0
 show_percentage = false
+script = ExtResource("9_sd6lq")
 
 [node name="HealthBarText" type="Label" parent="HealthBar"]
 layout_mode = 0
@@ -229,7 +231,7 @@ size_flags_vertical = 3
 theme = ExtResource("2_v3j47")
 label_settings = SubResource("LabelSettings_nhhdy")
 
-[node name="RessourceText" type="Label" parent="TopLeftDisplay"]
+[node name="ResourceText" type="Label" parent="TopLeftDisplay"]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("2_v3j47")
@@ -248,6 +250,18 @@ theme = ExtResource("2_v3j47")
 label_settings = SubResource("LabelSettings_3cauu")
 
 [node name="AbilityHasteText" type="Label" parent="TopLeftDisplay"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_v3j47")
+label_settings = SubResource("LabelSettings_3cauu")
+
+[node name="HealthRegenerationText" type="Label" parent="TopLeftDisplay"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_v3j47")
+label_settings = SubResource("LabelSettings_3cauu")
+
+[node name="SpeedText" type="Label" parent="TopLeftDisplay"]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("2_v3j47")

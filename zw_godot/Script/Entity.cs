@@ -74,4 +74,42 @@ public partial class Entity : RigidBody3D
         return sceneNode;
     }
 
+    public int GetMaxHealth()
+    {
+        return MaxHealth;
+    }
+    public int GetHealth()
+    {
+        return Health;
+    }
+
+    public double GetHealthRegeneration()
+    {
+        return HealthRegeneration;
+    }
+
+    public int GetDamage()
+    {
+        return Damage;
+    }
+
+    public float GetRange()
+    {
+        return Range;
+    }
+
+    public float GetSpeed()
+    {
+        return Speed;
+    }
+
+    public double GetAttackSpeed()
+    {
+        return AttackSpeed;
+    }
+
+    public int GetAbilityHaste()
+    {
+        return AbilityHaste;
+    }
 }

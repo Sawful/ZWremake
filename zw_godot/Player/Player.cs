@@ -20,19 +20,8 @@ public partial class Player : Entity
     private Enemy EnemyClicked;
     public SimpleStateMachine PlayerStateMachine;
     public Node3D ClosestTarget;
-
     AbilityUI AbilityUI;
     GameUI GameUI;
-
-    VBoxContainer TopLeftDisplay;
-    Label LevelText;
-    Label ExperienceText;
-    Label RessourceText;
-    Label DamageText;
-    Label AttackSpeedText;
-    Label AbilityHasteText;
-    ProgressBar HealthBar;
-    Label HealthBarText;
     Area3D Area3D;
     public Godot.Collections.Array<Node3D> OverlappingBodies;
 
@@ -69,13 +58,12 @@ public partial class Player : Entity
     public Dictionary<string, double> StatsBonusMult;
     public Dictionary<string, double> StatsBonusAdd;
 
-
     public string PlayerClass;
 
     private int Experience;
     private int Level = 1;
     private int ExperienceToLevelUp;
-    private int Ressource;
+    private int Resource;
 
     public override void _Ready()
     {
@@ -84,18 +72,6 @@ public partial class Player : Entity
 
         GameUI = GetTree().Root.GetNode("Main").GetNode<GameUI>("PlayerUI");
         AbilityUI = GameUI.GetNode<PanelContainer>("BottomBar").GetNode<AbilityUI>("AbilityUI");
-        HealthBar = GameUI.GetNode<ProgressBar>("HealthBar");
-        HealthBarText = HealthBar.GetNode<Label>("HealthBarText");
-        TopLeftDisplay = GameUI.GetNode<VBoxContainer>("TopLeftDisplay");
-        LevelText = TopLeftDisplay.GetNode<Label>("LevelText");
-        ExperienceText = TopLeftDisplay.GetNode<Label>("ExperienceText");
-        RessourceText = TopLeftDisplay.GetNode<Label>("RessourceText");
-        DamageText = TopLeftDisplay.GetNode<Label>("DamageText");
-        AttackSpeedText = TopLeftDisplay.GetNode<Label>("AttackSpeedText");
-        AbilityHasteText = TopLeftDisplay.GetNode<Label>("AbilityHasteText");
-        LevelText.Text = "Level: " + Level.ToString();
-        ExperienceText.Text = "Exp: " + Experience.ToString();
-        RessourceText.Text = "Ressource: " + Ressource.ToString();
 
         AbilityScript = GetNode<Ability>("Abilities");
 
@@ -199,16 +175,16 @@ public partial class Player : Entity
             {"Ability4", false}
         };
 
-        
-        UpdateStats();
+        MaxHealth = (int)Math.Round((200 + StatsBonusAdd["MaxHealth"] + 10 * StatsLevel["MaxHealth"]) * (1 + StatsBonusMult["MaxHealth"]));
+        Damage = (int)Math.Round((10 + StatsBonusAdd["Damage"] + 3 * StatsLevel["Damage"]) * (1 + StatsBonusMult["Damage"]));
+        Speed = (float) (4 + StatsBonusAdd["MovementSpeed"] + 0.5f * StatsLevel["MovementSpeed"]) * (float) (1 + StatsBonusMult["MovementSpeed"]);
+        AttackSpeed = (1 + StatsBonusAdd["AttackSpeed"] + 0.2 * StatsLevel["AttackSpeed"]) * (1 + StatsBonusMult["AttackSpeed"]);
+        AbilityHaste = (int)Math.Round((0 + StatsBonusAdd["AbilityHaste"] + 3 * StatsLevel["AbilityHaste"]) * (1 + StatsBonusMult["AbilityHaste"]));
 
         base._Ready();
 
         SoundEffectPlayer = (PackedScene)ResourceLoader.Load("res://Sound/SoundEffect.tscn");
         AttackSound = (AudioStreamWav)ResourceLoader.Load("res://Sound/hitsound.wav");
-
-        HealthBar.MaxValue = MaxHealth;
-        HealthBar.Value = Health;
 
         PlayerStateMachine = (SimpleStateMachine)GetNode("PlayerStateMachine");
         Area3D = GetNode<Area3D>("Area3D");
@@ -218,9 +194,6 @@ public partial class Player : Entity
 
     public override void _Process(double delta)
     {
-        HealthBar.MaxValue = MaxHealth;
-        HealthBar.Value = Mathf.Lerp(HealthBar.Value, Health, 0.25);
-        HealthBarText.Text = Health.ToString() + " / " + MaxHealth.ToString();
 
         if (Input.IsActionJustPressed("AttackMoveKey"))
         {
@@ -320,17 +293,15 @@ public partial class Player : Entity
 
     public void GetRewards(int ressource, int experience)
     {
-        Ressource += ressource;
+        Resource += ressource;
         Experience += experience;
 
         while (Experience >= ExperienceToLevelUp)
         {
             LevelUp();
         }
-
-        LevelText.Text = "Level: " + Level.ToString();
-        ExperienceText.Text = "Exp: " + Experience.ToString();
-        RessourceText.Text = "Ressource: " + Ressource.ToString();
+        GameUI.GetRewards();
+        
     }
 
     public void UpdateStats()
@@ -341,9 +312,7 @@ public partial class Player : Entity
         AttackSpeed = (1 + StatsBonusAdd["AttackSpeed"] + 0.2 * StatsLevel["AttackSpeed"]) * (1 + StatsBonusMult["AttackSpeed"]);
         AbilityHaste = (int)Math.Round((0 + StatsBonusAdd["AbilityHaste"] + 3 * StatsLevel["AbilityHaste"]) * (1 + StatsBonusMult["AbilityHaste"]));
 
-        DamageText.Text = "Damage: " + Damage.ToString();
-        AttackSpeedText.Text = "Attack Speed: " + AttackSpeed.ToString();
-        AbilityHasteText.Text = "Ability Haste: " + AbilityHaste.ToString();
+        GameUI.UpdateStats();
     }
 
     public void LevelUp()
@@ -362,6 +331,11 @@ public partial class Player : Entity
     public int GetExperience()
     {
         return Experience;
+    }
+
+    public int GetResource()
+    {
+        return Resource;
     }
 
     public void SetLevel(int level)
