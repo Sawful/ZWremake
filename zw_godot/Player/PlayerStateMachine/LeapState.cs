@@ -6,7 +6,7 @@ public partial class LeapState : SimpleState
 {
 	SimpleStateMachine StateMachine;
     private AbilityUI AbilityUI;
-	private Ability Ability;
+	private AbilityHandler AbilityHandler;
 	Enemy Target;
     Player Player;
 	Dictionary<string, object> Message;
@@ -20,7 +20,7 @@ public partial class LeapState : SimpleState
 		TargetCircle = (PackedScene)ResourceLoader.Load("res://Enemies/TargetCircle.tscn");
 		Player = (Player)StateMachine.GetParent();
 		AbilityUI = GetTree().Root.GetNode("Main").GetNode("PlayerUI").GetNode("BottomBar").GetNode<AbilityUI>("AbilityUI");
-		Ability = Player.GetNode<Ability>("Abilities");
+		AbilityHandler = Player.GetNode<AbilityHandler>("Abilities");
     }
     public override void OnStart(Dictionary<string, object> message)
     {
@@ -73,8 +73,8 @@ public partial class LeapState : SimpleState
         {
             TargetCircleObject.QueueFree();
         }
-		StatEffect effect = Ability.CreateStatEffect(0, "AttackSpeed", 0.1);
-		Ability.AttackSpeedEffects.Add(effect);
+		StatEffect effect = ((Ability)Message["AbilityNode"]).CreateStatEffect(0, "AttackSpeed", 0.1);
+		//Ability.AttackSpeedEffects.Add(effect);
         base.OnExit(NextState);
     }
 }

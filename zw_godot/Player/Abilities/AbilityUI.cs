@@ -116,22 +116,22 @@ public partial class AbilityUI : ItemList
 
     public void OnAbilityButton1Pressed()
     {
-        Player.AbilityScript.Call(Player.Ability["Ability1"], Player);
+        Player.Ability["Ability1"].Call("CastAbility", Player);
     }
 
     public void OnAbilityButton2Pressed()
     {
-        Player.AbilityScript.Call(Player.Ability["Ability2"], Player);
+        Player.Ability["Ability2"].Call("CastAbility", Player);
     }
 
     public void OnAbilityButton3Pressed()
     {
-        Player.AbilityScript.Call(Player.Ability["Ability3"], Player);
+        Player.Ability["Ability3"].Call("CastAbility", Player);
     }
 
     public void OnAbilityButton4Pressed()
     {
-        Player.AbilityScript.Call(Player.Ability["Ability4"], Player);
+        Player.Ability["Ability4"].Call("CastAbility", Player);
     }
 
 }

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ct6n5chnucpdp"]
+
+[ext_resource type="Script" path="res://Player/Abilities/Script/Warrior/Warrior3.cs" id="1_en12u"]
+
+[node name="Warrior3" type="Node"]
+script = ExtResource("1_en12u")

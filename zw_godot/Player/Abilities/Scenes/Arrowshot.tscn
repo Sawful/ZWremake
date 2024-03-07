@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://wl2u3h0olprw"]
+
+[ext_resource type="Script" path="res://Player/Abilities/Script/Other/Arrowshot.cs" id="1_5qs31"]
+
+[node name="Arrowshot" type="Node"]
+script = ExtResource("1_5qs31")
