@@ -41,23 +41,23 @@ public partial class Warrior4 : PointAndClickAbility
     {
         Node3D node = (Node3D)AbilityRaycast()["objectHit"];
 
-            if (node != null)
+        if (node != null)
+        {
+            if ((Node3D)AbilityRaycast()["objectHit"] is Enemy enemyHit)
             {
-                if ((Node3D)AbilityRaycast()["objectHit"] is Enemy enemyHit)
+                System.Collections.Generic.Dictionary<string, object> message = new()
                 {
-                    System.Collections.Generic.Dictionary<string, object> message = new()
-                    {
-                        {"Target",  enemyHit},
-                        {"Ability", "Leap"},
-                        {"Range", 2f},
-                        {"Leap Range", 10f},
-                        {"DamageMultiplier", 2f},
-                        {"Cooldown", 10},
-                        {"AbilityNode", this}
-                    };
-                    Player.PlayerStateMachine.ChangeState("AttackingState", message);
-                }
+                    {"Target",  enemyHit},
+                    {"Ability", "Leap"},
+                    {"Range", 2f},
+                    {"Leap Range", 10f},
+                    {"DamageMultiplier", 2f},
+                    {"Cooldown", 10},
+                    {"AbilityNode", this}
+                };
+                Player.PlayerStateMachine.ChangeState("AttackingState", message);
             }
+        }
     }
    
     public void AutoAttacked() //Not activated

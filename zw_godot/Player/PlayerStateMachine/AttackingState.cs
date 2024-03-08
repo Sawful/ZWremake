@@ -102,16 +102,9 @@ public partial class AttackingState : SimpleState
                 else
                 {
                     Player.RotateTo(targetPosition, Entity.RotationWeight);
-
-                    if (Player.AttackReload <= 0)
-                    {
-                        Player.DealDamage(Target, Player.Damage);
-                        Player.AttackReload = 1 / Player.AttackSpeed;
-                        
-                    }
+                    Player.AutoAttack(Target);
                 }
             }
-  
         }
     }
 

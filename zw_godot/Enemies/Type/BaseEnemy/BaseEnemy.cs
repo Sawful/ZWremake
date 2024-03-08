@@ -8,7 +8,7 @@ public partial class BaseEnemy : Enemy
     public override void _Ready()
 	{
         MaxHealth = 30;
-        Damage = 5;
+        Damage = 3;
         Range = 2;
         Speed = 2;
         AttackSpeed = 1;

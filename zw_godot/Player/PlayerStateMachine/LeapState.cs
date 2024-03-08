@@ -74,7 +74,7 @@ public partial class LeapState : SimpleState
             TargetCircleObject.QueueFree();
         }
 		StatEffect effect = ((Ability)Message["AbilityNode"]).CreateStatEffect(0, "AttackSpeed", 0.1);
-		//Ability.AttackSpeedEffects.Add(effect);
+		((Warrior4)Message["AbilityNode"]).AttackSpeedEffects.Add(effect);
         base.OnExit(NextState);
     }
 }

@@ -57,6 +57,8 @@ public partial class Player : Entity
     public Dictionary<string, double> StatsBonusMult;
     public Dictionary<string, double> StatsBonusAdd;
 
+    Godot.Timer RegenerationTimer;
+
     public string PlayerClass;
 
     private int Experience;
@@ -71,6 +73,8 @@ public partial class Player : Entity
 
         GameUI = GetTree().Root.GetNode("Main").GetNode<GameUI>("PlayerUI");
         AbilityUI = GameUI.GetNode<PanelContainer>("BottomBar").GetNode<AbilityUI>("AbilityUI");
+
+        RegenerationTimer = GetNode<Godot.Timer>("RegenerationTimer");
 
         AbilityScript = GetNode<AbilityHandler>("Abilities");
 
@@ -176,6 +180,9 @@ public partial class Player : Entity
         AttackSpeed = (1 + StatsBonusAdd["AttackSpeed"] + 0.2 * StatsLevel["AttackSpeed"]) * (1 + StatsBonusMult["AttackSpeed"]);
         AbilityHaste = (int)Math.Round((0 + StatsBonusAdd["AbilityHaste"] + 3 * StatsLevel["AbilityHaste"]) * (1 + StatsBonusMult["AbilityHaste"]));
 
+        HealthRegeneration = 3;
+        RegenerationTimer.WaitTime = 1/HealthRegeneration;
+
         base._Ready();
 
         SoundEffectPlayer = (PackedScene)ResourceLoader.Load("res://Sound/SoundEffect.tscn");
@@ -259,6 +266,17 @@ public partial class Player : Entity
         }
     }
 
+    public void AutoAttack(Entity target)
+    {
+        if (AttackReload <= 0)
+        {
+            DealDamage(target, Damage);
+            AttackReload = 1 / AttackSpeed;
+            // Call auto attack
+            Ability["Ability4"].Call("AutoAttacked");
+        }
+    }
+
     public void OnRegenerationTimerTimeout()
     {
         Health = Math.Min(Health + 1, MaxHealth);
@@ -307,6 +325,8 @@ public partial class Player : Entity
         Speed = (float) (4 + StatsBonusAdd["MovementSpeed"] + 0.5f * StatsLevel["MovementSpeed"]) * (float) (1 + StatsBonusMult["MovementSpeed"]);
         AttackSpeed = (1 + StatsBonusAdd["AttackSpeed"] + 0.2 * StatsLevel["AttackSpeed"]) * (1 + StatsBonusMult["AttackSpeed"]);
         AbilityHaste = (int)Math.Round((0 + StatsBonusAdd["AbilityHaste"] + 3 * StatsLevel["AbilityHaste"]) * (1 + StatsBonusMult["AbilityHaste"]));
+        HealthRegeneration = 3;
+        RegenerationTimer.WaitTime = 1/HealthRegeneration;
 
         GameUI.UpdateStats();
     }
