@@ -1,9 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://xjh6b4khdnpy"]
+[gd_scene load_steps=13 format=3 uid="uid://xjh6b4khdnpy"]
 
 [ext_resource type="Script" path="res://Player/Player.cs" id="1_5n8ii"]
 [ext_resource type="Shader" path="res://Visual/Shaders/player.gdshader" id="2_13mig"]
-[ext_resource type="Script" path="res://Player/Abilities/Ability.cs" id="3_ifiaf"]
+[ext_resource type="Script" path="res://Player/Abilities/AbilityHandler.cs" id="3_rpmj0"]
+[ext_resource type="PackedScene" uid="uid://cmf7tet4tigqg" path="res://Player/Abilities/Scenes/Warrior1.tscn" id="4_wkbiu"]
 [ext_resource type="PackedScene" uid="uid://jv2jsrirhn8u" path="res://Player/PlayerStateMachine/PlayerStateMachine.tscn" id="4_x4kkh"]
+[ext_resource type="PackedScene" uid="uid://bkadxytui856e" path="res://Player/Abilities/Scenes/Warrior2.tscn" id="5_br2gj"]
+[ext_resource type="PackedScene" uid="uid://ct6n5chnucpdp" path="res://Player/Abilities/Scenes/Warrior3.tscn" id="6_irv88"]
+[ext_resource type="PackedScene" uid="uid://da2ba83us77lu" path="res://Player/Abilities/Scenes/Warrior4.tscn" id="7_8vwn7"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ah6sg"]
 height = 1.0
@@ -36,10 +40,20 @@ material_override = SubResource("ShaderMaterial_nkeww")
 mesh = SubResource("BoxMesh_fhn0w")
 
 [node name="Abilities" type="Node3D" parent="."]
-script = ExtResource("3_ifiaf")
+script = ExtResource("3_rpmj0")
 MouseColliderLayers = 6
 
-[node name="AutoAttackEndTimer" type="Timer" parent="Abilities"]
+[node name="Warrior1" parent="Abilities" instance=ExtResource("4_wkbiu")]
+MouseColliderLayers = 6
+
+[node name="Warrior2" parent="Abilities" instance=ExtResource("5_br2gj")]
+MouseColliderLayers = 6
+
+[node name="Warrior3" parent="Abilities" instance=ExtResource("6_irv88")]
+MouseColliderLayers = 6
+
+[node name="Warrior4" parent="Abilities" instance=ExtResource("7_8vwn7")]
+MouseColliderLayers = 6
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 0
@@ -54,5 +68,4 @@ shape = SubResource("CylinderShape3D_b4j62")
 [node name="RegenerationTimer" type="Timer" parent="."]
 autostart = true
 
-[connection signal="timeout" from="Abilities/AutoAttackEndTimer" to="Abilities" method="_on_auto_attack_end_timer_timeout"]
 [connection signal="timeout" from="RegenerationTimer" to="." method="OnRegenerationTimerTimeout"]

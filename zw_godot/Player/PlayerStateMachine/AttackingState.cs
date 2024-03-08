@@ -8,7 +8,7 @@ public partial class AttackingState : SimpleState
     Enemy Target;
     Player Player;
     Dictionary<string, object> Message;
-    private Ability Ability;
+    private AbilityHandler Ability;
     private AbilityUI AbilityUI;
     PackedScene TargetCircle;
     Node3D TargetCircleObject;
@@ -17,7 +17,7 @@ public partial class AttackingState : SimpleState
         StateMachine = (SimpleStateMachine)GetParent().GetParent();
         Player = (Player)StateMachine.GetParent();
         AbilityUI = GetTree().Root.GetNode("Main").GetNode("PlayerUI").GetNode("BottomBar").GetNode<AbilityUI>("AbilityUI");
-        Ability = Player.GetNode<Ability>("Abilities");
+        Ability = Player.GetNode<AbilityHandler>("Abilities");
 
         TargetCircle = (PackedScene)ResourceLoader.Load("res://Enemies/TargetCircle.tscn");
     }
@@ -102,17 +102,9 @@ public partial class AttackingState : SimpleState
                 else
                 {
                     Player.RotateTo(targetPosition, Entity.RotationWeight);
-
-                    if (Player.AttackReload <= 0)
-                    {
-                        Player.DealDamage(Target, Player.Damage);
-                        Player.AttackReload = 1 / Player.AttackSpeed;
-
-                        Ability.AutoAttacked();
-                    }
+                    Player.AutoAttack(Target);
                 }
             }
-  
         }
     }
 

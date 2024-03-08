@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://da2ba83us77lu"]
+
+[ext_resource type="Script" path="res://Player/Abilities/Script/Warrior/Warrior4.cs" id="1_0r4kx"]
+
+[node name="Warrior4" type="Node"]
+script = ExtResource("1_0r4kx")
+
+[node name="AutoAttackEndTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="AutoAttackEndTimer" to="." method="_on_auto_attack_end_timer_timeout"]

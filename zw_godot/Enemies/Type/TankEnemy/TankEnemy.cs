@@ -7,10 +7,10 @@ public partial class TankEnemy : Enemy
     public override void _Ready()
     {
         MaxHealth = 80;
-        Damage = 7;
+        Damage = 5;
         Range = 2;
         Speed = 1.5f;
-        AttackSpeed = 0.8;
+        AttackSpeed = 0.6;
 
         base._Ready();
         EnemyStateMachine = (SimpleStateMachine)GetNode("EnemyStateMachine");

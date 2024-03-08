@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://h7p247tw7bap"]
+
+[ext_resource type="Script" path="res://Player/Abilities/Script/Other/Flamestorm.cs" id="1_6i06r"]
+
+[node name="Flamestorm" type="Node"]
+script = ExtResource("1_6i06r")

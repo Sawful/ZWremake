@@ -5,8 +5,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
-//using System.Collections;
-//using System.Collections.Generic;
 
 
 public partial class Player : Entity
@@ -41,12 +39,13 @@ public partial class Player : Entity
     public CollisionObject3D[] possibleTargets;
 
     // Abilities
-    public Ability AbilityScript;
-
-    public Dictionary<string, string> Ability;
+    public AbilityHandler AbilityScript;
+    public Godot.Collections.Array<Node> AbilityArray;
+    public Dictionary<string, Node> Ability;
     public Dictionary<string, float> AbilityCooldown;
     public Dictionary<string, float> CurrentAbilityCooldown;
     public Dictionary<string, bool> IsAbilityCooldown;
+    public Dictionary<string, string> AbilityPath;
 
     // Vectors
     private Vector3 AnchorPoint = Vector3.Zero;
@@ -57,6 +56,8 @@ public partial class Player : Entity
 
     public Dictionary<string, double> StatsBonusMult;
     public Dictionary<string, double> StatsBonusAdd;
+
+    Godot.Timer RegenerationTimer;
 
     public string PlayerClass;
 
@@ -73,10 +74,21 @@ public partial class Player : Entity
         GameUI = GetTree().Root.GetNode("Main").GetNode<GameUI>("PlayerUI");
         AbilityUI = GameUI.GetNode<PanelContainer>("BottomBar").GetNode<AbilityUI>("AbilityUI");
 
-        AbilityScript = GetNode<Ability>("Abilities");
+        RegenerationTimer = GetNode<Godot.Timer>("RegenerationTimer");
+
+        AbilityScript = GetNode<AbilityHandler>("Abilities");
 
         MainCamera = GetTree().Root.GetNode("Main").GetNode<CameraScript>("MainCamera");
         AbilityScript.MainCamera = MainCamera;
+        AbilityArray = AbilityScript.GetChildren();
+
+        Ability = new()
+        {
+            {"Ability1", AbilityArray[0]},
+            {"Ability2", AbilityArray[1]},
+            {"Ability3", AbilityArray[2]},
+            {"Ability4", AbilityArray[3]}
+        };
 
         PlayerClass = "Warrior";
 
@@ -111,39 +123,26 @@ public partial class Player : Entity
 
         if(PlayerClass == "Warrior")
         {
-            Ability = new()
+            AbilityPath = new()
             {
-                {"Ability1", "Warrior1"},
-                {"Ability2", "Warrior2"},
-                {"Ability3", "Warrior3"},
-                {"Ability4", "Warrior4"}
+                {"Ability1", "res://Player/Abilities/Scenes/Warrior/" + AbilityArray[0].Name + ".tscn"},
+                {"Ability2", "res://Player/Abilities/Scenes/Warrior/" + AbilityArray[1].Name + ".tscn"},
+                {"Ability3", "res://Player/Abilities/Scenes/Warrior/" + AbilityArray[2].Name + ".tscn"},
+                {"Ability4", "res://Player/Abilities/Scenes/Warrior/" + AbilityArray[3].Name + ".tscn"}
             };
+
             Range = 2;
             RangedAttack = false;
         }
 
         else if(PlayerClass == "Sorcerer")
         {
-            Ability = new()
-            {
-                {"Ability1", "Sorcerer1"},
-                {"Ability2", "Sorcerer2"},
-                {"Ability3", "Sorcerer3"},
-                {"Ability4", "Sorcerer4"}
-            };
             Range = 4;
             RangedAttack = true;
         }
 
         else if(PlayerClass == "Archer")
         {
-            Ability = new()
-            {
-                {"Ability1", "Archer1"},
-                {"Ability2", "Archer2"},
-                {"Ability3", "Archer3"},
-                {"Ability4", "Archer4"}
-            };
             Range = 4;
             RangedAttack = true;
         }
@@ -181,6 +180,9 @@ public partial class Player : Entity
         AttackSpeed = (1 + StatsBonusAdd["AttackSpeed"] + 0.2 * StatsLevel["AttackSpeed"]) * (1 + StatsBonusMult["AttackSpeed"]);
         AbilityHaste = (int)Math.Round((0 + StatsBonusAdd["AbilityHaste"] + 3 * StatsLevel["AbilityHaste"]) * (1 + StatsBonusMult["AbilityHaste"]));
 
+        HealthRegeneration = 3;
+        RegenerationTimer.WaitTime = 1/HealthRegeneration;
+
         base._Ready();
 
         SoundEffectPlayer = (PackedScene)ResourceLoader.Load("res://Sound/SoundEffect.tscn");
@@ -200,6 +202,8 @@ public partial class Player : Entity
             AbilityScript.Call("AttackMove");
         }
     }
+
+
 
     public override void _PhysicsProcess(double delta)
     {
@@ -262,10 +266,20 @@ public partial class Player : Entity
         }
     }
 
+    public void AutoAttack(Entity target)
+    {
+        if (AttackReload <= 0)
+        {
+            DealDamage(target, Damage);
+            AttackReload = 1 / AttackSpeed;
+            // Call auto attack
+            Ability["Ability4"].Call("AutoAttacked");
+        }
+    }
+
     public void OnRegenerationTimerTimeout()
     {
         Health = Math.Min(Health + 1, MaxHealth);
-        GD.Print("Regened" + Health);
     }
 
     public void GetEnemies()
@@ -311,6 +325,8 @@ public partial class Player : Entity
         Speed = (float) (4 + StatsBonusAdd["MovementSpeed"] + 0.5f * StatsLevel["MovementSpeed"]) * (float) (1 + StatsBonusMult["MovementSpeed"]);
         AttackSpeed = (1 + StatsBonusAdd["AttackSpeed"] + 0.2 * StatsLevel["AttackSpeed"]) * (1 + StatsBonusMult["AttackSpeed"]);
         AbilityHaste = (int)Math.Round((0 + StatsBonusAdd["AbilityHaste"] + 3 * StatsLevel["AbilityHaste"]) * (1 + StatsBonusMult["AbilityHaste"]));
+        HealthRegeneration = 3;
+        RegenerationTimer.WaitTime = 1/HealthRegeneration;
 
         GameUI.UpdateStats();
     }
