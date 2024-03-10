@@ -18,6 +18,7 @@ public partial class GameManager : Node3D
     Control PlayerUI;
     Player Player;
     ProgressBar HealthBar;
+    PlayerInfo PlayerInfo;
 
     public bool IsPlayerDead = false;
 
@@ -30,6 +31,8 @@ public partial class GameManager : Node3D
 
     public override void _Ready()
     {
+        PlayerInfo = GetNode<PlayerInfo>("/root/PlayerInfo");
+
         Player = GetNode<Player>("Player");
         PlayerUI = GetNode<Control>("PlayerUI");
         SpawnLocation = GetNode<Marker3D>("SpawnLocation");
@@ -44,8 +47,6 @@ public partial class GameManager : Node3D
         BottomLeft = new(-40, 0, -40);
         BottomRight = new(-40, 0, 40);
 
-        
-
         BaseEnemyScene = (PackedScene)ResourceLoader.Load("res://Enemies/Type/BaseEnemy/BaseEnemy.tscn");
         TankEnemyScene = (PackedScene)ResourceLoader.Load("res://Enemies/Type/TankEnemy/TankEnemy.tscn");
         RangeEnemyScene = (PackedScene)ResourceLoader.Load("res://Enemies/Type/RangeEnemy/RangeEnemy.tscn");
@@ -53,6 +54,9 @@ public partial class GameManager : Node3D
         Content = "GaMiNg";
         Content2 = "don't feel like gaming rn";
         Load();
+
+        PlayerInfo.GameNumber += 1;
+
         Start();
     }
     public override void _Process(double delta)
@@ -108,6 +112,8 @@ public partial class GameManager : Node3D
 
         await ToSignal(GetTree().CreateTimer(25), "timeout");
 
+        Save();
+
         #endregion
 
         #region Round 2
@@ -129,6 +135,8 @@ public partial class GameManager : Node3D
 
         await ToSignal(GetTree().CreateTimer(10), "timeout");
 
+        Save();
+
         #endregion
 
         #region Round 3
@@ -141,9 +149,11 @@ public partial class GameManager : Node3D
         SpawnObjectCorners(RangeEnemyScene, 1);
 
         Save();
-        GD.Print(Load());
 
         await ToSignal(GetTree().CreateTimer(5), "timeout");
+
+        Save();
+
         #endregion
 
         #region Round 4
@@ -369,25 +379,36 @@ public partial class GameManager : Node3D
 
     public void Save()
     {
-        using var file = FileAccess.Open("user://save_game.dat", FileAccess.ModeFlags.Write);
-        file.StoreVar(Player.GetLevel());
-        file.StoreVar(Player.GetExperience());
+        PlayerInfo.PlayerLevel = Player.GetLevel();
+        PlayerInfo.PlayerExperience = Player.GetExperience();
 
+        PlayerInfo.Save();
     }
 
-    public Variant Load()
+    public override void _Notification(int what)
+    {
+    if (what == NotificationWMCloseRequest)
+        {
+        GD.Print("EXIT");
+        Save();
+        GetTree().Quit(); // default behavior
+        }
+    }
+
+    public void Load()
     {
         using var file = FileAccess.Open("user://save_game.dat", FileAccess.ModeFlags.Read);
+
         Variant level = file.GetVar();
         Variant experience = file.GetVar();
+        Variant gameNumber = file.GetVar();
 
         int levelInt = (int)level.AsInt64();
         int experienceInt = (int)experience.AsInt64();
-
+        int gameNumberInt = (int)gameNumber.AsInt64();
 
         Player.SetLevel(levelInt);
         Player.SetExperience(experienceInt);
-
-        return level.ToString() + experience.ToString();
+        PlayerInfo.GameNumber = gameNumberInt;
     }
 }
