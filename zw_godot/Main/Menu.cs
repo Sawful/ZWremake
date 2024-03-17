@@ -4,10 +4,13 @@ using System;
 public partial class Menu : Control
 {
 	PackedScene MainScene;
+	PackedScene SettingsPackedScene;
+	Node SettingsScene;
 	private PlayerInfo PlayerInfo;
 	public override void _Ready()
 	{
 		MainScene = (PackedScene)ResourceLoader.Load("res://Main/Main.tscn");
+		SettingsPackedScene = (PackedScene)ResourceLoader.Load("res://Main/Settings/Settings.tscn");
 		PlayerInfo = GetNode<PlayerInfo>("/root/PlayerInfo");
 		PlayerInfo.PlayerClass = "Warrior";
 	}
@@ -25,6 +28,8 @@ public partial class Menu : Control
 	public void _on_settings_button_pressed()
 	{
 		// Instantiate settings node as child
+		SettingsScene = SettingsPackedScene.Instantiate();
+		AddChild(SettingsScene);
 	}
 	public void _on_exit_button_pressed()
 	{

@@ -1,0 +1,200 @@
+[gd_scene load_steps=10 format=3 uid="uid://po6o4v664wgh"]
+
+[ext_resource type="Theme" uid="uid://1lay8k43egpa" path="res://Visual/Theme/Settings.tres" id="1_yrwoo"]
+[ext_resource type="Script" path="res://Main/Settings/Settings.cs" id="2_fjqgi"]
+[ext_resource type="Script" path="res://Main/Settings/SoundHSlider.cs" id="2_idbkm"]
+[ext_resource type="Theme" uid="uid://bita8m8sy37vl" path="res://Visual/Theme/Header.tres" id="2_wrv37"]
+[ext_resource type="Script" path="res://Main/Settings/ResolutionMenuButton.cs" id="3_i5r6w"]
+[ext_resource type="Script" path="res://Main/Settings/BrightnessHSlider.cs" id="4_pncsw"]
+[ext_resource type="Script" path="res://Main/Settings/FPSMenuButton.cs" id="5_l5ls4"]
+[ext_resource type="Script" path="res://Main/Settings/FullscreenCheckBox.cs" id="6_pgfiv"]
+[ext_resource type="Script" path="res://Main/Settings/ExitSettingsButton.cs" id="8_m5rv5"]
+
+[node name="Settings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_yrwoo")
+script = ExtResource("2_fjqgi")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -800.0
+offset_top = -450.0
+offset_right = 800.0
+offset_bottom = 450.0
+scale = Vector2(2, 2)
+theme = ExtResource("1_yrwoo")
+color = Color(0.227451, 0.239216, 0.294118, 1)
+
+[node name="SettingsText" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -62.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme = ExtResource("2_wrv37")
+text = "Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sound" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 200.0
+offset_top = 200.0
+offset_right = 240.0
+offset_bottom = 240.0
+theme = ExtResource("1_yrwoo")
+
+[node name="SoundHSlider" type="HSlider" parent="Sound"]
+layout_mode = 0
+offset_top = 32.0
+offset_right = 256.0
+offset_bottom = 64.0
+theme = ExtResource("1_yrwoo")
+value = 100.0
+script = ExtResource("2_idbkm")
+
+[node name="SoundLabel" type="Label" parent="Sound"]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 32.0
+theme = ExtResource("1_yrwoo")
+text = "Audio Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Resolution" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 200.0
+offset_top = 400.0
+offset_right = 240.0
+offset_bottom = 440.0
+theme = ExtResource("1_yrwoo")
+
+[node name="ResolutionLabel" type="Label" parent="Resolution"]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 32.0
+theme = ExtResource("1_yrwoo")
+text = "Resolution"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ResolutionMenuButton" type="MenuButton" parent="Resolution"]
+layout_mode = 0
+offset_top = 32.0
+offset_right = 256.0
+offset_bottom = 64.0
+theme = ExtResource("1_yrwoo")
+flat = false
+alignment = 0
+item_count = 5
+popup/item_0/text = "1920x1080"
+popup/item_0/id = 0
+popup/item_1/text = "1600x900"
+popup/item_1/id = 1
+popup/item_2/text = "1440x900"
+popup/item_2/id = 2
+popup/item_3/text = "1366x768"
+popup/item_3/id = 3
+popup/item_4/text = "1280x1024"
+popup/item_4/id = 4
+script = ExtResource("3_i5r6w")
+
+[node name="Brightness" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 1200.0
+offset_top = 200.0
+offset_right = 1240.0
+offset_bottom = 240.0
+theme = ExtResource("1_yrwoo")
+
+[node name="BrightnessLabel" type="Label" parent="Brightness"]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 32.0
+theme = ExtResource("1_yrwoo")
+text = "Brightness"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BrightnessHSlider" type="HSlider" parent="Brightness"]
+layout_mode = 0
+offset_top = 32.0
+offset_right = 256.0
+offset_bottom = 64.0
+theme = ExtResource("1_yrwoo")
+min_value = 75.0
+max_value = 125.0
+value = 100.0
+script = ExtResource("4_pncsw")
+
+[node name="FPS" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 1200.0
+offset_top = 400.0
+offset_right = 1240.0
+offset_bottom = 440.0
+
+[node name="FPSLabel" type="Label" parent="FPS"]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 32.0
+theme = ExtResource("1_yrwoo")
+text = "FPS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FPSMenuButton" type="MenuButton" parent="FPS"]
+layout_mode = 0
+offset_top = 32.0
+offset_right = 256.0
+offset_bottom = 64.0
+theme = ExtResource("1_yrwoo")
+flat = false
+alignment = 0
+item_count = 3
+popup/item_0/text = "120 fps"
+popup/item_0/id = 0
+popup/item_1/text = "60 fps"
+popup/item_1/id = 1
+popup/item_2/text = "30 fps"
+popup/item_2/id = 2
+script = ExtResource("5_l5ls4")
+
+[node name="Fullscreen" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 200.0
+offset_top = 600.0
+offset_right = 240.0
+offset_bottom = 640.0
+
+[node name="FullscreenCheckBox" type="CheckBox" parent="Fullscreen"]
+layout_mode = 0
+offset_right = 24.0
+offset_bottom = 24.0
+button_pressed = true
+text = "Fullscreen"
+script = ExtResource("6_pgfiv")
+
+[node name="ExitSettingsButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -80.0
+offset_bottom = 80.0
+grow_horizontal = 0
+text = "Exit
+Settings"
+script = ExtResource("8_m5rv5")
+
+[connection signal="value_changed" from="Sound/SoundHSlider" to="Sound/SoundHSlider" method="_on_value_changed"]
+[connection signal="toggled" from="Fullscreen/FullscreenCheckBox" to="Fullscreen/FullscreenCheckBox" method="_on_toggled"]
+[connection signal="pressed" from="ExitSettingsButton" to="." method="_on_exit_settings_button_pressed"]
