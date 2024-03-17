@@ -112,4 +112,5 @@ AttackMoveKey={
 3d_physics/layer_1="Player"
 3d_physics/layer_2="Enemy"
 3d_physics/layer_3="Ground"
+3d_physics/layer_4="Obstacle"
 3d_physics/layer_6="EnemyRaycast"

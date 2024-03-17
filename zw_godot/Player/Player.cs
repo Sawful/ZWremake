@@ -206,7 +206,10 @@ public partial class Player : Entity
         }
     }
 
-
+    public void _on_nav_agent_target_reached()
+    {
+        PlayerStateMachine.ChangeState("IdleState");
+    }
 
     public override void _PhysicsProcess(double delta)
     {

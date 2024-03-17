@@ -21,7 +21,7 @@ size = Vector3(0.75, 0.75, 0.75)
 
 [node name="TankEnemy" type="RigidBody3D"]
 collision_layer = 2
-collision_mask = 7
+collision_mask = 15
 axis_lock_linear_y = true
 lock_rotation = true
 script = ExtResource("1_noiav")
@@ -56,3 +56,7 @@ offset_bottom = 40.0
 texture_under = ExtResource("4_05sxy")
 texture_progress = ExtResource("5_wyh2n")
 script = ExtResource("6_dtdtd")
+
+[node name="NavAgent" type="NavigationAgent3D" parent="."]
+path_height_offset = 0.1
+avoidance_enabled = true

@@ -68,4 +68,9 @@ shape = SubResource("CylinderShape3D_b4j62")
 [node name="RegenerationTimer" type="Timer" parent="."]
 autostart = true
 
+[node name="NavAgent" type="NavigationAgent3D" parent="."]
+target_desired_distance = 0.5
+path_height_offset = 0.1
+
 [connection signal="timeout" from="RegenerationTimer" to="." method="OnRegenerationTimerTimeout"]
+[connection signal="target_reached" from="NavAgent" to="." method="_on_nav_agent_target_reached"]
