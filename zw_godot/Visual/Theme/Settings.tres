@@ -1,0 +1,73 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://1lay8k43egpa"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tosot"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.3)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ca82h"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.75)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i4aed"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.225, 0.225, 0.225, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8oqw8"]
+bg_color = Color(0.160784, 0.172549, 0.145098, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y4mcy"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[resource]
+MenuButton/colors/font_disabled_color = Color(1, 1, 1, 0.3)
+MenuButton/colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
+MenuButton/colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
+MenuButton/colors/font_outline_color = Color(1, 1, 1, 1)
+MenuButton/colors/font_pressed_color = Color(1, 1, 1, 1)
+MenuButton/styles/disabled = SubResource("StyleBoxFlat_tosot")
+MenuButton/styles/focus = SubResource("StyleBoxFlat_ca82h")
+MenuButton/styles/hover = SubResource("StyleBoxFlat_i4aed")
+MenuButton/styles/normal = SubResource("StyleBoxFlat_8oqw8")
+MenuButton/styles/pressed = SubResource("StyleBoxFlat_y4mcy")

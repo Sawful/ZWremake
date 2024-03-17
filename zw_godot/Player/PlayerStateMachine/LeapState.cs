@@ -30,7 +30,6 @@ public partial class LeapState : SimpleState
 
         Target = (Enemy)Message["Target"];
 
-		GD.Print(Target);
         TargetCircleObject = (Node3D)TargetCircle.Instantiate();
         Target.AddChild(TargetCircleObject);
 		
@@ -39,7 +38,6 @@ public partial class LeapState : SimpleState
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void UpdateState(double dt)
 	{
-		GD.Print("Leaping i guess");
 		Vector3 targetPosition = Target.Position;
 		Player.Position = Player.Position.MoveToward(targetPosition, 20 * Convert.ToSingle(dt));
 
@@ -48,7 +46,6 @@ public partial class LeapState : SimpleState
 		if (Player.Position.DistanceTo(targetPosition) <= range)
 		{
 			Player.RotateTo(targetPosition, Entity.RotationWeight);
-            GD.Print(Message["Ability"] + "GAMING");
             //Play spell
             Player.DealDamage(Target, (int) Mathf.Round(Player.Damage * (float)Message["DamageMultiplier"]));
             AbilityUI.SetAbilityCooldown("Ability4", (int)Message["Cooldown"]); // Set Cooldown

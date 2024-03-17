@@ -27,7 +27,6 @@ public partial class AttackingState : SimpleState
         base.OnStart(message);
         Message = message;
         Target = (Enemy)Message["Target"];
-		GD.Print(Target);
 
         TargetCircleObject = (Node3D)TargetCircle.Instantiate();
         Target.AddChild(TargetCircleObject);
@@ -62,7 +61,6 @@ public partial class AttackingState : SimpleState
                     else
                     {
                         Player.RotateTo(targetPosition, Entity.RotationWeight);
-                        GD.Print(Message["Ability"] + "GAMING");
                         //Play spell
                         Player.DealDamage(Target, (int) Mathf.Round(Player.Damage * (float)Message["DamageMultiplier"]));
                         AbilityUI.SetAbilityCooldown("Ability1", (float)Message["Cooldown"]); // Set Cooldown

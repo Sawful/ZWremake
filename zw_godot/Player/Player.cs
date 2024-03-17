@@ -65,10 +65,12 @@ public partial class Player : Entity
     private int Level = 1;
     private int ExperienceToLevelUp;
     private int Resource;
+    
+	private PlayerInfo PlayerInfo;
 
     public override void _Ready()
     {
-        RangedAttack = true;
+        PlayerInfo = GetNode<PlayerInfo>("/root/PlayerInfo");
         Main = GetTree().Root.GetNode("Main");
 
         GameUI = GetTree().Root.GetNode("Main").GetNode<GameUI>("PlayerUI");
@@ -90,7 +92,8 @@ public partial class Player : Entity
             {"Ability4", AbilityArray[3]}
         };
 
-        PlayerClass = "Warrior";
+        PlayerClass = PlayerInfo.PlayerClass;
+        GD.Print(PlayerClass);
 
         ExperienceToLevelUp = 5;
 

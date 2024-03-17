@@ -1,0 +1,69 @@
+[gd_scene load_steps=4 format=3 uid="uid://ddnkyuhr8nfjy"]
+
+[ext_resource type="Script" path="res://Main/Menu.cs" id="1_1hv3j"]
+[ext_resource type="ButtonGroup" uid="uid://rtqvlqc7alq6" path="res://ClassSelect.tres" id="2_5ximv"]
+[ext_resource type="Theme" uid="uid://bxe73ibnjartc" path="res://Visual/Theme/PlayerUITheme.tres" id="2_q7uht"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1hv3j")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.5
+offset_top = -50.5
+offset_right = 43.5
+offset_bottom = 50.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StartButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_q7uht")
+text = "Start"
+
+[node name="SettingsButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_q7uht")
+text = "Settings"
+
+[node name="ExitButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_q7uht")
+text = "Exit Game"
+
+[node name="WarriorCheckBox" type="CheckBox" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_q7uht")
+button_pressed = true
+button_group = ExtResource("2_5ximv")
+text = "Warrior"
+
+[node name="SorcererCheckBox" type="CheckBox" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_q7uht")
+button_group = ExtResource("2_5ximv")
+text = "Sorcerer"
+
+[node name="ArcherCheckBox" type="CheckBox" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_q7uht")
+button_group = ExtResource("2_5ximv")
+text = "Archer"
+
+[connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="toggled" from="VBoxContainer/WarriorCheckBox" to="." method="_on_warrior_check_box_toggled"]
+[connection signal="toggled" from="VBoxContainer/SorcererCheckBox" to="." method="_on_sorcerer_check_box_toggled"]
+[connection signal="toggled" from="VBoxContainer/ArcherCheckBox" to="." method="_on_archer_check_box_toggled"]
