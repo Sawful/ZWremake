@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://btk08876ggvce"]
+[gd_scene load_steps=9 format=3 uid="uid://btk08876ggvce"]
 
 [ext_resource type="Script" path="res://Main/GameManager.cs" id="1_8bxkj"]
 [ext_resource type="PackedScene" uid="uid://cunm7mu63qeb4" path="res://Main/MainScenePrefabs/ground.tscn" id="2_4n4u5"]
 [ext_resource type="PackedScene" uid="uid://xjh6b4khdnpy" path="res://Player/PlayerScene/player.tscn" id="3_a0wd3"]
 [ext_resource type="Script" path="res://Main/CameraScript.cs" id="3_a6c6b"]
+[ext_resource type="NavigationMesh" uid="uid://b5t5cqq35ddch" path="res://Main/MainNavMesh.tres" id="5_dfkgu"]
 [ext_resource type="PackedScene" uid="uid://bl0rsh88rppk" path="res://Player/PlayerUI.tscn" id="5_npj1m"]
+[ext_resource type="PackedScene" uid="uid://dl5ocu3debwmg" path="res://Main/box.tscn" id="6_y5g6b"]
 
 [sub_resource type="Environment" id="Environment_v8m81"]
 background_mode = 1
@@ -20,9 +22,8 @@ adjustment_brightness = 0.95
 script = ExtResource("1_8bxkj")
 
 [node name="Player" parent="." node_paths=PackedStringArray("Ground") instance=ExtResource("3_a0wd3")]
-Ground = NodePath("../Ground")
-
-[node name="Ground" parent="." instance=ExtResource("2_4n4u5")]
+collision_mask = 14
+Ground = NodePath("../NavigationRegion3D/Ground")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_v8m81")
@@ -45,6 +46,38 @@ autostart = true
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0)
 fov = 107.5
 script = ExtResource("3_a6c6b")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = ExtResource("5_dfkgu")
+
+[node name="Box" parent="NavigationRegion3D" instance=ExtResource("6_y5g6b")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 5, 1, 5)
+
+[node name="Box2" parent="NavigationRegion3D" instance=ExtResource("6_y5g6b")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 3, 1, 5)
+
+[node name="Box3" parent="NavigationRegion3D" instance=ExtResource("6_y5g6b")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -6, 1, 2)
+
+[node name="Box4" parent="NavigationRegion3D" instance=ExtResource("6_y5g6b")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -6, 1, 0)
+
+[node name="Box5" parent="NavigationRegion3D" instance=ExtResource("6_y5g6b")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -8, 1, 0)
+
+[node name="Ground" parent="NavigationRegion3D" instance=ExtResource("2_4n4u5")]
+
+[node name="Box6" parent="NavigationRegion3D" instance=ExtResource("6_y5g6b")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -15, 1, 15)
+
+[node name="Box7" parent="NavigationRegion3D" instance=ExtResource("6_y5g6b")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -17, 1, 15)
+
+[node name="Box9" parent="NavigationRegion3D" instance=ExtResource("6_y5g6b")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -17, 1, 17)
+
+[node name="Box8" parent="NavigationRegion3D" instance=ExtResource("6_y5g6b")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -15, 1, 17)
 
 [connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
 [connection signal="timeout" from="Seconds" to="." method="OnSecondsTimeout"]

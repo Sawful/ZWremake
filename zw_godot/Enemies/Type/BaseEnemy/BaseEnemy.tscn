@@ -21,7 +21,7 @@ size = Vector3(0.75, 0.75, 0.75)
 
 [node name="BaseEnemy" type="RigidBody3D"]
 collision_layer = 2
-collision_mask = 7
+collision_mask = 15
 axis_lock_linear_y = true
 lock_rotation = true
 script = ExtResource("1_1k6it")
@@ -33,7 +33,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 shape = SubResource("CylinderShape3D_2md15")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0.4, 0)
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0.3, 0)
 layers = 2
 material_override = SubResource("ShaderMaterial_tuaae")
 mesh = SubResource("BoxMesh_hld2k")
@@ -56,3 +56,8 @@ offset_bottom = 40.0
 texture_under = ExtResource("5_ex3x2")
 texture_progress = ExtResource("6_4xl01")
 script = ExtResource("7_20noa")
+
+[node name="NavAgent" type="NavigationAgent3D" parent="."]
+path_height_offset = 0.5
+avoidance_enabled = true
+radius = 1.0

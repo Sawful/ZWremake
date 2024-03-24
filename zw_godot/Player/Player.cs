@@ -65,22 +65,26 @@ public partial class Player : Entity
     private int Level = 1;
     private int ExperienceToLevelUp;
     private int Resource;
+
+    private NavigationMesh NavMesh;
+    private Rid NavMeshRID;
     
 	private PlayerInfo PlayerInfo;
 
     public override void _Ready()
     {
+
         PlayerInfo = GetNode<PlayerInfo>("/root/PlayerInfo");
         Main = GetTree().Root.GetNode("Main");
 
-        GameUI = GetTree().Root.GetNode("Main").GetNode<GameUI>("PlayerUI");
+        GameUI = Main.GetNode<GameUI>("PlayerUI");
         AbilityUI = GameUI.GetNode<PanelContainer>("BottomBar").GetNode<AbilityUI>("AbilityUI");
 
         RegenerationTimer = GetNode<Godot.Timer>("RegenerationTimer");
 
         AbilityScript = GetNode<AbilityHandler>("Abilities");
 
-        MainCamera = GetTree().Root.GetNode("Main").GetNode<CameraScript>("MainCamera");
+        MainCamera = Main.GetNode<CameraScript>("MainCamera");
         AbilityScript.MainCamera = MainCamera;
         AbilityArray = AbilityScript.GetChildren();
 
@@ -195,6 +199,9 @@ public partial class Player : Entity
         Area3D = GetNode<Area3D>("Area3D");
         // Camera initialisation
         CameraLocalStartingPosition = ToLocal(MainCamera.GlobalPosition);
+
+        NavMesh = Main.GetNode<NavigationRegion3D>("NavigationRegion3D").NavigationMesh;
+
     }
 
     public override void _Process(double delta)
@@ -206,7 +213,10 @@ public partial class Player : Entity
         }
     }
 
-
+    public void _on_nav_agent_target_reached()
+    {
+        PlayerStateMachine.ChangeState("IdleState");
+    }
 
     public override void _PhysicsProcess(double delta)
     {
@@ -240,7 +250,7 @@ public partial class Player : Entity
 
             if (objectHit == Ground)
             {
-                AnchorPoint = (Vector3)hitDictionary["position"];
+                AnchorPoint = NavigationServer3D.MapGetClosestPoint(NavigationServer3D.GetMaps()[0], (Vector3)hitDictionary["position"]);
                 Dictionary<string, object> message = new()
                 {
                     { "MovePoint", AnchorPoint }

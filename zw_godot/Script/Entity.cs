@@ -16,11 +16,14 @@ public partial class Entity : RigidBody3D
 
     public const float RotationWeight = 0.1f;
 
+    public NavigationAgent3D NavAgent;
+
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
         Health = MaxHealth;
+        NavAgent = GetNode<NavigationAgent3D>("NavAgent");
     }
 
     public void RotateTo(Vector3 rotationPoint, float rotationWeight)
@@ -32,8 +35,9 @@ public partial class Entity : RigidBody3D
     public void MoveTo(double delta, Vector3 moveTo)
     {
         // Player update
-        RotateTo(moveTo, RotationWeight);
-        Position = Position.MoveToward(moveTo, Speed * Convert.ToSingle(delta));
+        NavAgent.TargetPosition = moveTo;
+        RotateTo(NavAgent.GetNextPathPosition(), RotationWeight);
+        Position = Position.MoveToward(NavAgent.GetNextPathPosition(), Speed * Convert.ToSingle(delta));
     }
 
     public void RegenerateHealth(int amount)
