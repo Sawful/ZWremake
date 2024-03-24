@@ -58,5 +58,5 @@ texture_progress = ExtResource("6_rrwr5")
 script = ExtResource("7_4q5up")
 
 [node name="NavAgent" type="NavigationAgent3D" parent="."]
-path_height_offset = 0.1
+path_height_offset = 0.5
 avoidance_enabled = true

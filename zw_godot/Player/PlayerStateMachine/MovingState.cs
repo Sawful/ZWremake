@@ -22,7 +22,7 @@ public partial class MovingState : SimpleState
         base.OnStart(message);
         MovePoint = (Vector3)message["MovePoint"];
         Node3D click = (Node3D)ClickVFX.Instantiate();
-        click.Position = MovePoint;
+        click.Position = MovePoint + (Vector3.Down * 0.2f);
         AddChild(click);
     }
 

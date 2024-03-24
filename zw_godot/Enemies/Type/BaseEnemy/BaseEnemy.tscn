@@ -33,7 +33,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 shape = SubResource("CylinderShape3D_2md15")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0.4, 0)
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0.3, 0)
 layers = 2
 material_override = SubResource("ShaderMaterial_tuaae")
 mesh = SubResource("BoxMesh_hld2k")
@@ -58,5 +58,6 @@ texture_progress = ExtResource("6_4xl01")
 script = ExtResource("7_20noa")
 
 [node name="NavAgent" type="NavigationAgent3D" parent="."]
-path_height_offset = 0.1
+path_height_offset = 0.5
 avoidance_enabled = true
+radius = 1.0
