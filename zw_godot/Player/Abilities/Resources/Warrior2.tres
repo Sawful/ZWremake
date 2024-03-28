@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bx6ciudjhquaf"]
+
+[ext_resource type="Texture2D" uid="uid://cd8cp4s5o0cj5" path="res://Visual/Ui/Icon/ability2.png" id="1_itq87"]
+[ext_resource type="Script" path="res://Player/Abilities/Resources/AbilityResource.cs" id="1_n7jlp"]
+
+[resource]
+script = ExtResource("1_n7jlp")
+AbilityName = "Warrior2"
+Slot = 2
+Cooldown = 10.0
+CurrentCooldown = 0.0
+OnCooldown = false
+AbilityNodePath = "res://Player/Abilities/Scenes/Warrior2.tscn"
+Icon = ExtResource("1_itq87")

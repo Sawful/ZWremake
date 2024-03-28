@@ -48,7 +48,7 @@ public partial class LeapState : SimpleState
 			Player.RotateTo(targetPosition, Entity.RotationWeight);
             //Play spell
             Player.DealDamage(Target, (int) Mathf.Round(Player.Damage * (float)Message["DamageMultiplier"]));
-            AbilityUI.SetAbilityCooldown("Ability4", (int)Message["Cooldown"]); // Set Cooldown
+            AbilityUI.SetAbilityCooldown(3, (int)Message["Cooldown"]); // Set Cooldown
 
              //Reset attack
             
