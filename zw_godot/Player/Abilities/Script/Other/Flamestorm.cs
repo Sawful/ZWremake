@@ -24,7 +24,7 @@ public partial class Flamestorm : AreaAbility
 
         CurrentHitbox.QueueFree();
 
-        Handler.AbilityUI.SetAbilityCooldown(1, 10);
+        Handler.AbilityUI.SetAbilityCooldown(1);
         Player.PlayerStateMachine.ChangeState("IdleState");
     }
 }

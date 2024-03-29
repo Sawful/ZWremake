@@ -9,7 +9,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 public partial class Player : Entity
 {
-
+    public float CooldownReduction;
 
     // Nodes
     public Node Main;
@@ -166,7 +166,7 @@ public partial class Player : Entity
         CameraLocalStartingPosition = ToLocal(MainCamera.GlobalPosition);
 
         NavMesh = Main.GetNode<NavigationRegion3D>("NavigationRegion3D").NavigationMesh;
-
+        CooldownReduction = 1 - (100 - (10000 / (100 + 2 * AbilityHaste))) / 100;
     }
 
     public override void _Process(double delta)

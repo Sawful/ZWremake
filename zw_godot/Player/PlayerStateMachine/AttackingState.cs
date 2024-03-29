@@ -63,7 +63,7 @@ public partial class AttackingState : SimpleState
                         Player.RotateTo(targetPosition, Entity.RotationWeight);
                         //Play spell
                         Player.DealDamage(Target, (int) Mathf.Round(Player.Damage * (float)Message["DamageMultiplier"]));
-                        AbilityUI.SetAbilityCooldown(0, (float)Message["Cooldown"]); // Set Cooldown
+                        AbilityUI.SetAbilityCooldown(0); // Set Cooldown
 
                         //Reset attack
                         Dictionary<string, object> message = new()

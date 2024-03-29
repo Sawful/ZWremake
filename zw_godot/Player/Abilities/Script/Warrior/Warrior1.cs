@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 public partial class Warrior1 : PointAndClickAbility
 {
-	float Cooldown = 10;
 	public override void _Ready()
 	{
         base._Ready();
@@ -30,8 +29,7 @@ public partial class Warrior1 : PointAndClickAbility
                         {"Target",  enemyHit},
                         {"Ability", "Warrior1"},
                         {"Range", 2f},
-                        {"DamageMultiplier", 2.5f},
-                        {"Cooldown", Cooldown * Handler.CooldownReduction}
+                        {"DamageMultiplier", 2.5f}
                     };
                     Player.PlayerStateMachine.ChangeState("AttackingState", message);
                 }

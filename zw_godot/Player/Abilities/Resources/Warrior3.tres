@@ -7,7 +7,7 @@
 script = ExtResource("1_moxlw")
 AbilityName = "Warrior3"
 Slot = 3
-Cooldown = 10.0
+Cooldown = 20.0
 CurrentCooldown = 0.0
 OnCooldown = false
 AbilityNodePath = "res://Player/Abilities/Scenes/Warrior3.tscn"

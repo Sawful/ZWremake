@@ -21,7 +21,6 @@ public partial class AbilityHandler : Node
     public bool Casting = false;
     public bool AttackMoving = false;
     public TaskCompletionSource<bool> AttackMoveContinue = new();
-    public float CooldownReduction;
 	public TaskCompletionSource<bool> AbilityCast = new();
 	public bool Cast = false;
 	// Called when the node enters the scene tree for the first time.
@@ -44,7 +43,7 @@ public partial class AbilityHandler : Node
             AttackMoving = false;
         }
 
-        CooldownReduction = 1 - (100 - (10000 / (100 + 2 * Player.AbilityHaste))) / 100;
+        
 	}
 
 	public override void _Input(InputEvent @event)

@@ -46,7 +46,7 @@ public partial class AbilityUI : ItemList
     {
         if (AbilityResource[abilityIndex].OnCooldown)
         {
-            float cooldown = AbilityResource[abilityIndex].Cooldown;
+            float cooldown = AbilityResource[abilityIndex].CurrentCooldown;
             Label label = AbilitySettings[abilityIndex].Item2;
 
             cooldown = Math.Clamp(cooldown - (float)delta, 0, MaxCooldown);
@@ -67,15 +67,15 @@ public partial class AbilityUI : ItemList
                 }
             }
 
-            AbilityResource[abilityIndex].Cooldown = cooldown;
+            AbilityResource[abilityIndex].CurrentCooldown = cooldown;
         }
     }
 
-    public void SetAbilityCooldown(int abilityIndex, float cooldownTime)
-    {
+    public void SetAbilityCooldown(int abilityIndex)
+    { 
         AbilitySettings[abilityIndex].Item1.Disabled = true;
         AbilityResource[abilityIndex].OnCooldown = true;
-        AbilityResource[abilityIndex].Cooldown = cooldownTime;
+        AbilityResource[abilityIndex].CurrentCooldown = AbilityResource[abilityIndex].Cooldown * Player.CooldownReduction;
         AbilitySettings[abilityIndex].Item2.Text = Mathf.Ceil(AbilityResource[abilityIndex].Cooldown).ToString();
     }
 
