@@ -4,6 +4,7 @@
 
 [node name="Warrior4" type="Node"]
 script = ExtResource("1_0r4kx")
+MouseColliderLayers = 6
 
 [node name="AutoAttackEndTimer" type="Timer" parent="."]
 

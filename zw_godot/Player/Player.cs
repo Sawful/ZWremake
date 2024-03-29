@@ -9,7 +9,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 public partial class Player : Entity
 {
-
+    public float CooldownReduction;
 
     // Nodes
     public Node Main;
@@ -40,12 +40,6 @@ public partial class Player : Entity
 
     // Abilities
     public AbilityHandler AbilityScript;
-    public Godot.Collections.Array<Node> AbilityArray;
-    public Dictionary<string, Node> Ability;
-    public Dictionary<string, float> AbilityCooldown;
-    public Dictionary<string, float> CurrentAbilityCooldown;
-    public Dictionary<string, bool> IsAbilityCooldown;
-    public Dictionary<string, string> AbilityPath;
 
     // Vectors
     private Vector3 AnchorPoint = Vector3.Zero;
@@ -71,6 +65,8 @@ public partial class Player : Entity
     
 	private PlayerInfo PlayerInfo;
 
+    public List<AbilityResource> AbilityResource = new();
+
     public override void _Ready()
     {
 
@@ -86,15 +82,6 @@ public partial class Player : Entity
 
         MainCamera = Main.GetNode<CameraScript>("MainCamera");
         AbilityScript.MainCamera = MainCamera;
-        AbilityArray = AbilityScript.GetChildren();
-
-        Ability = new()
-        {
-            {"Ability1", AbilityArray[0]},
-            {"Ability2", AbilityArray[1]},
-            {"Ability3", AbilityArray[2]},
-            {"Ability4", AbilityArray[3]}
-        };
 
         PlayerClass = PlayerInfo.PlayerClass;
         GD.Print(PlayerClass);
@@ -130,14 +117,14 @@ public partial class Player : Entity
 
         if(PlayerClass == "Warrior")
         {
-            AbilityPath = new()
+            AbilityResource.Add((AbilityResource)ResourceLoader.Load("res://Player/Abilities/Resources/Warrior1.tres"));
+            AbilityResource.Add((AbilityResource)ResourceLoader.Load("res://Player/Abilities/Resources/Warrior2.tres"));
+            AbilityResource.Add((AbilityResource)ResourceLoader.Load("res://Player/Abilities/Resources/Warrior3.tres"));
+            AbilityResource.Add((AbilityResource)ResourceLoader.Load("res://Player/Abilities/Resources/Warrior4.tres"));
+            for(int i = 0; i < 4; i++)
             {
-                {"Ability1", "res://Player/Abilities/Scenes/Warrior/" + AbilityArray[0].Name + ".tscn"},
-                {"Ability2", "res://Player/Abilities/Scenes/Warrior/" + AbilityArray[1].Name + ".tscn"},
-                {"Ability3", "res://Player/Abilities/Scenes/Warrior/" + AbilityArray[2].Name + ".tscn"},
-                {"Ability4", "res://Player/Abilities/Scenes/Warrior/" + AbilityArray[3].Name + ".tscn"}
-            };
-
+                AbilityResource[i].SetAbility(AbilityScript);
+            }
             Range = 2;
             RangedAttack = false;
         }
@@ -159,28 +146,6 @@ public partial class Player : Entity
             GD.Print("Unknown Class");
         }
 
-        AbilityCooldown = new()
-        {
-            {"Ability1", 6},
-            {"Ability2", 10},
-            {"Ability3", 8},
-            {"Ability4", 12}
-        };
-        CurrentAbilityCooldown = new()
-        {
-            {"Ability1", 0},
-            {"Ability2", 0},
-            {"Ability3", 0},
-            {"Ability4", 0}
-        };
-        IsAbilityCooldown = new()
-        {
-            {"Ability1", false},
-            {"Ability2", false},
-            {"Ability3", false},
-            {"Ability4", false}
-        };
-
         MaxHealth = (int)Math.Round((200 + StatsBonusAdd["MaxHealth"] + 10 * StatsLevel["MaxHealth"]) * (1 + StatsBonusMult["MaxHealth"]));
         Damage = (int)Math.Round((10 + StatsBonusAdd["Damage"] + 3 * StatsLevel["Damage"]) * (1 + StatsBonusMult["Damage"]));
         Speed = (float) (4 + StatsBonusAdd["MovementSpeed"] + 0.5f * StatsLevel["MovementSpeed"]) * (float) (1 + StatsBonusMult["MovementSpeed"]);
@@ -201,7 +166,7 @@ public partial class Player : Entity
         CameraLocalStartingPosition = ToLocal(MainCamera.GlobalPosition);
 
         NavMesh = Main.GetNode<NavigationRegion3D>("NavigationRegion3D").NavigationMesh;
-
+        CooldownReduction = 1 - (100 - (10000 / (100 + 2 * AbilityHaste))) / 100;
     }
 
     public override void _Process(double delta)
@@ -286,7 +251,7 @@ public partial class Player : Entity
             DealDamage(target, Damage);
             AttackReload = 1 / AttackSpeed;
             // Call auto attack
-            Ability["Ability4"].Call("AutoAttacked");
+            AbilityResource[3].AbilityNode.Call("AutoAttacked");
         }
     }
 

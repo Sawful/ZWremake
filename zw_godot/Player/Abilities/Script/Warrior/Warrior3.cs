@@ -37,7 +37,7 @@ public partial class Warrior3 : LineAbility
         Player.StatsBonusMult["MovementSpeed"] += -0.5;
         Player.UpdateStats();
 
-        Handler.AbilityUI.SetAbilityCooldown("Ability3", 20 * Handler.CooldownReduction);
+        Handler.AbilityUI.SetAbilityCooldown(2);
         int loopNumber = 0;
         CurrentHitbox.PositionLocked = true;
 

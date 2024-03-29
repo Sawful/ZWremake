@@ -21,7 +21,6 @@ public partial class AbilityHandler : Node
     public bool Casting = false;
     public bool AttackMoving = false;
     public TaskCompletionSource<bool> AttackMoveContinue = new();
-    public float CooldownReduction;
 	public TaskCompletionSource<bool> AbilityCast = new();
 	public bool Cast = false;
 	// Called when the node enters the scene tree for the first time.
@@ -44,7 +43,7 @@ public partial class AbilityHandler : Node
             AttackMoving = false;
         }
 
-        CooldownReduction = 1 - (100 - (10000 / (100 + 2 * Player.AbilityHaste))) / 100;
+        
 	}
 
 	public override void _Input(InputEvent @event)
@@ -73,52 +72,65 @@ public async void AttackMove()
             AttackMoveContinue = new();
             AttackMoving = true;
 
-            Vector3 movePoint = (Vector3)AbilityRaycast()["positionHit"];
+            System.Collections.Generic.Dictionary<string, object> info = AbilityRaycast();
 
-            System.Collections.Generic.Dictionary<string, object> message = new()
+            Vector3 movePoint = (Vector3)info["positionHit"];
+            if(info["objectHit"] == Ground)
             {
-                {"MovePoint",  movePoint}
-            };
+                movePoint = NavigationServer3D.MapGetClosestPoint(NavigationServer3D.GetMaps()[0], (Vector3)AbilityRaycast()["positionHit"]);
 
-            Player.PlayerStateMachine.ChangeState("MovingState", message);
-
-            if (await AttackMoveContinue.Task == true)
-            {
-
-                if (Casting)
+                System.Collections.Generic.Dictionary<string, object> message = new()
                 {
-                    GD.Print("AttackMove cancel because of alternate casting.");
+                    {"MovePoint",  movePoint}
+                };
+
+                Player.PlayerStateMachine.ChangeState("MovingState", message);
+
+                if (await AttackMoveContinue.Task == true)
+                {
+
+                    if (Casting)
+                    {
+                        AttackMoveContinue = new();
+                        AttackMoving = false;
+                        return;
+                    }
+
+                    else if (Player.ClosestTarget != null)
+                    {
+                        System.Collections.Generic.Dictionary<string, object> message2 = new()
+                        {
+                            {"Target", Player.ClosestTarget},
+                            {"Projectile Speed" ,  Player.ProjectileSpeed}
+                        };
+                        
+                    if (Player.RangedAttack)
+                        Player.PlayerStateMachine.ChangeState("RangeAttackingState", message2);
+
+                    else
+                        Player.PlayerStateMachine.ChangeState("AttackingState", message2);
+
+                        AttackMoving = false;
+                    }
+                }
+                
+                else
+                {
                     AttackMoveContinue = new();
                     AttackMoving = false;
                     return;
                 }
-
-                else if (Player.ClosestTarget != null)
-                {
-                    GD.Print("Player entered detection range and starts attack");
-                    System.Collections.Generic.Dictionary<string, object> message2 = new()
-                    {
-                        {"Target", Player.ClosestTarget},
-                        {"Projectile Speed" ,  Player.ProjectileSpeed}
-                    };
-                    
-                if (Player.RangedAttack)
-                    Player.PlayerStateMachine.ChangeState("RangeAttackingState", message2);
-
-                else
-                    Player.PlayerStateMachine.ChangeState("AttackingState", message2);
-
-                    AttackMoving = false;
-                }
             }
             
-            else
+            else if(info["objectHit"] is Enemy)
             {
-                GD.Print("AttackMove cancel because of alternate casting of AttackMove.");
-                AttackMoveContinue = new();
-                AttackMoving = false;
-                return;
+                System.Collections.Generic.Dictionary<string, object> message = new()
+                {
+                    {"Target",  info["objectHit"]}
+                };
+                Player.PlayerStateMachine.ChangeState("AttackingState", message);
             }
+            
         }
 
         else // Ability canceled

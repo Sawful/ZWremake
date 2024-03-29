@@ -18,10 +18,6 @@ public partial class Warrior4 : PointAndClickAbility
 		AutoAttackEndTimer = GetNode<Godot.Timer>("AutoAttackEndTimer");
 	}
 
-	public override void _Process(double delta)
-	{
-	}
-
 	private void _on_auto_attack_end_timer_timeout()
 	{
         foreach (StatEffect effect in AttackSpeedEffects)
@@ -65,7 +61,7 @@ public partial class Warrior4 : PointAndClickAbility
         AutoAttacksLaunched++;
         AutoAttackEndTimer.WaitTime = 3;
         AutoAttackEndTimer.Start();
-        Handler.AbilityUI.UpdateLeapCooldown("Ability4");
+        Handler.AbilityUI.UpdateLeapCooldown(3);
     }
 
 }

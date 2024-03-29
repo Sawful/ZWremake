@@ -24,7 +24,7 @@ public partial class Cone : LineAbility
             caster.DealDamage(target, caster.Damage);
         }
 
-        Handler.AbilityUI.SetAbilityCooldown("Ability4", 10);
+        Handler.AbilityUI.SetAbilityCooldown(3);
         Player.PlayerStateMachine.ChangeState("IdleState");
     }
 }

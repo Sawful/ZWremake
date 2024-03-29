@@ -98,6 +98,7 @@ theme = ExtResource("2_v3j47")
 
 [node name="AbilityUI" type="ItemList" parent="BottomBar"]
 layout_mode = 2
+theme = ExtResource("2_v3j47")
 max_columns = 4
 same_column_width = true
 script = ExtResource("3_8qh8h")

@@ -10,6 +10,7 @@ public partial class Ability : Node
     public StaticBody3D Ground;
     public Node3D Main;
     public AbilityHandler Handler;
+    public float Cooldown;
 
     private const float RayLength = 1000.0f;
 

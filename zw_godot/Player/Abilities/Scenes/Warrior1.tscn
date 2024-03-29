@@ -4,3 +4,4 @@
 
 [node name="Warrior1" type="Node"]
 script = ExtResource("1_fvpph")
+MouseColliderLayers = 6

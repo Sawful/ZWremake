@@ -9,6 +9,6 @@ public partial class Warrior2 : Ability
 		CreateStatEffect(5, "AttackSpeed", 0.5);
         CreateStatEffect(5, "Damage", 0.2);
 
-        Handler.AbilityUI.SetAbilityCooldown("Ability2", 20 * Handler.CooldownReduction);
+        Handler.AbilityUI.SetAbilityCooldown(1);
 	}
 }

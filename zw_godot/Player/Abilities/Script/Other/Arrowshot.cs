@@ -26,7 +26,7 @@ public partial class Arrowshot : LineAbility
 
         CurrentHitbox.QueueFree();
 
-        Handler.AbilityUI.SetAbilityCooldown("Ability3", 10);
+        Handler.AbilityUI.SetAbilityCooldown(2);
         Player.PlayerStateMachine.ChangeState("IdleState");
     }
 }
