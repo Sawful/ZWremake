@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cgpqfnx6jwxwb"]
+
+[ext_resource type="Script" path="res://Player/Abilities/Resources/AbilityResource.cs" id="1_bg85x"]
+[ext_resource type="Texture2D" uid="uid://ch5ydusk4job1" path="res://Visual/Ui/Icon/ability3.png" id="1_ghx30"]
+
+[resource]
+script = ExtResource("1_bg85x")
+AbilityName = "Flamestorm"
+Slot = 2
+Cooldown = 5.0
+CurrentCooldown = 0.0
+OnCooldown = false
+AbilityNodePath = "res://Player/Abilities/Scenes/Flamestorm.tscn"
+Icon = ExtResource("1_ghx30")

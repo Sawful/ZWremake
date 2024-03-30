@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dktjgjdnr68tn"]
+
+[ext_resource type="Script" path="res://Player/Abilities/Resources/AbilityResource.cs" id="2_ibjis"]
+
+[resource]
+script = ExtResource("2_ibjis")
+AbilityName = "Warrior5"
+Slot = 2
+Cooldown = 10.0
+CurrentCooldown = 0.0
+OnCooldown = false
+AbilityNodePath = "res://Player/Abilities/Scenes/Warrior5.tscn"

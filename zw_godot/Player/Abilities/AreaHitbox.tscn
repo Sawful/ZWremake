@@ -6,7 +6,7 @@
 height = 1.0
 
 [node name="Area3D" type="Area3D"]
-collision_layer = 8
+collision_layer = 16
 collision_mask = 2
 script = ExtResource("1_7lhn5")
 MouseColliderLayers = 4

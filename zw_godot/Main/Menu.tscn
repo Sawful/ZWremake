@@ -20,10 +20,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -43.5
-offset_top = -50.5
-offset_right = 43.5
-offset_bottom = 50.5
+offset_top = -100.0
+offset_right = 87.0
+offset_bottom = 91.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -61,9 +60,21 @@ theme = ExtResource("2_q7uht")
 button_group = ExtResource("2_5ximv")
 text = "Archer"
 
+[node name="WarriorSkillTreeButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 900.0
+offset_top = 350.0
+offset_right = 980.0
+offset_bottom = 500.0
+theme = ExtResource("2_q7uht")
+text = "Warrior
+ Skill
+ Tree"
+
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="toggled" from="VBoxContainer/WarriorCheckBox" to="." method="_on_warrior_check_box_toggled"]
 [connection signal="toggled" from="VBoxContainer/SorcererCheckBox" to="." method="_on_sorcerer_check_box_toggled"]
 [connection signal="toggled" from="VBoxContainer/ArcherCheckBox" to="." method="_on_archer_check_box_toggled"]
+[connection signal="pressed" from="WarriorSkillTreeButton" to="." method="_on_warrior_skill_tree_button_pressed"]

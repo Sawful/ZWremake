@@ -1,0 +1,200 @@
+[gd_scene load_steps=19 format=3 uid="uid://y42527tfqs5t"]
+
+[ext_resource type="Texture2D" uid="uid://crgfffdd5swcr" path="res://Visual/Ui/Icon/slash.png" id="1_0uh36"]
+[ext_resource type="Theme" uid="uid://c6s6l1snyrcqd" path="res://Visual/Theme/TalentTree.tres" id="1_f74cq"]
+[ext_resource type="Script" path="res://Script/WarriorBranch.cs" id="2_rufyx"]
+[ext_resource type="PackedScene" uid="uid://bstocoopircpq" path="res://SkillTree/SkillNode.tscn" id="3_kbuvb"]
+[ext_resource type="Texture2D" uid="uid://cd8cp4s5o0cj5" path="res://Visual/Ui/Icon/ability2.png" id="5_3dcy0"]
+[ext_resource type="Resource" uid="uid://co252bnrww1mq" path="res://Player/Abilities/Resources/Warrior1.tres" id="5_u12uy"]
+[ext_resource type="Texture2D" uid="uid://6w71rmh4rjdc" path="res://Visual/Ui/Icon/ability4.png" id="6_ubn44"]
+[ext_resource type="Texture2D" uid="uid://ch5ydusk4job1" path="res://Visual/Ui/Icon/ability3.png" id="7_06lgd"]
+[ext_resource type="Resource" uid="uid://dktjgjdnr68tn" path="res://Player/Abilities/Resources/Warrior5.tres" id="8_ce2of"]
+[ext_resource type="Resource" uid="uid://bx6ciudjhquaf" path="res://Player/Abilities/Resources/Warrior2.tres" id="9_et4gt"]
+[ext_resource type="Resource" uid="uid://b7cvpln2o8mdd" path="res://Player/Abilities/Resources/Warrior3.tres" id="10_3yvv1"]
+[ext_resource type="Resource" uid="uid://ta3v0axda3x3" path="res://Player/Abilities/Resources/Warrior4.tres" id="11_8t1je"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_ypm4q"]
+resource_local_to_scene = false
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_lnhxp"]
+resource_local_to_scene = false
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_quotk"]
+resource_local_to_scene = false
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_1gdyv"]
+resource_local_to_scene = false
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_7tcra"]
+resource_local_to_scene = false
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_7nj7h"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_f74cq")
+script = ExtResource("2_rufyx")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1600.0
+offset_bottom = 900.0
+color = Color(0.0823529, 0.0823529, 0.109804, 1)
+
+[node name="WarriorLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 800.0
+offset_top = 20.0
+offset_right = 860.0
+offset_bottom = 46.0
+scale = Vector2(2, 2)
+text = "Warrior"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Node1" parent="." instance=ExtResource("3_kbuvb")]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 410.0
+offset_right = 180.0
+offset_bottom = 490.0
+SkillIcon = ExtResource("1_0uh36")
+Ability = ExtResource("5_u12uy")
+
+[node name="Node2" parent="." node_paths=PackedStringArray("ParentNode1") instance=ExtResource("3_kbuvb")]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 410.0
+offset_right = 380.0
+offset_bottom = 490.0
+ParentNode1 = NodePath("../Node1")
+SkillIcon = ExtResource("5_3dcy0")
+
+[node name="Node31" parent="." node_paths=PackedStringArray("ParentNode1") instance=ExtResource("3_kbuvb")]
+layout_mode = 0
+offset_left = 350.0
+offset_top = 610.0
+offset_right = 430.0
+offset_bottom = 690.0
+button_group = SubResource("ButtonGroup_ypm4q")
+ParentNode1 = NodePath("../Node2")
+SkillIcon = ExtResource("6_ubn44")
+Ability = ExtResource("8_ce2of")
+
+[node name="Node32" parent="." node_paths=PackedStringArray("ParentNode1") instance=ExtResource("3_kbuvb")]
+layout_mode = 0
+offset_left = 350.0
+offset_top = 210.0
+offset_right = 430.0
+offset_bottom = 290.0
+button_group = SubResource("ButtonGroup_ypm4q")
+ParentNode1 = NodePath("../Node2")
+SkillIcon = ExtResource("7_06lgd")
+Ability = ExtResource("9_et4gt")
+
+[node name="Node41" parent="." node_paths=PackedStringArray("ParentNode1") instance=ExtResource("3_kbuvb")]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 330.0
+offset_right = 580.0
+offset_bottom = 410.0
+button_group = SubResource("ButtonGroup_lnhxp")
+ParentNode1 = NodePath("../Node2")
+
+[node name="Node42" parent="." node_paths=PackedStringArray("ParentNode1") instance=ExtResource("3_kbuvb")]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 490.0
+offset_right = 580.0
+offset_bottom = 570.0
+button_group = SubResource("ButtonGroup_lnhxp")
+ParentNode1 = NodePath("../Node2")
+
+[node name="Node51" parent="." node_paths=PackedStringArray("ParentNode1", "ParentNode2") instance=ExtResource("3_kbuvb")]
+layout_mode = 0
+offset_left = 700.0
+offset_top = 330.0
+offset_right = 780.0
+offset_bottom = 410.0
+button_group = SubResource("ButtonGroup_quotk")
+ParentNode1 = NodePath("../Node41")
+ParentNode2 = NodePath("../Node42")
+Ability = ExtResource("10_3yvv1")
+
+[node name="Node52" parent="." node_paths=PackedStringArray("ParentNode1", "ParentNode2") instance=ExtResource("3_kbuvb")]
+layout_mode = 0
+offset_left = 700.0
+offset_top = 490.0
+offset_right = 780.0
+offset_bottom = 570.0
+button_group = SubResource("ButtonGroup_quotk")
+ParentNode1 = NodePath("../Node41")
+ParentNode2 = NodePath("../Node42")
+
+[node name="Node61" parent="." node_paths=PackedStringArray("ParentNode1", "ParentNode2") instance=ExtResource("3_kbuvb")]
+layout_mode = 0
+offset_left = 900.0
+offset_top = 330.0
+offset_right = 980.0
+offset_bottom = 410.0
+button_group = SubResource("ButtonGroup_1gdyv")
+ParentNode1 = NodePath("../Node51")
+ParentNode2 = NodePath("../Node52")
+
+[node name="Node62" parent="." node_paths=PackedStringArray("ParentNode1", "ParentNode2") instance=ExtResource("3_kbuvb")]
+layout_mode = 0
+offset_left = 900.0
+offset_top = 490.0
+offset_right = 980.0
+offset_bottom = 570.0
+button_group = SubResource("ButtonGroup_1gdyv")
+ParentNode1 = NodePath("../Node51")
+ParentNode2 = NodePath("../Node52")
+
+[node name="Node71" parent="." node_paths=PackedStringArray("ParentNode1", "ParentNode2") instance=ExtResource("3_kbuvb")]
+layout_mode = 0
+offset_left = 1100.0
+offset_top = 330.0
+offset_right = 1180.0
+offset_bottom = 410.0
+button_group = SubResource("ButtonGroup_7tcra")
+ParentNode1 = NodePath("../Node61")
+ParentNode2 = NodePath("../Node62")
+Ability = ExtResource("11_8t1je")
+
+[node name="Node72" parent="." node_paths=PackedStringArray("ParentNode1", "ParentNode2") instance=ExtResource("3_kbuvb")]
+layout_mode = 0
+offset_left = 1100.0
+offset_top = 490.0
+offset_right = 1180.0
+offset_bottom = 570.0
+button_group = SubResource("ButtonGroup_7tcra")
+ParentNode1 = NodePath("../Node61")
+ParentNode2 = NodePath("../Node62")
+
+[node name="Node8" parent="." node_paths=PackedStringArray("ParentNode1", "ParentNode2") instance=ExtResource("3_kbuvb")]
+layout_mode = 0
+offset_left = 1300.0
+offset_top = 410.0
+offset_right = 1380.0
+offset_bottom = 490.0
+button_group = SubResource("ButtonGroup_7nj7h")
+ParentNode1 = NodePath("../Node71")
+ParentNode2 = NodePath("../Node72")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_right = 160.0
+offset_bottom = 80.0
+text = "EXIT"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

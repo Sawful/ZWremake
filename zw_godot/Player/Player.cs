@@ -117,11 +117,12 @@ public partial class Player : Entity
 
         if(PlayerClass == "Warrior")
         {
-            AbilityResource.Add((AbilityResource)ResourceLoader.Load("res://Player/Abilities/Resources/Warrior1.tres"));
-            AbilityResource.Add((AbilityResource)ResourceLoader.Load("res://Player/Abilities/Resources/Warrior2.tres"));
-            AbilityResource.Add((AbilityResource)ResourceLoader.Load("res://Player/Abilities/Resources/Warrior3.tres"));
-            AbilityResource.Add((AbilityResource)ResourceLoader.Load("res://Player/Abilities/Resources/Warrior4.tres"));
-            for(int i = 0; i < 4; i++)
+            AbilityResource = PlayerInfo.AbilityResource;
+            //AbilityResource.Add((AbilityResource)ResourceLoader.Load("res://Player/Abilities/Resources/Warrior1.tres"));
+            //AbilityResource.Add((AbilityResource)ResourceLoader.Load("res://Player/Abilities/Resources/Warrior2.tres"));
+            //AbilityResource.Add((AbilityResource)ResourceLoader.Load("res://Player/Abilities/Resources/Warrior3.tres"));
+            //AbilityResource.Add((AbilityResource)ResourceLoader.Load("res://Player/Abilities/Resources/Warrior4.tres"));
+            for(int i = 0; i < AbilityResource.Count; i++)
             {
                 AbilityResource[i].SetAbility(AbilityScript);
             }
