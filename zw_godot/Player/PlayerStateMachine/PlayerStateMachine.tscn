@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://Player/PlayerStateMachine/AttackingState.cs" id="3_0unef"]
 [ext_resource type="Script" path="res://Player/PlayerStateMachine/IdleState.cs" id="4_tq6ej"]
 [ext_resource type="Script" path="res://Player/PlayerStateMachine/RangeAttackingState.cs" id="5_83djn"]
-[ext_resource type="Script" path="res://Player/PlayerStateMachine/LeapState.cs" id="6_p7gtl"]
+[ext_resource type="Script" path="res://Player/PlayerStateMachine/DashState.cs" id="6_p7gtl"]
 
 [node name="PlayerStateMachine" type="Node"]
 script = ExtResource("1_d26oi")

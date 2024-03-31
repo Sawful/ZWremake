@@ -56,7 +56,7 @@ public partial class Warrior4 : PointAndClickAbility
         }
     }
    
-    public void AutoAttacked() //Not activated
+    public void AutoAttacked()
     {
         AutoAttacksLaunched++;
         AutoAttackEndTimer.WaitTime = 3;

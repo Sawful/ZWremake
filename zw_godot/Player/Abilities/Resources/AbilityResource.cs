@@ -53,6 +53,7 @@ public partial class AbilityResource : Resource
 		GD.Print("Cooldown set");
 	}
 
+
 	public void UpdateCooldown()
 	{
 		if(CooldownRecharge)

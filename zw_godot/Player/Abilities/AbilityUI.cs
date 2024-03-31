@@ -87,10 +87,18 @@ public partial class AbilityUI : ItemList
         else
         {
             AbilitySettings[abilityIndex].Item1.Disabled = true;
+            AbilitySettings[abilityIndex].Item2.Text = AbilityResource[abilityIndex].Cooldown.ToString();
             AbilityResource[abilityIndex].OnCooldown = true;
             AbilityResource[abilityIndex].SetCooldown();
         }
         
+    }
+
+    public void SetLeapCooldown(int abilityIndex)
+    {
+        AbilitySettings[abilityIndex].Item1.Disabled = true;
+        AbilitySettings[abilityIndex].Item2.Text = AbilityResource[abilityIndex].Cooldown.ToString();
+        AbilityResource[abilityIndex].OnCooldown = true;
     }
 
     public void UpdateLeapCooldown(int abilityIndex)

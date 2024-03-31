@@ -85,7 +85,9 @@ public partial class AttackingState : SimpleState
 
                     else
                     {
-                        StateMachine.ChangeState("LeapState", Message);
+                        Message.Add("AbilityOnExit", "Leap");
+                        Message.Add("NextState", "AttackingState");
+                        StateMachine.ChangeState("DashState", Message);
                     }
                 }
             }
