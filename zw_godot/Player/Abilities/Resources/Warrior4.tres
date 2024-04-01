@@ -7,8 +7,13 @@
 script = ExtResource("1_k7yrd")
 AbilityName = "Warrior4"
 Slot = 4
+TimedCooldown = false
 Cooldown = 10.0
 CurrentCooldown = 0.0
 OnCooldown = false
+CooldownRecharge = false
+MultipleCharges = false
+MaxCharges = 0
+Charges = 0
 AbilityNodePath = "res://Player/Abilities/Scenes/Warrior4.tscn"
 Icon = ExtResource("1_ivt5m")

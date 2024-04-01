@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://y42527tfqs5t"]
+[gd_scene load_steps=20 format=3 uid="uid://y42527tfqs5t"]
 
 [ext_resource type="Texture2D" uid="uid://crgfffdd5swcr" path="res://Visual/Ui/Icon/slash.png" id="1_0uh36"]
 [ext_resource type="Theme" uid="uid://c6s6l1snyrcqd" path="res://Visual/Theme/TalentTree.tres" id="1_f74cq"]
@@ -12,6 +12,7 @@
 [ext_resource type="Resource" uid="uid://bx6ciudjhquaf" path="res://Player/Abilities/Resources/Warrior2.tres" id="9_et4gt"]
 [ext_resource type="Resource" uid="uid://b7cvpln2o8mdd" path="res://Player/Abilities/Resources/Warrior3.tres" id="10_3yvv1"]
 [ext_resource type="Resource" uid="uid://ta3v0axda3x3" path="res://Player/Abilities/Resources/Warrior4.tres" id="11_8t1je"]
+[ext_resource type="Resource" uid="uid://cer1fb85vj2rc" path="res://Player/Abilities/Resources/Warrior6.tres" id="12_80a2f"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_ypm4q"]
 resource_local_to_scene = false
@@ -32,7 +33,7 @@ allow_unpress = true
 resource_local_to_scene = false
 allow_unpress = true
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_7nj7h"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_btgdb"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -139,6 +140,7 @@ offset_bottom = 570.0
 button_group = SubResource("ButtonGroup_quotk")
 ParentNode1 = NodePath("../Node41")
 ParentNode2 = NodePath("../Node42")
+Ability = ExtResource("12_80a2f")
 
 [node name="Node61" parent="." node_paths=PackedStringArray("ParentNode1", "ParentNode2") instance=ExtResource("3_kbuvb")]
 layout_mode = 0
@@ -187,7 +189,7 @@ offset_left = 1300.0
 offset_top = 410.0
 offset_right = 1380.0
 offset_bottom = 490.0
-button_group = SubResource("ButtonGroup_7nj7h")
+button_group = SubResource("ButtonGroup_btgdb")
 ParentNode1 = NodePath("../Node71")
 ParentNode2 = NodePath("../Node72")
 

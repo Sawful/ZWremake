@@ -14,6 +14,8 @@ public partial class DashState : SimpleState
 	Dictionary<string, object> Message;
     PackedScene TargetCircle;
     Node3D TargetCircleObject;
+    float Speed;
+    float Range;
     
     public override void _Ready()
     {
@@ -41,12 +43,18 @@ public partial class DashState : SimpleState
             DashLocation = (Vector3)Message["DashLocation"];
         }
         
+        if(Message.ContainsKey("Speed"))
+        {
+            Speed = (float)Message["Speed"];
+        }
+        else {Speed = 20;}
+
 
         if(Message.ContainsKey("AbilityOnStart"))
         {
             
         }
-		
+		Range = (float)Message["Range"];
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -57,9 +65,7 @@ public partial class DashState : SimpleState
             DashLocation = Target.Position;
         }
 
-		float range = (float)Message["Range"];
-
-		if (Player.Position.DistanceTo(DashLocation) <= range)
+		if (Player.Position.DistanceTo(DashLocation) <= Range)
 		{
             Dictionary<string, object> message = new();
 
@@ -70,13 +76,12 @@ public partial class DashState : SimpleState
                 
                 message.Add("Target",  Target);
             }
-            GD.Print("Why no changing state ;-;");
             StateMachine.ChangeState((string)Message["NextState"], message);
 		}
 
         else
         {
-		    Player.Position = Player.Position.MoveToward(DashLocation, 20 * Convert.ToSingle(dt));
+		    Player.Position = Player.Position.MoveToward(DashLocation, Speed * Convert.ToSingle(dt));
         }
 
 	}
@@ -92,15 +97,17 @@ public partial class DashState : SimpleState
                 //Play spell
                 Player.DealDamage(Target, (int) Mathf.Round(Player.Damage * (float)Message["DamageMultiplier"]));
                 AbilityUI.SetLeapCooldown(3); // Set Cooldown
+		        StatEffect effect = ((Ability)Message["AbilityNode"]).CreateStatEffect(0, "AttackSpeed", 0.1);
+		        ((Warrior4)Message["AbilityNode"]).AttackSpeedEffects.Add(effect);
             }
         }
-
-        if (IsInstanceValid(Target))
+        if(DashOnTarget)
         {
-            TargetCircleObject.QueueFree();
+            if (IsInstanceValid(Target))
+            {
+                TargetCircleObject.QueueFree();
+            }
         }
-		StatEffect effect = ((Ability)Message["AbilityNode"]).CreateStatEffect(0, "AttackSpeed", 0.1);
-		((Warrior4)Message["AbilityNode"]).AttackSpeedEffects.Add(effect);
         base.OnExit(NextState);
     }
 }

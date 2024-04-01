@@ -7,7 +7,7 @@ public partial class ArrowHitbox : Area3D
 
     private Camera3D Camera3D;
     private Player Player;
-    private Vector3 PointHit;
+    public Vector3 PointHit;
 
     // Raycast lenght
     private const float RayLength = 1000.0f;
