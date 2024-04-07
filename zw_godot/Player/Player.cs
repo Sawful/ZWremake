@@ -69,7 +69,6 @@ public partial class Player : Entity
 
     public override void _Ready()
     {
-
         PlayerInfo = GetNode<PlayerInfo>("/root/PlayerInfo");
         Main = GetTree().Root.GetNode("Main");
 

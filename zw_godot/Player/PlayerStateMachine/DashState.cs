@@ -41,6 +41,8 @@ public partial class DashState : SimpleState
         else
         {
             DashLocation = (Vector3)Message["DashLocation"];
+            Player.CollisionMask = 4;
+            Player.Targetable = false;
         }
         
         if(Message.ContainsKey("Speed"))
@@ -63,26 +65,38 @@ public partial class DashState : SimpleState
         if(DashOnTarget)
         {
             DashLocation = Target.Position;
-        }
-
-		if (Player.Position.DistanceTo(DashLocation) <= Range)
-		{
-            Dictionary<string, object> message = new();
-
-            if(DashOnTarget)
+            if (Player.Position.DistanceTo(DashLocation) <= Range)
             {
-                //Reset attack
-                Player.AttackReload = 0.25;
-                
-                message.Add("Target",  Target);
+                Dictionary<string, object> message = new();
+
+                if(DashOnTarget)
+                {
+                    //Reset attack
+                    Player.AttackReload = 0.25;
+                    
+                    message.Add("Target",  Target);
+                }
+                StateMachine.ChangeState((string)Message["NextState"], message);
             }
-            StateMachine.ChangeState((string)Message["NextState"], message);
-		}
+
+            else
+            {
+                Player.Position = Player.Position.MoveToward(DashLocation, Speed * Convert.ToSingle(dt));
+            }
+        }
 
         else
         {
-		    Player.Position = Player.Position.MoveToward(DashLocation, Speed * Convert.ToSingle(dt));
+            Player.Position = Player.Position.MoveToward(DashLocation, Speed * Convert.ToSingle(dt));
+
+            if (Player.Position.DistanceTo(DashLocation) <= Range)
+            {
+                Dictionary<string, object> message = new();
+                StateMachine.ChangeState((string)Message["NextState"], message);
+            }
         }
+
+		
 
 	}
 
@@ -107,6 +121,12 @@ public partial class DashState : SimpleState
             {
                 TargetCircleObject.QueueFree();
             }
+        }
+
+        else
+        {
+            Player.CollisionMask = 2 + 4 + 8;
+            Player.Targetable = true;
         }
         base.OnExit(NextState);
     }

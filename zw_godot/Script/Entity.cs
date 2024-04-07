@@ -13,6 +13,7 @@ public partial class Entity : RigidBody3D
     [Export] public double AttackSpeed;
     [Export] public double AttackReload;
     [Export] public int AbilityHaste;
+    [Export] public bool Targetable = true;
 
     public const float RotationWeight = 0.1f;
 

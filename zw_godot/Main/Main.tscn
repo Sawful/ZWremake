@@ -22,7 +22,6 @@ adjustment_brightness = 0.95
 script = ExtResource("1_8bxkj")
 
 [node name="Player" parent="." node_paths=PackedStringArray("Ground") instance=ExtResource("3_a0wd3")]
-collision_mask = 14
 Ground = NodePath("../NavigationRegion3D/Ground")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -66,6 +65,7 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -6, 1, 0)
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -8, 1, 0)
 
 [node name="Ground" parent="NavigationRegion3D" instance=ExtResource("2_4n4u5")]
+collision_mask = 0
 
 [node name="Box6" parent="NavigationRegion3D" instance=ExtResource("6_y5g6b")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -15, 1, 15)

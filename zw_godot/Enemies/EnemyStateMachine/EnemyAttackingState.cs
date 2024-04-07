@@ -29,7 +29,7 @@ public partial class EnemyAttackingState : SimpleState
 
         Self.RotateTo(targetPosition, Entity.RotationWeight);
 
-        if (Self.AttackReload <= 0)
+        if (Self.AttackReload <= 0 & Target.Targetable)
         {
              Self.DealDamage(Target, Self.Damage);
              Self.AttackReload = 1 / Self.AttackSpeed;
