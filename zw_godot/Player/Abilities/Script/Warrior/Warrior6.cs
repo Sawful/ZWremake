@@ -19,6 +19,7 @@ public partial class Warrior6 : LineAbility
                     {"DashLocation",  newPosition},
                     {"Cooldown", 10},
                     {"AbilityNode", this},
+                    {"AbilityOnExit", "Warrior6"},
 					{"Range", 0.05f},
 					{"NextState", "IdleState"},
 					{"Speed", 30f}

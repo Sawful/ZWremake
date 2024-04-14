@@ -255,6 +255,21 @@ public partial class Player : Entity
         }
     }
 
+    public void DisableAllAbilities()
+    {
+        for(int i = 0; i<4; i++)
+        {
+            AbilityUI.DisableAbility(i);
+        }
+    }
+    public void EnableAllAbilities()
+    {
+        for(int i = 0; i<4; i++)
+        {
+            AbilityUI.EnableAbility(i);
+        }
+    }
+
     public void OnRegenerationTimerTimeout()
     {
         Health = Math.Min(Health + 1, MaxHealth);

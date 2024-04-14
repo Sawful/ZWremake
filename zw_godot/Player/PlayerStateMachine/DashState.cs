@@ -31,6 +31,8 @@ public partial class DashState : SimpleState
         base.OnStart(message);
         Message = message;
         
+        Player.DisableAllAbilities();
+
         DashOnTarget = Message.ContainsKey("Target");
         if(DashOnTarget)
         {
@@ -103,6 +105,8 @@ public partial class DashState : SimpleState
 	    public override void OnExit(string NextState)
     {
 
+        Player.EnableAllAbilities();
+
         if(Message.ContainsKey("AbilityOnExit"))
         {
             if((string)Message["AbilityOnExit"] == "Leap")
@@ -114,7 +118,14 @@ public partial class DashState : SimpleState
 		        StatEffect effect = ((Ability)Message["AbilityNode"]).CreateStatEffect(0, "AttackSpeed", 0.1);
 		        ((Warrior4)Message["AbilityNode"]).AttackSpeedEffects.Add(effect);
             }
+
+            else if((string)Message["AbilityOnExit"] == "Warrior6")
+            {
+                Player.RotateTo(DashLocation, Entity.RotationWeight);
+                AbilityUI.SetAbilityCooldown(2); // Set Cooldown
+            }
         }
+
         if(DashOnTarget)
         {
             if (IsInstanceValid(Target))
