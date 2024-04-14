@@ -87,4 +87,12 @@ public partial class RangeAttackingState : SimpleState
 
         base.OnExit(NextState);
     }
+
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventMouseButton eventMouseButton && eventMouseButton.Pressed && eventMouseButton.ButtonIndex == MouseButton.Right && Enabled)
+        {
+            Player.RightClickRaycast(eventMouseButton);
+        }
+    }
 }

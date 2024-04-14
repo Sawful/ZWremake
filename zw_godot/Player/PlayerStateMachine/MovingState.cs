@@ -37,9 +37,9 @@ public partial class MovingState : SimpleState
         }
     }
 
-        public override void _Input(InputEvent @event)
+    public override void _Input(InputEvent @event)
     {
-        if (@event is InputEventMouseButton eventMouseButton && eventMouseButton.Pressed && eventMouseButton.ButtonIndex == MouseButton.Right)
+        if (@event is InputEventMouseButton eventMouseButton && eventMouseButton.Pressed && eventMouseButton.ButtonIndex == MouseButton.Right && Enabled)
         {
             Player.RightClickRaycast(eventMouseButton);
         }

@@ -108,14 +108,6 @@ public partial class AttackingState : SimpleState
         }
     }
 
-    public override void _Input(InputEvent @event)
-    {
-        if (@event is InputEventMouseButton eventMouseButton && eventMouseButton.Pressed && eventMouseButton.ButtonIndex == MouseButton.Right)
-        {
-            Player.RightClickRaycast(eventMouseButton);
-        }
-    }
-
     public override void OnExit(string NextState)
     {
         if (IsInstanceValid(Target))
@@ -124,5 +116,13 @@ public partial class AttackingState : SimpleState
         }
 
         base.OnExit(NextState);
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventMouseButton eventMouseButton && eventMouseButton.Pressed && eventMouseButton.ButtonIndex == MouseButton.Right && Enabled)
+        {
+            Player.RightClickRaycast(eventMouseButton);
+        }
     }
 }

@@ -9,7 +9,7 @@ public partial class PlayerStateMachine : SimpleStateMachine
 	{
 		base._Ready();
         
-        
+        ChangeState("IdleState");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
