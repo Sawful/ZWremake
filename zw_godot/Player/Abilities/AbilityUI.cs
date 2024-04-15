@@ -57,7 +57,6 @@ public partial class AbilityUI : ItemList
     {
         Label label = AbilitySettings[abilityIndex].Item2;
         label.Text = Mathf.Ceil(AbilityResource[abilityIndex].CurrentCooldown).ToString();
-        GD.Print(AbilityResource[abilityIndex].CurrentCooldown);
     }
 
     public void UnlockCooldown(int abilityIndex)

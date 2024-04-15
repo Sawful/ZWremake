@@ -2,19 +2,17 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class MovingState : SimpleState
+public partial class MovingState : MobileState
 {
-	SimpleStateMachine StateMachine;
     Vector3 MovePoint;
-    Player Player;
     PackedScene ClickVFX;
 
 
     public override void _Ready()
 	{
+        base._Ready();
+
         ClickVFX = (PackedScene)ResourceLoader.Load("res://Visual/VFX/Click.tscn");
-        StateMachine = (SimpleStateMachine)GetParent().GetParent();
-        Player = (Player)StateMachine.GetParent();
     }
 
     public override void OnStart(Dictionary<string, object> message)
@@ -34,14 +32,6 @@ public partial class MovingState : SimpleState
         if (Player.Position == MovePoint)
         {
             StateMachine.ChangeState("IdleState");
-        }
-    }
-
-    public override void _Input(InputEvent @event)
-    {
-        if (@event is InputEventMouseButton eventMouseButton && eventMouseButton.Pressed && eventMouseButton.ButtonIndex == MouseButton.Right && Enabled)
-        {
-            Player.RightClickRaycast(eventMouseButton);
         }
     }
 }

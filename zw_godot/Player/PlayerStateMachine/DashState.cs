@@ -2,13 +2,12 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class DashState : SimpleState
+public partial class DashState : ImmobileState
 {
-	SimpleStateMachine StateMachine;
+
     private AbilityUI AbilityUI;
 	private AbilityHandler AbilityHandler;
 	Enemy Target;
-    Player Player;
     bool DashOnTarget;
     Vector3 DashLocation;
 	Dictionary<string, object> Message;
@@ -20,9 +19,7 @@ public partial class DashState : SimpleState
     public override void _Ready()
     {
         base._Ready();
-		StateMachine = (SimpleStateMachine)GetParent().GetParent();
 		TargetCircle = (PackedScene)ResourceLoader.Load("res://Enemies/TargetCircle.tscn");
-		Player = (Player)StateMachine.GetParent();
 		AbilityUI = GetTree().Root.GetNode("Main").GetNode("PlayerUI").GetNode("BottomBar").GetNode<AbilityUI>("AbilityUI");
 		AbilityHandler = Player.GetNode<AbilityHandler>("Abilities");
     }
@@ -71,14 +68,18 @@ public partial class DashState : SimpleState
             {
                 Dictionary<string, object> message = new();
 
-                if(DashOnTarget)
+                //Reset attack
+                Player.AttackReload = 0.25;
+                
+                if (NextState != null) 
                 {
-                    //Reset attack
-                    Player.AttackReload = 0.25;
-                    
-                    message.Add("Target",  Target);
+                    StateMachine.ChangeState(NextState, NextStateMessage);
                 }
-                StateMachine.ChangeState((string)Message["NextState"], message);
+                else 
+                {
+                    message.Add("Target",  Target);
+                    StateMachine.ChangeState("AttackingState", message);
+                }
             }
 
             else
@@ -93,13 +94,17 @@ public partial class DashState : SimpleState
 
             if (Player.Position.DistanceTo(DashLocation) <= Range)
             {
-                Dictionary<string, object> message = new();
-                StateMachine.ChangeState((string)Message["NextState"], message);
+                if (NextState != null) 
+                {
+                    StateMachine.ChangeState(NextState, NextStateMessage);
+                }
+                else 
+                {
+                    Dictionary<string, object> message = new();
+                    StateMachine.ChangeState("IdleState", message);
+                }
             }
         }
-
-		
-
 	}
 
 	    public override void OnExit(string NextState)

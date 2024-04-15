@@ -2,11 +2,9 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class RangeAttackingState : SimpleState
+public partial class RangeAttackingState : MobileState
 {
-    SimpleStateMachine StateMachine;
     Enemy Target;
-    Player Player;
     Dictionary<string, object> Message;
     PackedScene Projectile;
     float Speed;
@@ -15,8 +13,8 @@ public partial class RangeAttackingState : SimpleState
 
     public override void _Ready()
     {
-        StateMachine = (SimpleStateMachine)GetParent().GetParent();
-        Player = (Player)StateMachine.GetParent();
+        base._Ready();
+
         Projectile = (PackedScene)ResourceLoader.Load("res://Player/Projectiles/Projectile.tscn");
         TargetCircle = (PackedScene)ResourceLoader.Load("res://Enemies/TargetCircle.tscn");
     }
@@ -86,13 +84,5 @@ public partial class RangeAttackingState : SimpleState
         }
 
         base.OnExit(NextState);
-    }
-
-    public override void _Input(InputEvent @event)
-    {
-        if (@event is InputEventMouseButton eventMouseButton && eventMouseButton.Pressed && eventMouseButton.ButtonIndex == MouseButton.Right && Enabled)
-        {
-            Player.RightClickRaycast(eventMouseButton);
-        }
     }
 }

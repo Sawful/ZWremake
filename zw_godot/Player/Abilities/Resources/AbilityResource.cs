@@ -50,7 +50,6 @@ public partial class AbilityResource : Resource
 		{
 			OnCooldown = true;
 		}
-		GD.Print("Cooldown set");
 	}
 
 
@@ -63,7 +62,6 @@ public partial class AbilityResource : Resource
 			foreach (Timer currentCooldownTimer in CooldownTimerList)
 			{
 				CurrentCooldown = (float)Mathf.Min(CurrentCooldown, currentCooldownTimer.TimeLeft);
-				GD.Print("AAAAAAAa");
 			}
 		}
 	}

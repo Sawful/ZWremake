@@ -2,11 +2,9 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class AttackingState : SimpleState
+public partial class AttackingState : MobileState
 {
-    SimpleStateMachine StateMachine;
     Enemy Target;
-    Player Player;
     Dictionary<string, object> Message;
     private AbilityHandler Ability;
     private AbilityUI AbilityUI;
@@ -14,8 +12,7 @@ public partial class AttackingState : SimpleState
     Node3D TargetCircleObject;
     public override void _Ready()
 	{
-        StateMachine = (SimpleStateMachine)GetParent().GetParent();
-        Player = (Player)StateMachine.GetParent();
+        base._Ready();
         AbilityUI = GetTree().Root.GetNode("Main").GetNode("PlayerUI").GetNode("BottomBar").GetNode<AbilityUI>("AbilityUI");
         Ability = Player.GetNode<AbilityHandler>("Abilities");
 
@@ -118,11 +115,4 @@ public partial class AttackingState : SimpleState
         base.OnExit(NextState);
     }
 
-    public override void _Input(InputEvent @event)
-    {
-        if (@event is InputEventMouseButton eventMouseButton && eventMouseButton.Pressed && eventMouseButton.ButtonIndex == MouseButton.Right && Enabled)
-        {
-            Player.RightClickRaycast(eventMouseButton);
-        }
-    }
 }
