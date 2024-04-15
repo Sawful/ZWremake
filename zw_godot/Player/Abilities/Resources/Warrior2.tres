@@ -11,6 +11,7 @@ TimedCooldown = true
 Cooldown = 20.0
 CurrentCooldown = 0.0
 OnCooldown = false
+CooldownRecharge = false
 MultipleCharges = false
 MaxCharges = 0
 Charges = 0

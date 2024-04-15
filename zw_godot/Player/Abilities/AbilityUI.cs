@@ -57,7 +57,6 @@ public partial class AbilityUI : ItemList
     {
         Label label = AbilitySettings[abilityIndex].Item2;
         label.Text = Mathf.Ceil(AbilityResource[abilityIndex].CurrentCooldown).ToString();
-        GD.Print(AbilityResource[abilityIndex].CurrentCooldown);
     }
 
     public void UnlockCooldown(int abilityIndex)
@@ -87,20 +86,29 @@ public partial class AbilityUI : ItemList
         else
         {
             AbilitySettings[abilityIndex].Item1.Disabled = true;
+            AbilitySettings[abilityIndex].Item2.Text = AbilityResource[abilityIndex].Cooldown.ToString();
             AbilityResource[abilityIndex].OnCooldown = true;
             AbilityResource[abilityIndex].SetCooldown();
         }
         
     }
 
+    public void SetLeapCooldown(int abilityIndex)
+    {
+        AbilitySettings[abilityIndex].Item1.Disabled = true;
+        AbilityResource[abilityIndex].CurrentCooldown = AbilityResource[abilityIndex].Cooldown;
+        AbilitySettings[abilityIndex].Item2.Text = AbilityResource[abilityIndex].Cooldown.ToString();
+        AbilityResource[abilityIndex].OnCooldown = true;
+    }
+
     public void UpdateLeapCooldown(int abilityIndex)
     {
         if(AbilityResource[abilityIndex].OnCooldown)
         {
-            int Number = AbilitySettings[abilityIndex].Item2.Text.ToInt();
+            AbilityResource[abilityIndex].CurrentCooldown = Math.Max(AbilityResource[abilityIndex].CurrentCooldown - 1, 0);
+            AbilitySettings[abilityIndex].Item2.Text = AbilityResource[abilityIndex].CurrentCooldown.ToString();
 
-            AbilitySettings[abilityIndex].Item2.Text = Math.Max(Number - 1, 0).ToString();
-            if(AbilitySettings[abilityIndex].Item2.Text.ToInt() == 0)
+            if(AbilityResource[abilityIndex].CurrentCooldown == 0)
             {
                 AbilitySettings[abilityIndex].Item1.Disabled = false;
                 AbilityResource[abilityIndex].OnCooldown = false;
@@ -130,6 +138,24 @@ public partial class AbilityUI : ItemList
     public void OnAbilityButton4Pressed()
     {
         AbilityResource[3].AbilityNode.Call("CastAbility", Player);
+    }
+
+    public void DisableAbility(int abilityIndex)
+    {
+        AbilitySettings[abilityIndex].Item1.Disabled = true;
+    }
+
+    public void EnableAbility(int abilityIndex)
+    {
+        if (!AbilityResource[abilityIndex].OnCooldown)
+        {
+            AbilitySettings[abilityIndex].Item1.Disabled = false;
+            AbilitySettings[abilityIndex].Item2.Text = "";
+        }
+        else
+        {
+            AbilitySettings[abilityIndex].Item2.Text = AbilityResource[abilityIndex].CurrentCooldown.ToString();
+        }
     }
 
 }

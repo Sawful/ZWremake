@@ -42,7 +42,6 @@ public partial class Player : Entity
     public AbilityHandler AbilityScript;
 
     // Vectors
-    private Vector3 AnchorPoint = Vector3.Zero;
     private Vector3 CameraLocalStartingPosition;
     private Vector3 EnemyPos;
 
@@ -69,7 +68,6 @@ public partial class Player : Entity
 
     public override void _Ready()
     {
-
         PlayerInfo = GetNode<PlayerInfo>("/root/PlayerInfo");
         Main = GetTree().Root.GetNode("Main");
 
@@ -192,7 +190,7 @@ public partial class Player : Entity
 
     }
 
-    public void RightClickRaycast(InputEventMouseButton rClick)
+    public Godot.Collections.Dictionary RightClickRaycast(InputEventMouseButton rClick)
     {
         // Raycast
         PhysicsRayQueryParameters3D query = new()
@@ -208,41 +206,14 @@ public partial class Player : Entity
         var hitDictionary = GetWorld3D().DirectSpaceState.IntersectRay(query);
         if (hitDictionary.Count > 0) 
         {
-            var objectHit = hitDictionary["collider"].Obj;
-
             AbilityScript.AbilityCast.SetResult(false);
             AbilityScript.AbilityCast = new TaskCompletionSource<bool>();
             AbilityScript.Casting = false;
 
-            if (objectHit == Ground)
-            {
-                AnchorPoint = NavigationServer3D.MapGetClosestPoint(NavigationServer3D.GetMaps()[0], (Vector3)hitDictionary["position"]);
-                Dictionary<string, object> message = new()
-                {
-                    { "MovePoint", AnchorPoint }
-                };
-
-                PlayerStateMachine.ChangeState("MovingState", message);
-            }
-            
-            else if (objectHit is Enemy enemyHit)
-            {
-                EnemyClicked = enemyHit;
-                Dictionary<string, object> message = new()
-                {
-                    { "Target", EnemyClicked },
-                    { "Projectile Speed", ProjectileSpeed }
-                };
-
-                if (RangedAttack) 
-                {
-                    PlayerStateMachine.ChangeState("RangeAttackingState", message);
-                }
-                    
-                else
-                    PlayerStateMachine.ChangeState("AttackingState", message);
-            }
+            return hitDictionary;
         }
+
+        else return null;
     }
 
     public void AutoAttack(Entity target)
@@ -253,6 +224,21 @@ public partial class Player : Entity
             AttackReload = 1 / AttackSpeed;
             // Call auto attack
             AbilityResource[3].AbilityNode.Call("AutoAttacked");
+        }
+    }
+
+    public void DisableAllAbilities()
+    {
+        for(int i = 0; i<4; i++)
+        {
+            AbilityUI.DisableAbility(i);
+        }
+    }
+    public void EnableAllAbilities()
+    {
+        for(int i = 0; i<4; i++)
+        {
+            AbilityUI.EnableAbility(i);
         }
     }
 
