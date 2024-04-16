@@ -1,8 +1,21 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Warrior6 : LineAbility
 {
+
+	PackedScene AreaHitboxPacked;
+    AreaHitbox AreaHitbox;
+    List<Entity> TargetHit = new();
+	bool Dashing = false;
+
+	public override void _Ready()
+    {
+		base._Ready();
+		AreaHitboxPacked = (PackedScene)ResourceLoader.Load("res://Player/Abilities/AreaHitbox.tscn");
+	}
+
 	public void CastAbility(Entity caster)
 	{
 		float length = 10;
@@ -14,7 +27,7 @@ public partial class Warrior6 : LineAbility
 	{
 		Vector3 newPosition = (CurrentHitbox.PointHit - Player.Position).Normalized() * CurrentHitbox.Scale.Z + Player.Position; 
 
-		System.Collections.Generic.Dictionary<string, object> message = new()
+		Dictionary<string, object> message = new()
                 {
                     {"DashLocation",  newPosition},
                     {"Cooldown", 10},
@@ -27,10 +40,37 @@ public partial class Warrior6 : LineAbility
 
         Player.PlayerStateMachine.ChangeState("DashState", message);
 		
+		AreaHitbox = (AreaHitbox)AreaHitboxPacked.Instantiate();
+        AreaHitbox.FollowMouse = false;
+		AreaHitbox.Scale = Vector3.One * 2;
+        Player.AddChild(AreaHitbox);
+		Dashing = true;
+	}
+
+	public override void _Process(double delta)
+    {
+		if(Dashing)
+		{
+			foreach(Entity Target in AreaHitbox.GetOverlappingBodies())
+			{
+				if(!TargetHit.Contains(Target))
+				{
+					Player.DealDamage(Target, Player.Damage);
+					TargetHit.Add(Target);
+					GD.Print(Target);
+				}
+			}
+			GD.Print(AreaHitbox.GetOverlappingBodies());
+			GD.Print(AreaHitbox.GlobalPosition);
+
+		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public void EndAbility()
 	{
+		AreaHitbox.QueueFree();
+		TargetHit = new();
+		Dashing = false;
 	}
 }

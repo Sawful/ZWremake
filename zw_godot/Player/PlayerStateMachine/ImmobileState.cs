@@ -9,18 +9,15 @@ public partial class ImmobileState : PlayerState
 
 	public override void _Input(InputEvent @event)
     {
-		GD.Print("Input");
 
         if (@event is InputEventMouseButton eventMouseButton && eventMouseButton.Pressed && eventMouseButton.ButtonIndex == MouseButton.Right && Enabled)
         {
-			GD.Print("Registered Input");
 
 			Godot.Collections.Dictionary hitDictionary = Player.RightClickRaycast(eventMouseButton);
             object objectHit = hitDictionary["collider"].Obj;
 
 			if (objectHit == Player.Ground)
             {
-				GD.Print("Registered Input Ground");
 
                 Vector3 AnchorPoint = NavigationServer3D.MapGetClosestPoint(NavigationServer3D.GetMaps()[0], (Vector3)hitDictionary["position"]);
                 NextStateMessage = new()
@@ -33,7 +30,6 @@ public partial class ImmobileState : PlayerState
             
             else if (objectHit is Enemy enemyHit)
             {
-				GD.Print("Registered Input Enemy");
 
                 Enemy enemyClicked = enemyHit;
                 NextStateMessage = new()

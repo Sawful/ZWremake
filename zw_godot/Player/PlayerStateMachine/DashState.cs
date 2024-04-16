@@ -15,6 +15,7 @@ public partial class DashState : ImmobileState
     Node3D TargetCircleObject;
     float Speed;
     float Range;
+
     
     public override void _Ready()
     {
@@ -23,11 +24,18 @@ public partial class DashState : ImmobileState
 		AbilityUI = GetTree().Root.GetNode("Main").GetNode("PlayerUI").GetNode("BottomBar").GetNode<AbilityUI>("AbilityUI");
 		AbilityHandler = Player.GetNode<AbilityHandler>("Abilities");
     }
+    
     public override void OnStart(Dictionary<string, object> message)
     {
         base.OnStart(message);
         Message = message;
-        
+
+        if(Message.ContainsKey("AbilityOnStart"))
+        {
+        }
+
+
+
         Player.DisableAllAbilities();
 
         DashOnTarget = Message.ContainsKey("Target");
@@ -126,8 +134,8 @@ public partial class DashState : ImmobileState
 
             else if((string)Message["AbilityOnExit"] == "Warrior6")
             {
-                Player.RotateTo(DashLocation, Entity.RotationWeight);
                 AbilityUI.SetAbilityCooldown(2); // Set Cooldown
+                ((Warrior6)Message["AbilityNode"]).EndAbility();
             }
         }
 
