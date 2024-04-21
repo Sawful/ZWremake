@@ -47,8 +47,8 @@ public partial class Player : Entity
 
     public Dictionary<string, int> StatsLevel;
 
-    public Dictionary<string, double> StatsBonusMult;
-    public Dictionary<string, double> StatsBonusAdd;
+    public Dictionary<string, float> StatsBonusMult;
+    public Dictionary<string, float> StatsBonusAdd;
 
     Godot.Timer RegenerationTimer;
 
@@ -116,10 +116,6 @@ public partial class Player : Entity
         if(PlayerClass == "Warrior")
         {
             AbilityResource = PlayerInfo.AbilityResource;
-            //AbilityResource.Add((AbilityResource)ResourceLoader.Load("res://Player/Abilities/Resources/Warrior1.tres"));
-            //AbilityResource.Add((AbilityResource)ResourceLoader.Load("res://Player/Abilities/Resources/Warrior2.tres"));
-            //AbilityResource.Add((AbilityResource)ResourceLoader.Load("res://Player/Abilities/Resources/Warrior3.tres"));
-            //AbilityResource.Add((AbilityResource)ResourceLoader.Load("res://Player/Abilities/Resources/Warrior4.tres"));
             for(int i = 0; i < AbilityResource.Count; i++)
             {
                 AbilityResource[i].SetAbility(AbilityScript);
@@ -145,11 +141,11 @@ public partial class Player : Entity
             GD.Print("Unknown Class");
         }
 
-        MaxHealth = (int)Math.Round((200 + StatsBonusAdd["MaxHealth"] + 10 * StatsLevel["MaxHealth"]) * (1 + StatsBonusMult["MaxHealth"]));
-        Damage = (int)Math.Round((10 + StatsBonusAdd["Damage"] + 3 * StatsLevel["Damage"]) * (1 + StatsBonusMult["Damage"]));
-        Speed = (float) (4 + StatsBonusAdd["MovementSpeed"] + 0.5f * StatsLevel["MovementSpeed"]) * (float) (1 + StatsBonusMult["MovementSpeed"]);
-        AttackSpeed = (1 + StatsBonusAdd["AttackSpeed"] + 0.2 * StatsLevel["AttackSpeed"]) * (1 + StatsBonusMult["AttackSpeed"]);
-        AbilityHaste = (int)Math.Round((0 + StatsBonusAdd["AbilityHaste"] + 3 * StatsLevel["AbilityHaste"]) * (1 + StatsBonusMult["AbilityHaste"]));
+        MaxHealth = (int)Mathf.Round((200 + StatsBonusAdd["MaxHealth"] + 10 * StatsLevel["MaxHealth"]) * (1 + StatsBonusMult["MaxHealth"]));
+        Damage = (int)Mathf.Round((10 + StatsBonusAdd["Damage"] + 3 * StatsLevel["Damage"]) * (1 + StatsBonusMult["Damage"]));
+        Speed =  (4 + StatsBonusAdd["MovementSpeed"] + 0.5f * StatsLevel["MovementSpeed"]) * (1 + StatsBonusMult["MovementSpeed"]);
+        AttackSpeed = (1 + StatsBonusAdd["AttackSpeed"] + 0.2f * StatsLevel["AttackSpeed"]) * (1 + StatsBonusMult["AttackSpeed"]);
+        AbilityHaste = (int)Mathf.Round((0 + StatsBonusAdd["AbilityHaste"] + 3 * StatsLevel["AbilityHaste"]) * (1 + StatsBonusMult["AbilityHaste"]));
 
         HealthRegeneration = 3;
         RegenerationTimer.WaitTime = 1/HealthRegeneration;
@@ -170,7 +166,6 @@ public partial class Player : Entity
 
     public override void _Process(double delta)
     {
-
         if (Input.IsActionJustPressed("AttackMoveKey"))
         {
             AbilityScript.Call("AttackMove");
@@ -223,7 +218,13 @@ public partial class Player : Entity
             DealDamage(target, Damage);
             AttackReload = 1 / AttackSpeed;
             // Call auto attack
-            AbilityResource[3].AbilityNode.Call("AutoAttacked");
+            foreach (AbilityResource currentAbility in AbilityResource)
+            {
+                if(!currentAbility.TimedCooldown)
+                {
+                    currentAbility.AbilityNode.Call("AutoAttacked");
+                }
+            }
         }
     }
 
@@ -288,7 +289,7 @@ public partial class Player : Entity
         MaxHealth = (int)Math.Round((200 + StatsBonusAdd["MaxHealth"] + 10 * StatsLevel["MaxHealth"]) * (1 + StatsBonusMult["MaxHealth"]));
         Damage = (int)Math.Round((10 + StatsBonusAdd["Damage"] + 3 * StatsLevel["Damage"]) * (1 + StatsBonusMult["Damage"]));
         Speed = (float) (4 + StatsBonusAdd["MovementSpeed"] + 0.5f * StatsLevel["MovementSpeed"]) * (float) (1 + StatsBonusMult["MovementSpeed"]);
-        AttackSpeed = (1 + StatsBonusAdd["AttackSpeed"] + 0.2 * StatsLevel["AttackSpeed"]) * (1 + StatsBonusMult["AttackSpeed"]);
+        AttackSpeed = (1 + StatsBonusAdd["AttackSpeed"] + 0.2f * StatsLevel["AttackSpeed"]) * (1 + StatsBonusMult["AttackSpeed"]);
         AbilityHaste = (int)Math.Round((0 + StatsBonusAdd["AbilityHaste"] + 3 * StatsLevel["AbilityHaste"]) * (1 + StatsBonusMult["AbilityHaste"]));
         HealthRegeneration = 3;
         RegenerationTimer.WaitTime = 1/HealthRegeneration;

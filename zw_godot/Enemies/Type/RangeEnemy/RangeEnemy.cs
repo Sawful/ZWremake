@@ -10,7 +10,7 @@ public partial class RangeEnemy : Enemy
         Damage = 3;
         Range = 4;
         Speed = 2;
-        AttackSpeed = 1.4;
+        AttackSpeed = 1.4f;
 
         base._Ready();
         EnemyStateMachine = (SimpleStateMachine)GetNode("EnemyStateMachine");

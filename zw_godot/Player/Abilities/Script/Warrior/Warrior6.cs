@@ -57,11 +57,8 @@ public partial class Warrior6 : LineAbility
 				{
 					Player.DealDamage(Target, Player.Damage);
 					TargetHit.Add(Target);
-					GD.Print(Target);
 				}
 			}
-			GD.Print(AreaHitbox.GetOverlappingBodies());
-			GD.Print(AreaHitbox.GlobalPosition);
 
 		}
 	}

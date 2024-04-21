@@ -10,7 +10,7 @@ public partial class TankEnemy : Enemy
         Damage = 5;
         Range = 2;
         Speed = 1.5f;
-        AttackSpeed = 0.6;
+        AttackSpeed = 0.6f;
 
         base._Ready();
         EnemyStateMachine = (SimpleStateMachine)GetNode("EnemyStateMachine");

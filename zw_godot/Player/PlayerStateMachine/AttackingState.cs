@@ -59,7 +59,7 @@ public partial class AttackingState : MobileState
                     {
                         Player.RotateTo(targetPosition, Entity.RotationWeight);
                         //Play spell
-                        Player.DealDamage(Target, (int) Mathf.Round(Player.Damage * (float)Message["DamageMultiplier"]));
+                        Player.DealDirectDamage(Target, (int) Mathf.Round(Player.Damage * (float)Message["DamageMultiplier"]));
                         AbilityUI.SetAbilityCooldown(0); // Set Cooldown
 
                         //Reset attack

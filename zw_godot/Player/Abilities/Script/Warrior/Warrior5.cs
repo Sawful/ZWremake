@@ -22,7 +22,7 @@ public partial class Warrior5 : AreaAbility
 	{
         Array<Node3D> targets = CurrentHitbox.GetOverlappingBodies();
 
-        CreateStatEffect(0.5f, "MovementSpeed", -0.2);
+        CreateStatEffect(0.5f, "MovementSpeed", -0.2f);
 
 		foreach (Node target in targets)
         {

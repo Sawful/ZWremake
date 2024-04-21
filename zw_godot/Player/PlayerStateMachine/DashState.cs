@@ -126,9 +126,9 @@ public partial class DashState : ImmobileState
             {
                 Player.RotateTo(DashLocation, Entity.RotationWeight);
                 //Play spell
-                Player.DealDamage(Target, (int) Mathf.Round(Player.Damage * (float)Message["DamageMultiplier"]));
+                Player.DealDirectDamage(Target, (int) Mathf.Round(Player.Damage * (float)Message["DamageMultiplier"]));
                 AbilityUI.SetLeapCooldown(3); // Set Cooldown
-		        StatEffect effect = ((Ability)Message["AbilityNode"]).CreateStatEffect(0, "AttackSpeed", 0.1);
+		        StatEffect effect = ((Ability)Message["AbilityNode"]).CreateStatEffect(0, "AttackSpeed", 0.1f);
 		        ((Warrior4)Message["AbilityNode"]).AttackSpeedEffects.Add(effect);
             }
 

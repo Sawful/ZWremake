@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://1sana2a2gyb7"]
+
+[ext_resource type="Script" path="res://Player/Abilities/Resources/AbilityResource.cs" id="1_xcgss"]
+
+[resource]
+script = ExtResource("1_xcgss")
+AbilityName = "Warrior7"
+Slot = 4
+TimedCooldown = true
+Cooldown = 90.0
+CurrentCooldown = 0.0
+OnCooldown = false
+CooldownRecharge = false
+MultipleCharges = false
+MaxCharges = 0
+Charges = 0
+AbilityNodePath = "res://Player/Abilities/Scenes/Warrior7.tscn"

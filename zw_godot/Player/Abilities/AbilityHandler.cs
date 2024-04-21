@@ -42,8 +42,6 @@ public partial class AbilityHandler : Node
             AttackMoveContinue.SetResult(true);
             AttackMoving = false;
         }
-
-        
 	}
 
 	public override void _Input(InputEvent @event)
@@ -54,7 +52,7 @@ public partial class AbilityHandler : Node
         }
     }
 
-public async void AttackMove()
+    public async void AttackMove()
     {
         // Change cursor
         AbilityCast.SetResult(false); // Cancel other abilities

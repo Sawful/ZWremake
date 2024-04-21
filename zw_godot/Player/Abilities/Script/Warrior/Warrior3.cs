@@ -34,7 +34,7 @@ public partial class Warrior3 : LineAbility
         AbilityTimer.Interval = 333;
         AbilityTimer.Enabled = true;
 
-        Player.StatsBonusMult["MovementSpeed"] += -0.5;
+        Player.StatsBonusMult["MovementSpeed"] += -0.5f;
         Player.UpdateStats();
 
         Handler.AbilityUI.SetAbilityCooldown(2);
@@ -56,7 +56,7 @@ public partial class Warrior3 : LineAbility
                 loopNumber ++;
             }
         }
-        Player.StatsBonusMult["MovementSpeed"] -= -0.5;
+        Player.StatsBonusMult["MovementSpeed"] -= -0.5f;
         Player.UpdateStats();
 
         AbilityTimer.Enabled = false;
