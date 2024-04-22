@@ -17,11 +17,9 @@ public partial class Player : Entity
     [Export] public StaticBody3D Ground;
     private Enemy EnemyClicked;
     public SimpleStateMachine PlayerStateMachine;
-    public Node3D ClosestTarget;
     AbilityUI AbilityUI;
     GameUI GameUI;
-    Area3D Area3D;
-    public Godot.Collections.Array<Node3D> OverlappingBodies;
+    Area3D TargetArea;
 
     public PackedScene SoundEffectPlayer;
     public AudioStreamWav AttackSound;
@@ -156,7 +154,7 @@ public partial class Player : Entity
         AttackSound = (AudioStreamWav)ResourceLoader.Load("res://Sound/hitsound.wav");
 
         PlayerStateMachine = (SimpleStateMachine)GetNode("PlayerStateMachine");
-        Area3D = GetNode<Area3D>("Area3D");
+        TargetArea = GetNode<Area3D>("TargetArea");
         // Camera initialisation
         CameraLocalStartingPosition = ToLocal(MainCamera.GlobalPosition);
 
@@ -248,10 +246,13 @@ public partial class Player : Entity
         Health = Math.Min(Health + 1, MaxHealth);
     }
 
-    public void GetEnemies()
+    public Godot.Collections.Array<Node3D> GetEnemies()
     {
-        OverlappingBodies = Area3D.GetOverlappingBodies();
-        ClosestTarget = GetClosest(OverlappingBodies);
+        return TargetArea.GetOverlappingBodies();
+    }
+    public Enemy GetClosestEnemy()
+    {
+        return (Enemy)GetClosest(GetEnemies());
     }
 
     public virtual Node3D GetClosest(Godot.Collections.Array<Node3D> nodeArray)

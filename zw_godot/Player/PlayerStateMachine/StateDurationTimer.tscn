@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://btm38r7lqqrf3"]
+
+[node name="StateDurationTimer" type="Timer"]
+one_shot = true
+autostart = true

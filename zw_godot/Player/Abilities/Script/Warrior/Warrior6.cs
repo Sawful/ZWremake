@@ -28,15 +28,15 @@ public partial class Warrior6 : LineAbility
 		Vector3 newPosition = (CurrentHitbox.PointHit - Player.Position).Normalized() * CurrentHitbox.Scale.Z + Player.Position; 
 
 		Dictionary<string, object> message = new()
-                {
-                    {"DashLocation",  newPosition},
-                    {"Cooldown", 10},
-                    {"AbilityNode", this},
-                    {"AbilityOnExit", "Warrior6"},
-					{"Range", 0.05f},
-					{"NextState", "IdleState"},
-					{"Speed", 30f}
-                };
+        {
+            {"DashLocation",  newPosition},
+            {"Cooldown", 10},
+            {"AbilityNode", this},
+            {"AbilityOnExit", "Warrior6"},
+			{"Range", 0.05f},
+			{"NextState", "IdleState"},
+			{"Speed", 30f}
+        };
 
         Player.PlayerStateMachine.ChangeState("DashState", message);
 		

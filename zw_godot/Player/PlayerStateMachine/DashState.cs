@@ -30,13 +30,6 @@ public partial class DashState : ImmobileState
         base.OnStart(message);
         Message = message;
 
-        if(Message.ContainsKey("AbilityOnStart"))
-        {
-        }
-
-
-
-        Player.DisableAllAbilities();
 
         DashOnTarget = Message.ContainsKey("Target");
         if(DashOnTarget)
@@ -115,11 +108,8 @@ public partial class DashState : ImmobileState
         }
 	}
 
-	    public override void OnExit(string NextState)
+	public override void OnExit(string NextState)
     {
-
-        Player.EnableAllAbilities();
-
         if(Message.ContainsKey("AbilityOnExit"))
         {
             if((string)Message["AbilityOnExit"] == "Leap")

@@ -29,7 +29,7 @@ public partial class Warrior1 : PointAndClickAbility
                         {"Target",  enemyHit},
                         {"Ability", "Warrior1"},
                         {"Range", 2f},
-                        {"DamageMultiplier", 2.5f}
+                        {"DamageMultiplier", 2f}
                     };
                     Player.PlayerStateMachine.ChangeState("AttackingState", message);
                 }
