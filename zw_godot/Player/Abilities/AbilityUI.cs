@@ -13,6 +13,7 @@ public partial class AbilityUI : ItemList
     public Player Player;
     public List<AbilityResource> AbilityResource;
 
+    private bool AbilitiesForceDisabled = false;
 
     List<bool> TimedCooldownAbilities = new();
 
@@ -61,7 +62,10 @@ public partial class AbilityUI : ItemList
 
     public void UnlockCooldown(int abilityIndex)
     {
-        AbilitySettings[abilityIndex].Item1.Disabled = false;
+        if(!AbilitiesForceDisabled)
+        {
+            AbilitySettings[abilityIndex].Item1.Disabled = false;
+        }
     }
 
     public void ClearCooldown(int abilityIndex)
@@ -143,6 +147,7 @@ public partial class AbilityUI : ItemList
     public void DisableAbility(int abilityIndex)
     {
         AbilitySettings[abilityIndex].Item1.Disabled = true;
+        AbilitiesForceDisabled = true;
     }
 
     public void EnableAbility(int abilityIndex)
@@ -156,6 +161,7 @@ public partial class AbilityUI : ItemList
         {
             AbilitySettings[abilityIndex].Item2.Text = AbilityResource[abilityIndex].CurrentCooldown.ToString();
         }
+        AbilitiesForceDisabled = false;
     }
 
 }

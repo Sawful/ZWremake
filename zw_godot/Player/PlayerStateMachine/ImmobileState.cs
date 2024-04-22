@@ -7,6 +7,10 @@ public partial class ImmobileState : PlayerState
 	protected string NextState;
 	protected Dictionary<string, object> NextStateMessage = new();
 
+    public override void OnStart(Dictionary<string, object> message)
+    {
+        Player.DisableAllAbilities();
+    }
 	public override void _Input(InputEvent @event)
     {
 
@@ -50,5 +54,10 @@ public partial class ImmobileState : PlayerState
                     
             }
         }
+    }
+
+    public override void OnExit(string NextState)
+    {
+        Player.EnableAllAbilities();
     }
 }

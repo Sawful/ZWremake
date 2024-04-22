@@ -39,11 +39,11 @@ mesh = SubResource("BoxMesh_fhn0w")
 script = ExtResource("3_rpmj0")
 MouseColliderLayers = 6
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="TargetArea" type="Area3D" parent="."]
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="TargetCircle" type="CollisionShape3D" parent="TargetArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 shape = SubResource("CylinderShape3D_b4j62")
 

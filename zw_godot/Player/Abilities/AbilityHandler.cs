@@ -37,7 +37,7 @@ public partial class AbilityHandler : Node
 	{
 		base._Process(delta);
 
-        if ((Casting | Player.ClosestTarget != null) & AttackMoving) 
+        if ((Casting | Player.GetClosestEnemy() != null) & AttackMoving) 
         {
             AttackMoveContinue.SetResult(true);
             AttackMoving = false;
@@ -94,11 +94,11 @@ public partial class AbilityHandler : Node
                         return;
                     }
 
-                    else if (Player.ClosestTarget != null)
+                    else if (Player.GetClosestEnemy() != null)
                     {
                         System.Collections.Generic.Dictionary<string, object> message2 = new()
                         {
-                            {"Target", Player.ClosestTarget},
+                            {"Target", Player.GetClosestEnemy()},
                             {"Projectile Speed" ,  Player.ProjectileSpeed}
                         };
                         
