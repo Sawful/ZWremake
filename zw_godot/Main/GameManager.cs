@@ -28,6 +28,7 @@ public partial class GameManager : Node3D
     Variant Content;
     Variant Content2;
 
+    PackedScene PauseMenu;
 
     public override void _Ready()
     {
@@ -51,6 +52,8 @@ public partial class GameManager : Node3D
         TankEnemyScene = (PackedScene)ResourceLoader.Load("res://Enemies/Type/TankEnemy/TankEnemy.tscn");
         RangeEnemyScene = (PackedScene)ResourceLoader.Load("res://Enemies/Type/RangeEnemy/RangeEnemy.tscn");
 
+        PauseMenu = (PackedScene)ResourceLoader.Load("res://Main/PauseMenu.tscn");
+
         Content = "GaMiNg";
         Content2 = "don't feel like gaming rn";
         Load();
@@ -62,6 +65,16 @@ public partial class GameManager : Node3D
     public override void _Process(double delta)
     {
         IsPlayerDead = !IsInstanceValid(Player);
+    }
+
+    public override void _Input(InputEvent @event)  
+    {
+        if (@event.IsActionPressed("Pause"))
+        {
+            Node pauseMenu = PauseMenu.Instantiate();
+            AddChild(pauseMenu);
+            GetTree().Paused = true;
+        }
     }
 
     void SpawnObject(PackedScene obj, Vector3 pos, int number)
