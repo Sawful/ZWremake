@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://po6o4v664wgh"]
+[gd_scene load_steps=12 format=3 uid="uid://po6o4v664wgh"]
 
 [ext_resource type="Theme" uid="uid://1lay8k43egpa" path="res://Visual/Theme/Settings.tres" id="1_yrwoo"]
 [ext_resource type="Script" path="res://Main/Settings/Settings.cs" id="2_fjqgi"]
@@ -9,6 +9,13 @@
 [ext_resource type="Script" path="res://Main/Settings/FPSMenuButton.cs" id="5_l5ls4"]
 [ext_resource type="Script" path="res://Main/Settings/FullscreenCheckBox.cs" id="6_pgfiv"]
 [ext_resource type="Script" path="res://Main/Settings/ExitSettingsButton.cs" id="8_m5rv5"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_l05um"]
+device = -1
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_iljwj"]
+events = [SubResource("InputEventKey_l05um")]
 
 [node name="Settings" type="Control"]
 layout_mode = 3
@@ -191,6 +198,7 @@ anchor_right = 1.0
 offset_left = -80.0
 offset_bottom = 80.0
 grow_horizontal = 0
+shortcut = SubResource("Shortcut_iljwj")
 text = "Exit
 Settings"
 script = ExtResource("8_m5rv5")

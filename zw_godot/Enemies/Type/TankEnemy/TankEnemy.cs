@@ -24,7 +24,7 @@ public partial class TankEnemy : Enemy
     {
         if (!IsInstanceValid(Player))
         {
-            EnemyStateMachine.ChangeState("IdleState");
+            EnemyStateMachine.ChangeState("EnemyIdleState");
         }
 
         else
