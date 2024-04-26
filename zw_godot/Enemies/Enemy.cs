@@ -25,7 +25,15 @@ public partial class Enemy : Entity
         // Stats
         base._Ready();
         Main = GetTree().Root.GetNode("Main");
-        Player = Main.GetNode<Player>("Player");
+
+        if(IsInstanceValid(Main.GetNode<Player>("Player")))
+        {
+            Player = Main.GetNode<Player>("Player");
+        }
+        else
+        {
+            EnemyStateMachine.ChangeState("EnemyIdleState");
+        }
         HealthBar = GetNode<HealthBar3D>("HealthBar3D");
         HealthBar.Update(Health, MaxHealth);
 

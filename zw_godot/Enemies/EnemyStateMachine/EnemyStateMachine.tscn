@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dpuxn46ahh05a"]
+[gd_scene load_steps=5 format=3 uid="uid://dpuxn46ahh05a"]
 
 [ext_resource type="Script" path="res://Enemies/EnemyStateMachine/EnemyStateMachine.cs" id="1_0tg2h"]
 [ext_resource type="Script" path="res://Enemies/EnemyStateMachine/EnemyAttackingState.cs" id="2_pyutf"]
 [ext_resource type="Script" path="res://Enemies/EnemyStateMachine/EnemyDirectMovingState.cs" id="3_l357o"]
+[ext_resource type="Script" path="res://Enemies/EnemyStateMachine/EnemyIdleState.cs" id="4_335fn"]
 
 [node name="EnemyStateMachine" type="Node"]
 script = ExtResource("1_0tg2h")
@@ -15,4 +16,5 @@ script = ExtResource("2_pyutf")
 [node name="EnemyDirectMovingState" type="Node" parent="States"]
 script = ExtResource("3_l357o")
 
-[node name="IdleState" type="Node" parent="States"]
+[node name="EnemyIdleState" type="Node" parent="States"]
+script = ExtResource("4_335fn")

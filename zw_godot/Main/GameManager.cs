@@ -20,7 +20,7 @@ public partial class GameManager : Node3D
     ProgressBar HealthBar;
     PlayerInfo PlayerInfo;
 
-    public bool IsPlayerDead = false;
+    public bool PlayerDead = false;
 
     public int TimeSeconds = 0;
     Label TimeDisplay;
@@ -28,6 +28,8 @@ public partial class GameManager : Node3D
     Variant Content;
     Variant Content2;
 
+    PackedScene PauseMenu;
+    PackedScene DeathMenu;
 
     public override void _Ready()
     {
@@ -51,6 +53,9 @@ public partial class GameManager : Node3D
         TankEnemyScene = (PackedScene)ResourceLoader.Load("res://Enemies/Type/TankEnemy/TankEnemy.tscn");
         RangeEnemyScene = (PackedScene)ResourceLoader.Load("res://Enemies/Type/RangeEnemy/RangeEnemy.tscn");
 
+        PauseMenu = (PackedScene)ResourceLoader.Load("res://Main/PauseMenu.tscn");
+        DeathMenu = (PackedScene)ResourceLoader.Load("res://Main/DeathMenu.tscn");
+
         Content = "GaMiNg";
         Content2 = "don't feel like gaming rn";
         Load();
@@ -61,7 +66,23 @@ public partial class GameManager : Node3D
     }
     public override void _Process(double delta)
     {
-        IsPlayerDead = !IsInstanceValid(Player);
+        PlayerDead = !IsInstanceValid(Player);
+        if (PlayerDead)
+        {
+            DeathMenu deathMenu = DeathMenu.Instantiate<DeathMenu>();
+            AddChild(deathMenu);
+            GetTree().Paused = true;
+        }
+    }
+
+    public override void _Input(InputEvent @event)  
+    {
+        if (@event.IsActionPressed("Pause"))
+        {
+            Node pauseMenu = PauseMenu.Instantiate();
+            AddChild(pauseMenu);
+            GetTree().Paused = true;
+        }
     }
 
     void SpawnObject(PackedScene obj, Vector3 pos, int number)
