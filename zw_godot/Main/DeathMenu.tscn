@@ -1,0 +1,73 @@
+[gd_scene load_steps=5 format=3 uid="uid://df3rsd6o3uoxw"]
+
+[ext_resource type="Script" path="res://Main/DeathMenu.cs" id="1_ekmi3"]
+
+[sub_resource type="Theme" id="Theme_gf62s"]
+default_font_size = 64
+
+[sub_resource type="Theme" id="Theme_nsu34"]
+default_font_size = 48
+
+[sub_resource type="Theme" id="Theme_r10h2"]
+default_font_size = 48
+
+[node name="DeathMenu" type="Control"]
+process_mode = 2
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ekmi3")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -173.5
+offset_top = -140.0
+offset_right = 173.5
+offset_bottom = -52.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_gf62s")
+text = "Game Over"
+
+[node name="RetryButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = -40.0
+offset_right = 140.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_nsu34")
+text = "Retry"
+
+[node name="MainMenuButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = 60.0
+offset_right = 140.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_r10h2")
+text = "Main Menu"
+
+[connection signal="pressed" from="RetryButton" to="." method="_on_retry_button_pressed"]
+[connection signal="pressed" from="MainMenuButton" to="." method="_on_main_menu_button_pressed"]

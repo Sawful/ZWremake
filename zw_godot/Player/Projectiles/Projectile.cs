@@ -7,6 +7,7 @@ public partial class Projectile : Area3D
 	public float Speed;
 	public Entity ProjectileOwner;
 	public int Damage;
+	public bool DamageAbsolute = false;
 
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -31,12 +32,17 @@ public partial class Projectile : Area3D
 
 	public void OnBodyEntered(Entity body)
 	{
-		GD.Print(body);
 
 		if (body == Target)
 		{
-            ProjectileOwner.DealDamage(Target, Damage);
-			GD.Print("projectile hit");
+			if(DamageAbsolute)
+			{
+            	ProjectileOwner.DealDamage(Target, Damage);
+			}
+			else
+			{
+				ProjectileOwner.DealDirectDamage(Target, Damage);
+			}
 			QueueFree();
         }
 			

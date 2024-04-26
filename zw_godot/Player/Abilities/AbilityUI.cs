@@ -13,14 +13,14 @@ public partial class AbilityUI : ItemList
     public Player Player;
     public List<AbilityResource> AbilityResource;
 
+    private bool AbilitiesForceDisabled = false;
 
-    int AbilityCooldownNumber = 4;
+    List<bool> TimedCooldownAbilities = new();
 
     public override void _Ready()
 	{
         Player = GetTree().Root.GetNode("Main").GetNode<Player>("Player");
         AbilityResource = Player.AbilityResource;
-        if(Player.PlayerClass == "Warrior"){ AbilityCooldownNumber = 3;}
 
         for(int i = 1; i < 5; i++)
         {
@@ -30,63 +30,89 @@ public partial class AbilityUI : ItemList
 
             AbilitySettings[i - 1].Item2.Text = "";
             AbilitySettings[i - 1].Item1.Icon = AbilityResource[i - 1].Icon;
+            if(AbilityResource[i - 1].TimedCooldown){TimedCooldownAbilities.Add(true);}
+            else{TimedCooldownAbilities.Add(false);}
         }
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
-        for (int i = 0; i < AbilityCooldownNumber; i++)
+        for (int i = 0; i < 4; i++)
         {
-            AbilityCooldown(i, delta);
+            if (TimedCooldownAbilities[i])
+            {AbilityCooldown(i);}
         }
     }
 
-    private void AbilityCooldown(int abilityIndex, double delta)
+    private void AbilityCooldown(int abilityIndex)
     {
-        if (AbilityResource[abilityIndex].OnCooldown)
+        AbilityResource[abilityIndex].UpdateCooldown();
+        if (AbilityResource[abilityIndex].CooldownRecharge)
         {
-            float cooldown = AbilityResource[abilityIndex].CurrentCooldown;
-            Label label = AbilitySettings[abilityIndex].Item2;
-
-            cooldown = Math.Clamp(cooldown - (float)delta, 0, MaxCooldown);
-            if (cooldown == 0)
-            {
-                AbilitySettings[abilityIndex].Item1.Disabled = false;
-                AbilityResource[abilityIndex].OnCooldown = false;
-                if (label != null)
-                {
-                    label.Text = "";
-                }
-            }
-            else
-            {
-                if (label != null)
-                {
-                    label.Text = Mathf.Ceil(cooldown).ToString();
-                }
-            }
-
-            AbilityResource[abilityIndex].CurrentCooldown = cooldown;
+            SetCooldownLabel(abilityIndex);
         }
+    }
+
+    private void SetCooldownLabel(int abilityIndex)
+    {
+        Label label = AbilitySettings[abilityIndex].Item2;
+        label.Text = Mathf.Ceil(AbilityResource[abilityIndex].CurrentCooldown).ToString();
+    }
+
+    public void UnlockCooldown(int abilityIndex)
+    {
+        if(!AbilitiesForceDisabled)
+        {
+            AbilitySettings[abilityIndex].Item1.Disabled = false;
+        }
+    }
+
+    public void ClearCooldown(int abilityIndex)
+    {
+        AbilitySettings[abilityIndex].Item2.Text = "";
+        UnlockCooldown(abilityIndex);
     }
 
     public void SetAbilityCooldown(int abilityIndex)
     { 
+        if(AbilityResource[abilityIndex].MultipleCharges)
+        {
+            AbilityResource[abilityIndex].CooldownRecharge = true;
+            AbilityResource[abilityIndex].SetCooldown();
+
+            if(AbilityResource[abilityIndex].OnCooldown)
+            {
+                AbilitySettings[abilityIndex].Item1.Disabled = true;
+            }
+        }
+
+        else
+        {
+            AbilitySettings[abilityIndex].Item1.Disabled = true;
+            AbilitySettings[abilityIndex].Item2.Text = AbilityResource[abilityIndex].Cooldown.ToString();
+            AbilityResource[abilityIndex].OnCooldown = true;
+            AbilityResource[abilityIndex].SetCooldown();
+        }
+        
+    }
+
+    public void SetLeapCooldown(int abilityIndex)
+    {
         AbilitySettings[abilityIndex].Item1.Disabled = true;
+        AbilityResource[abilityIndex].CurrentCooldown = AbilityResource[abilityIndex].Cooldown;
+        AbilitySettings[abilityIndex].Item2.Text = AbilityResource[abilityIndex].Cooldown.ToString();
         AbilityResource[abilityIndex].OnCooldown = true;
-        AbilityResource[abilityIndex].CurrentCooldown = AbilityResource[abilityIndex].Cooldown * Player.CooldownReduction;
-        AbilitySettings[abilityIndex].Item2.Text = Mathf.Ceil(AbilityResource[abilityIndex].Cooldown).ToString();
     }
 
     public void UpdateLeapCooldown(int abilityIndex)
     {
         if(AbilityResource[abilityIndex].OnCooldown)
         {
-            int Number = AbilitySettings[abilityIndex].Item2.Text.ToInt();
+            AbilityResource[abilityIndex].CurrentCooldown = Math.Max(AbilityResource[abilityIndex].CurrentCooldown - 1, 0);
+            AbilitySettings[abilityIndex].Item2.Text = AbilityResource[abilityIndex].CurrentCooldown.ToString();
 
-            AbilitySettings[abilityIndex].Item2.Text = Math.Max(Number - 1, 0).ToString();
-            if(AbilitySettings[abilityIndex].Item2.Text.ToInt() == 0)
+            if(AbilityResource[abilityIndex].CurrentCooldown == 0)
             {
                 AbilitySettings[abilityIndex].Item1.Disabled = false;
                 AbilityResource[abilityIndex].OnCooldown = false;
@@ -116,6 +142,26 @@ public partial class AbilityUI : ItemList
     public void OnAbilityButton4Pressed()
     {
         AbilityResource[3].AbilityNode.Call("CastAbility", Player);
+    }
+
+    public void DisableAbility(int abilityIndex)
+    {
+        AbilitySettings[abilityIndex].Item1.Disabled = true;
+        AbilitiesForceDisabled = true;
+    }
+
+    public void EnableAbility(int abilityIndex)
+    {
+        if (!AbilityResource[abilityIndex].OnCooldown)
+        {
+            AbilitySettings[abilityIndex].Item1.Disabled = false;
+            AbilitySettings[abilityIndex].Item2.Text = "";
+        }
+        else
+        {
+            AbilitySettings[abilityIndex].Item2.Text = AbilityResource[abilityIndex].CurrentCooldown.ToString();
+        }
+        AbilitiesForceDisabled = false;
     }
 
 }

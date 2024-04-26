@@ -64,7 +64,7 @@ public partial class Ability : Node
     }
     
 
-    public StatEffect CreateStatEffect(float duration, string statEffect, double effectAmount)
+    public StatEffect CreateStatEffect(float duration, string statEffect, float effectAmount)
     {
         StatEffect effect = (StatEffect)StatEffect.Instantiate();
         effect.Player = Player;

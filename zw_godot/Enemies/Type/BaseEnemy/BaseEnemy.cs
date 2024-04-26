@@ -27,7 +27,7 @@ public partial class BaseEnemy : Enemy
 	{
         if (!IsInstanceValid(Player))
         {
-            EnemyStateMachine.ChangeState("IdleState");
+            EnemyStateMachine.ChangeState("EnemyIdleState");
         }
 
         else

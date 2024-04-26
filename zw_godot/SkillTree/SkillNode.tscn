@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bstocoopircpq"]
+
+[ext_resource type="Script" path="res://SkillTree/SkillNode.cs" id="1_lc28o"]
+
+[node name="Node1" type="Button"]
+offset_right = 80.0
+offset_bottom = 80.0
+toggle_mode = true
+expand_icon = true
+script = ExtResource("1_lc28o")

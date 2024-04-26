@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class PlayerInfo : Node
 {
@@ -7,6 +8,7 @@ public partial class PlayerInfo : Node
 	public int GameNumber;
 	public int PlayerLevel;
 	public int PlayerExperience;
+	public List<AbilityResource> AbilityResource = new();
 
 	public override void _Ready()
 	{

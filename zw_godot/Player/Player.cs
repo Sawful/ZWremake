@@ -17,11 +17,9 @@ public partial class Player : Entity
     [Export] public StaticBody3D Ground;
     private Enemy EnemyClicked;
     public SimpleStateMachine PlayerStateMachine;
-    public Node3D ClosestTarget;
     AbilityUI AbilityUI;
     GameUI GameUI;
-    Area3D Area3D;
-    public Godot.Collections.Array<Node3D> OverlappingBodies;
+    Area3D TargetArea;
 
     public PackedScene SoundEffectPlayer;
     public AudioStreamWav AttackSound;
@@ -42,14 +40,13 @@ public partial class Player : Entity
     public AbilityHandler AbilityScript;
 
     // Vectors
-    private Vector3 AnchorPoint = Vector3.Zero;
     private Vector3 CameraLocalStartingPosition;
     private Vector3 EnemyPos;
 
     public Dictionary<string, int> StatsLevel;
 
-    public Dictionary<string, double> StatsBonusMult;
-    public Dictionary<string, double> StatsBonusAdd;
+    public Dictionary<string, float> StatsBonusMult;
+    public Dictionary<string, float> StatsBonusAdd;
 
     Godot.Timer RegenerationTimer;
 
@@ -69,7 +66,6 @@ public partial class Player : Entity
 
     public override void _Ready()
     {
-
         PlayerInfo = GetNode<PlayerInfo>("/root/PlayerInfo");
         Main = GetTree().Root.GetNode("Main");
 
@@ -117,11 +113,8 @@ public partial class Player : Entity
 
         if(PlayerClass == "Warrior")
         {
-            AbilityResource.Add((AbilityResource)ResourceLoader.Load("res://Player/Abilities/Resources/Warrior1.tres"));
-            AbilityResource.Add((AbilityResource)ResourceLoader.Load("res://Player/Abilities/Resources/Warrior2.tres"));
-            AbilityResource.Add((AbilityResource)ResourceLoader.Load("res://Player/Abilities/Resources/Warrior3.tres"));
-            AbilityResource.Add((AbilityResource)ResourceLoader.Load("res://Player/Abilities/Resources/Warrior4.tres"));
-            for(int i = 0; i < 4; i++)
+            AbilityResource = PlayerInfo.AbilityResource;
+            for(int i = 0; i < AbilityResource.Count; i++)
             {
                 AbilityResource[i].SetAbility(AbilityScript);
             }
@@ -146,11 +139,11 @@ public partial class Player : Entity
             GD.Print("Unknown Class");
         }
 
-        MaxHealth = (int)Math.Round((200 + StatsBonusAdd["MaxHealth"] + 10 * StatsLevel["MaxHealth"]) * (1 + StatsBonusMult["MaxHealth"]));
-        Damage = (int)Math.Round((10 + StatsBonusAdd["Damage"] + 3 * StatsLevel["Damage"]) * (1 + StatsBonusMult["Damage"]));
-        Speed = (float) (4 + StatsBonusAdd["MovementSpeed"] + 0.5f * StatsLevel["MovementSpeed"]) * (float) (1 + StatsBonusMult["MovementSpeed"]);
-        AttackSpeed = (1 + StatsBonusAdd["AttackSpeed"] + 0.2 * StatsLevel["AttackSpeed"]) * (1 + StatsBonusMult["AttackSpeed"]);
-        AbilityHaste = (int)Math.Round((0 + StatsBonusAdd["AbilityHaste"] + 3 * StatsLevel["AbilityHaste"]) * (1 + StatsBonusMult["AbilityHaste"]));
+        MaxHealth = (int)Mathf.Round((200 + StatsBonusAdd["MaxHealth"] + 10 * StatsLevel["MaxHealth"]) * (1 + StatsBonusMult["MaxHealth"]));
+        Damage = (int)Mathf.Round((10 + StatsBonusAdd["Damage"] + 3 * StatsLevel["Damage"]) * (1 + StatsBonusMult["Damage"]));
+        Speed =  (4 + StatsBonusAdd["MovementSpeed"] + 0.5f * StatsLevel["MovementSpeed"]) * (1 + StatsBonusMult["MovementSpeed"]);
+        AttackSpeed = (1 + StatsBonusAdd["AttackSpeed"] + 0.2f * StatsLevel["AttackSpeed"]) * (1 + StatsBonusMult["AttackSpeed"]);
+        AbilityHaste = (int)Mathf.Round((0 + StatsBonusAdd["AbilityHaste"] + 3 * StatsLevel["AbilityHaste"]) * (1 + StatsBonusMult["AbilityHaste"]));
 
         HealthRegeneration = 3;
         RegenerationTimer.WaitTime = 1/HealthRegeneration;
@@ -161,7 +154,7 @@ public partial class Player : Entity
         AttackSound = (AudioStreamWav)ResourceLoader.Load("res://Sound/hitsound.wav");
 
         PlayerStateMachine = (SimpleStateMachine)GetNode("PlayerStateMachine");
-        Area3D = GetNode<Area3D>("Area3D");
+        TargetArea = GetNode<Area3D>("TargetArea");
         // Camera initialisation
         CameraLocalStartingPosition = ToLocal(MainCamera.GlobalPosition);
 
@@ -171,7 +164,6 @@ public partial class Player : Entity
 
     public override void _Process(double delta)
     {
-
         if (Input.IsActionJustPressed("AttackMoveKey"))
         {
             AbilityScript.Call("AttackMove");
@@ -191,7 +183,7 @@ public partial class Player : Entity
 
     }
 
-    public void RightClickRaycast(InputEventMouseButton rClick)
+    public Godot.Collections.Dictionary RightClickRaycast(InputEventMouseButton rClick)
     {
         // Raycast
         PhysicsRayQueryParameters3D query = new()
@@ -207,41 +199,14 @@ public partial class Player : Entity
         var hitDictionary = GetWorld3D().DirectSpaceState.IntersectRay(query);
         if (hitDictionary.Count > 0) 
         {
-            var objectHit = hitDictionary["collider"].Obj;
-
             AbilityScript.AbilityCast.SetResult(false);
             AbilityScript.AbilityCast = new TaskCompletionSource<bool>();
             AbilityScript.Casting = false;
 
-            if (objectHit == Ground)
-            {
-                AnchorPoint = NavigationServer3D.MapGetClosestPoint(NavigationServer3D.GetMaps()[0], (Vector3)hitDictionary["position"]);
-                Dictionary<string, object> message = new()
-                {
-                    { "MovePoint", AnchorPoint }
-                };
-
-                PlayerStateMachine.ChangeState("MovingState", message);
-            }
-            
-            else if (objectHit is Enemy enemyHit)
-            {
-                EnemyClicked = enemyHit;
-                Dictionary<string, object> message = new()
-                {
-                    { "Target", EnemyClicked },
-                    { "Projectile Speed", ProjectileSpeed }
-                };
-
-                if (RangedAttack) 
-                {
-                    PlayerStateMachine.ChangeState("RangeAttackingState", message);
-                }
-                    
-                else
-                    PlayerStateMachine.ChangeState("AttackingState", message);
-            }
+            return hitDictionary;
         }
+
+        else return null;
     }
 
     public void AutoAttack(Entity target)
@@ -251,7 +216,28 @@ public partial class Player : Entity
             DealDamage(target, Damage);
             AttackReload = 1 / AttackSpeed;
             // Call auto attack
-            AbilityResource[3].AbilityNode.Call("AutoAttacked");
+            foreach (AbilityResource currentAbility in AbilityResource)
+            {
+                if(!currentAbility.TimedCooldown)
+                {
+                    currentAbility.AbilityNode.Call("AutoAttacked");
+                }
+            }
+        }
+    }
+
+    public void DisableAllAbilities()
+    {
+        for(int i = 0; i<4; i++)
+        {
+            AbilityUI.DisableAbility(i);
+        }
+    }
+    public void EnableAllAbilities()
+    {
+        for(int i = 0; i<4; i++)
+        {
+            AbilityUI.EnableAbility(i);
         }
     }
 
@@ -260,10 +246,13 @@ public partial class Player : Entity
         Health = Math.Min(Health + 1, MaxHealth);
     }
 
-    public void GetEnemies()
+    public Godot.Collections.Array<Node3D> GetEnemies()
     {
-        OverlappingBodies = Area3D.GetOverlappingBodies();
-        ClosestTarget = GetClosest(OverlappingBodies);
+        return TargetArea.GetOverlappingBodies();
+    }
+    public Enemy GetClosestEnemy()
+    {
+        return (Enemy)GetClosest(GetEnemies());
     }
 
     public virtual Node3D GetClosest(Godot.Collections.Array<Node3D> nodeArray)
@@ -301,7 +290,7 @@ public partial class Player : Entity
         MaxHealth = (int)Math.Round((200 + StatsBonusAdd["MaxHealth"] + 10 * StatsLevel["MaxHealth"]) * (1 + StatsBonusMult["MaxHealth"]));
         Damage = (int)Math.Round((10 + StatsBonusAdd["Damage"] + 3 * StatsLevel["Damage"]) * (1 + StatsBonusMult["Damage"]));
         Speed = (float) (4 + StatsBonusAdd["MovementSpeed"] + 0.5f * StatsLevel["MovementSpeed"]) * (float) (1 + StatsBonusMult["MovementSpeed"]);
-        AttackSpeed = (1 + StatsBonusAdd["AttackSpeed"] + 0.2 * StatsLevel["AttackSpeed"]) * (1 + StatsBonusMult["AttackSpeed"]);
+        AttackSpeed = (1 + StatsBonusAdd["AttackSpeed"] + 0.2f * StatsLevel["AttackSpeed"]) * (1 + StatsBonusMult["AttackSpeed"]);
         AbilityHaste = (int)Math.Round((0 + StatsBonusAdd["AbilityHaste"] + 3 * StatsLevel["AbilityHaste"]) * (1 + StatsBonusMult["AbilityHaste"]));
         HealthRegeneration = 3;
         RegenerationTimer.WaitTime = 1/HealthRegeneration;

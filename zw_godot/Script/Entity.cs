@@ -10,9 +10,13 @@ public partial class Entity : RigidBody3D
     [Export] public int Damage;
     [Export] public float Range;
     [Export] public float Speed;
-    [Export] public double AttackSpeed;
+    [Export] public float AttackSpeed;
     [Export] public double AttackReload;
     [Export] public int AbilityHaste;
+    [Export] public bool Targetable = true;
+
+    public float DamageDealtMultiplier = 1;
+    public float DamageReceivedMultiplier = 1;
 
     public const float RotationWeight = 0.1f;
 
@@ -55,6 +59,16 @@ public partial class Entity : RigidBody3D
     {
         Health -= damageAmount;
         CheckIfDead();
+    }
+
+    public void DealDirectDamage(Entity target, int damageAmount)
+    {
+        DealDamage(target, Mathf.RoundToInt(damageAmount * DamageDealtMultiplier));
+    }
+
+    public virtual void TakeDirectDamage(Entity attacker, int damageAmount)
+    {
+        TakeDamage(attacker, Mathf.RoundToInt(damageAmount * DamageReceivedMultiplier));
     }
 
     public void CheckIfDead()

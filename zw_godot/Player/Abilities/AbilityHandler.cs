@@ -37,13 +37,11 @@ public partial class AbilityHandler : Node
 	{
 		base._Process(delta);
 
-        if ((Casting | Player.ClosestTarget != null) & AttackMoving) 
+        if ((Casting | Player.GetClosestEnemy() != null) & AttackMoving) 
         {
             AttackMoveContinue.SetResult(true);
             AttackMoving = false;
         }
-
-        
 	}
 
 	public override void _Input(InputEvent @event)
@@ -54,7 +52,7 @@ public partial class AbilityHandler : Node
         }
     }
 
-public async void AttackMove()
+    public async void AttackMove()
     {
         // Change cursor
         AbilityCast.SetResult(false); // Cancel other abilities
@@ -96,11 +94,11 @@ public async void AttackMove()
                         return;
                     }
 
-                    else if (Player.ClosestTarget != null)
+                    else if (Player.GetClosestEnemy() != null)
                     {
                         System.Collections.Generic.Dictionary<string, object> message2 = new()
                         {
-                            {"Target", Player.ClosestTarget},
+                            {"Target", Player.GetClosestEnemy()},
                             {"Projectile Speed" ,  Player.ProjectileSpeed}
                         };
                         

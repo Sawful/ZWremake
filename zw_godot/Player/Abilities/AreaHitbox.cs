@@ -9,6 +9,8 @@ public partial class AreaHitbox : Area3D
     private Player Player;
     private Vector3 PointHit;
 
+    public bool FollowMouse = true;
+
     public float range;
 
     // Raycast lenght
@@ -20,16 +22,19 @@ public partial class AreaHitbox : Area3D
         Camera3D = GetTree().Root.GetNode("Main").GetNode<Camera3D>("MainCamera");
 
         range = 4;
-        SetPosition();
     }
 
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
-        SetPosition();
+
+        if(FollowMouse)
+        {
+            SetPositionToMouse();
+        }
     }
 
-    public void SetPosition()
+    public void SetPositionToMouse()
     {
         Vector2 mouse_pos = GetViewport().GetMousePosition();
         // Raycast

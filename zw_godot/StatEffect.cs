@@ -41,13 +41,40 @@ public partial class StatEffect : Node
 
 	private void AddEffect()
 	{
-		Player.StatsBonusMult[(string)Message["StatEffect"]] += (double)Message["EffectAmount"];
+		if((string)Message["StatEffect"] == "DamageReceived")
+		{
+			Player.DamageReceivedMultiplier += (float)Message["EffectAmount"];
+		}
+
+		else if((string)Message["StatEffect"] == "DamageDealt")
+		{
+			Player.DamageDealtMultiplier += (float)Message["EffectAmount"];
+		}
+
+		else
+		{
+			Player.StatsBonusMult[(string)Message["StatEffect"]] += (float)Message["EffectAmount"];
+		}
+
 		Player.UpdateStats();
 	}
 
 		private void RemoveEffect()
 	{
-		Player.StatsBonusMult[(string)Message["StatEffect"]] -= (double)Message["EffectAmount"];
+		if((string)Message["StatEffect"] == "DamageReceived")
+		{
+			Player.DamageReceivedMultiplier -= (float)Message["EffectAmount"];
+		}
+
+		else if((string)Message["StatEffect"] == "DamageDealt")
+		{
+			Player.DamageDealtMultiplier -= (float)Message["EffectAmount"];
+		}
+
+		else
+		{
+			Player.StatsBonusMult[(string)Message["StatEffect"]] -= (float)Message["EffectAmount"];
+		}
 		Player.UpdateStats();
 	}
 }

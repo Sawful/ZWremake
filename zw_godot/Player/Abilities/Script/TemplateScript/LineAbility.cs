@@ -9,7 +9,6 @@ public partial class LineAbility : Ability
 	public PackedScene ArrowHitbox;
 	public PackedScene ConeHitbox;
 	public PackedScene ConeIndicator;
-
 	public ArrowHitbox CurrentHitbox;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

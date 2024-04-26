@@ -1,0 +1,76 @@
+[gd_scene load_steps=6 format=3 uid="uid://kb224pgl46p"]
+
+[ext_resource type="Script" path="res://Main/PauseMenu.cs" id="1_faa6q"]
+
+[sub_resource type="Theme" id="Theme_gf62s"]
+default_font_size = 64
+
+[sub_resource type="Theme" id="Theme_nsu34"]
+default_font_size = 48
+
+[sub_resource type="Theme" id="Theme_3mvy3"]
+default_font_size = 48
+
+[sub_resource type="Theme" id="Theme_r10h2"]
+default_font_size = 48
+
+[node name="PauseMenu" type="Control"]
+process_mode = 2
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_faa6q")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -112.5
+offset_top = 240.0
+offset_right = 112.5
+offset_bottom = 328.0
+grow_horizontal = 2
+theme = SubResource("Theme_gf62s")
+text = "Paused"
+
+[node name="ResumeButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -106.5
+offset_top = -40.0
+offset_right = 133.5
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_nsu34")
+text = "Resume"
+
+[node name="SettingsButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 693.5
+offset_top = 510.0
+offset_right = 933.5
+offset_bottom = 590.0
+theme = SubResource("Theme_3mvy3")
+text = "Settings"
+
+[node name="ExitButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 693.5
+offset_top = 610.0
+offset_right = 933.5
+offset_bottom = 690.0
+theme = SubResource("Theme_r10h2")
+text = "Exit"
+
+[connection signal="pressed" from="ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]

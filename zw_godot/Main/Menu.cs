@@ -6,11 +6,16 @@ public partial class Menu : Control
 	PackedScene MainScene;
 	PackedScene SettingsPackedScene;
 	Node SettingsScene;
+	PackedScene WarriorSkillTree;
+
 	private PlayerInfo PlayerInfo;
 	public override void _Ready()
 	{
 		MainScene = (PackedScene)ResourceLoader.Load("res://Main/Main.tscn");
 		SettingsPackedScene = (PackedScene)ResourceLoader.Load("res://Main/Settings/Settings.tscn");
+
+		WarriorSkillTree = (PackedScene)ResourceLoader.Load("res://SkillTree/WarriorSkillTree.tscn");
+
 		PlayerInfo = GetNode<PlayerInfo>("/root/PlayerInfo");
 		PlayerInfo.PlayerClass = "Warrior";
 	}
@@ -34,6 +39,12 @@ public partial class Menu : Control
 	public void _on_exit_button_pressed()
 	{
 		GetTree().Quit();
+	}
+
+	public void _on_warrior_skill_tree_button_pressed()
+	{
+		WarriorBranch warriorScene = (WarriorBranch)WarriorSkillTree.Instantiate(); 
+		AddChild(warriorScene);
 	}
 
 	public void _on_warrior_check_box_toggled(bool toggled_on)

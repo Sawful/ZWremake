@@ -2,11 +2,9 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class AttackingState : SimpleState
+public partial class AttackingState : MobileState
 {
-    SimpleStateMachine StateMachine;
     Enemy Target;
-    Player Player;
     Dictionary<string, object> Message;
     private AbilityHandler Ability;
     private AbilityUI AbilityUI;
@@ -14,8 +12,7 @@ public partial class AttackingState : SimpleState
     Node3D TargetCircleObject;
     public override void _Ready()
 	{
-        StateMachine = (SimpleStateMachine)GetParent().GetParent();
-        Player = (Player)StateMachine.GetParent();
+        base._Ready();
         AbilityUI = GetTree().Root.GetNode("Main").GetNode("PlayerUI").GetNode("BottomBar").GetNode<AbilityUI>("AbilityUI");
         Ability = Player.GetNode<AbilityHandler>("Abilities");
 
@@ -62,7 +59,7 @@ public partial class AttackingState : SimpleState
                     {
                         Player.RotateTo(targetPosition, Entity.RotationWeight);
                         //Play spell
-                        Player.DealDamage(Target, (int) Mathf.Round(Player.Damage * (float)Message["DamageMultiplier"]));
+                        Player.DealDirectDamage(Target, (int) Mathf.Round(Player.Damage * (float)Message["DamageMultiplier"]));
                         AbilityUI.SetAbilityCooldown(0); // Set Cooldown
 
                         //Reset attack
@@ -85,7 +82,9 @@ public partial class AttackingState : SimpleState
 
                     else
                     {
-                        StateMachine.ChangeState("LeapState", Message);
+                        Message.Add("AbilityOnExit", "Leap");
+                        Message.Add("NextState", "AttackingState");
+                        StateMachine.ChangeState("DashState", Message);
                     }
                 }
             }
@@ -106,14 +105,6 @@ public partial class AttackingState : SimpleState
         }
     }
 
-    public override void _Input(InputEvent @event)
-    {
-        if (@event is InputEventMouseButton eventMouseButton && eventMouseButton.Pressed && eventMouseButton.ButtonIndex == MouseButton.Right)
-        {
-            Player.RightClickRaycast(eventMouseButton);
-        }
-    }
-
     public override void OnExit(string NextState)
     {
         if (IsInstanceValid(Target))
@@ -123,4 +114,5 @@ public partial class AttackingState : SimpleState
 
         base.OnExit(NextState);
     }
+
 }
