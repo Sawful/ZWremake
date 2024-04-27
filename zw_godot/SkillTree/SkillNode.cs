@@ -114,7 +114,7 @@ public partial class SkillNode : Button
 	{
 		if (IsInstanceValid(Ability))
 		{
-			PlayerInfo.AbilityResource.Add(Ability);
+			PlayerInfo.AbilityResource[Ability.Slot - 1] = Ability;
 		}
 	}
 
@@ -122,7 +122,7 @@ public partial class SkillNode : Button
 	{
 		if (IsInstanceValid(Ability))
 		{
-			PlayerInfo.AbilityResource.Remove(Ability);
+			PlayerInfo.AbilityResource[Ability.Slot - 1] = null;
 		}
 	}	
 
