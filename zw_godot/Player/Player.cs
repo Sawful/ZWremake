@@ -114,9 +114,12 @@ public partial class Player : Entity
         if(PlayerClass == "Warrior")
         {
             AbilityResource = PlayerInfo.AbilityResource;
-            for(int i = 0; i < AbilityResource.Count; i++)
+            foreach(AbilityResource abilityResource in AbilityResource)
             {
-                AbilityResource[i].SetAbility(AbilityScript);
+                if(abilityResource != null)
+                {
+                    abilityResource.SetAbility(AbilityScript);
+                }
             }
             Range = 2;
             RangedAttack = false;
@@ -218,10 +221,14 @@ public partial class Player : Entity
             // Call auto attack
             foreach (AbilityResource currentAbility in AbilityResource)
             {
-                if(!currentAbility.TimedCooldown)
+                if(currentAbility != null)
                 {
-                    currentAbility.AbilityNode.Call("AutoAttacked");
+                    if(!currentAbility.TimedCooldown)
+                    {
+                        currentAbility.AbilityNode.Call("AutoAttacked");
+                    }
                 }
+             
             }
         }
     }

@@ -8,7 +8,10 @@ public partial class AbilityUI : ItemList
 
     public Dictionary<string, Button> AbilityButton;
 
-    List<Tuple<Button, Label, CompressedTexture2D>> AbilitySettings = new();
+    List<Tuple<Button, Label, CompressedTexture2D>> AbilitySettings = new() {new Tuple<Button, Label, CompressedTexture2D>(null, null, null),
+    new Tuple<Button, Label, CompressedTexture2D>(null, null, null),
+    new Tuple<Button, Label, CompressedTexture2D>(null, null, null),
+    new Tuple<Button, Label, CompressedTexture2D>(null, null, null),};
 
     public Player Player;
     public List<AbilityResource> AbilityResource;
@@ -22,26 +25,35 @@ public partial class AbilityUI : ItemList
         Player = GetTree().Root.GetNode("Main").GetNode<Player>("Player");
         AbilityResource = Player.AbilityResource;
 
-        for(int i = 1; i < 5; i++)
+        foreach(AbilityResource abilityResource in AbilityResource)
         {
-            AbilitySettings.Add(new Tuple<Button, Label, CompressedTexture2D>(GetNode<Button>("AbilityButton" + i.ToString()),
-            GetNode<Button>("AbilityButton" + i.ToString()).GetNode<Label>("AbilityCooldownText" + i.ToString()),
-            AbilityResource[i - 1].Icon));
+            if(abilityResource != null)
+            {
+                int slot = abilityResource.Slot;
+                Button abilityButton = GetNode<Button>("AbilityButton" + slot.ToString());
+                abilityButton.Disabled = false;
+                AbilitySettings[slot - 1] = new Tuple<Button, Label, CompressedTexture2D>(abilityButton,
+                abilityButton.GetNode<Label>("AbilityCooldownText" + slot.ToString()),
+                abilityResource.Icon);
 
-            AbilitySettings[i - 1].Item2.Text = "";
-            AbilitySettings[i - 1].Item1.Icon = AbilityResource[i - 1].Icon;
-            if(AbilityResource[i - 1].TimedCooldown){TimedCooldownAbilities.Add(true);}
-            else{TimedCooldownAbilities.Add(false);}
+                AbilitySettings[slot - 1].Item2.Text = "";
+                AbilitySettings[slot - 1].Item1.Icon = AbilityResource[slot - 1].Icon;
+                if(abilityResource.TimedCooldown){TimedCooldownAbilities.Add(true);}
+                else{TimedCooldownAbilities.Add(false);}
+            }
         }
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
-        for (int i = 0; i < 4; i++)
+        foreach(AbilityResource abilityResource in AbilityResource)
         {
-            if (TimedCooldownAbilities[i])
-            {AbilityCooldown(i);}
+            if(abilityResource != null)
+            {
+                if (abilityResource.TimedCooldown)
+                {AbilityCooldown(abilityResource.Slot - 1);}
+            }
         }
     }
 

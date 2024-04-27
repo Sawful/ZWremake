@@ -8,7 +8,7 @@ public partial class PlayerInfo : Node
 	public int GameNumber;
 	public int PlayerLevel;
 	public int PlayerExperience;
-	public List<AbilityResource> AbilityResource = new();
+	public List<AbilityResource> AbilityResource = new(){null, null, null, null};
 
 	public override void _Ready()
 	{
