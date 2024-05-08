@@ -1,6 +1,9 @@
 using Godot;
 using System;
+using System.Timers;
 using System.Collections.Generic;
+using System.Threading;
+
 public partial class GameManager : Node3D
 {
     
@@ -414,6 +417,21 @@ public partial class GameManager : Node3D
         Save();
         GetTree().Quit(); // default behavior
         }
+    }
+
+    public void StartSlowMo()
+    {
+        Engine.TimeScale = 0.5f;
+        Player.MainCamera.Fov -= 10;
+    }
+
+    public void StopSlowMo(Object source, ElapsedEventArgs e)
+    {
+        Player.CallDeferred("CamFov");
+
+        System.Timers.Timer timer = (System.Timers.Timer)source;
+        timer.Dispose();
+        Engine.TimeScale = 1;
     }
 
     public void Load()

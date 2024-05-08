@@ -12,7 +12,7 @@ public partial class Player : Entity
     public float CooldownReduction;
 
     // Nodes
-    public Node Main;
+    public GameManager Main;
     public Camera3D MainCamera;
     [Export] public StaticBody3D Ground;
     private Enemy EnemyClicked;
@@ -67,7 +67,7 @@ public partial class Player : Entity
     public override void _Ready()
     {
         PlayerInfo = GetNode<PlayerInfo>("/root/PlayerInfo");
-        Main = GetTree().Root.GetNode("Main");
+        Main = GetTree().Root.GetNode<GameManager>("Main");
 
         GameUI = Main.GetNode<GameUI>("PlayerUI");
         AbilityUI = GameUI.GetNode<PanelContainer>("BottomBar").GetNode<AbilityUI>("AbilityUI");
@@ -216,7 +216,7 @@ public partial class Player : Entity
     {
         if (AttackReload <= 0)
         {
-            DealDamage(target, Damage);
+            DealDirectDamage(target, Damage);
             AttackReload = 1 / AttackSpeed;
             // Call auto attack
             foreach (AbilityResource currentAbility in AbilityResource)
@@ -228,9 +228,44 @@ public partial class Player : Entity
                         currentAbility.AbilityNode.Call("AutoAttacked");
                     }
                 }
-             
             }
         }
+    }
+
+    public override void DealDirectDamage(Entity target, int damageAmount)
+    {
+        Random rnd = new();
+        int critChance =  rnd.Next(100);
+        int damageDealt;
+        if(critChance <= 100)
+        {
+            GD.Print("Critical Hit");
+            damageDealt = Mathf.RoundToInt(damageAmount * DamageDealtMultiplier * target.DamageReceivedMultiplier) * 2;
+
+            if(target.Health - damageDealt <= 0)
+            {
+                CriticalKill();
+            }
+
+            DealDamage(target, damageDealt);
+        }
+        else
+        {
+            damageDealt = Mathf.RoundToInt(damageAmount * DamageDealtMultiplier);
+
+            DealDamage(target, damageDealt);
+        }
+    }
+
+    void CriticalKill()
+    {
+        Main.StartSlowMo();
+
+        System.Timers.Timer aTimer = new System.Timers.Timer(1000)
+        {
+            Enabled = true
+        };
+        aTimer.Elapsed += Main.StopSlowMo;
     }
 
     public void DisableAllAbilities()
@@ -290,6 +325,11 @@ public partial class Player : Entity
         }
         GameUI.GetRewards();
         
+    }
+
+    public void CamFov()
+    {
+        MainCamera.Fov += 10;
     }
 
     public void UpdateStats()
