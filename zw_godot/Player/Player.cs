@@ -24,6 +24,7 @@ public partial class Player : Entity
     public PackedScene SoundEffectPlayer;
     public AudioStreamWav AttackSound;
 
+
     // Ranged attack
     public bool RangedAttack;
     public const float ProjectileSpeed = 10;
@@ -239,7 +240,7 @@ public partial class Player : Entity
         Random rnd = new();
         int critChance =  rnd.Next(100);
         int damageDealt;
-        if(critChance <= 100)
+        if(critChance == 4)
         {
             GD.Print("Critical Hit");
             damageDealt = Mathf.RoundToInt(damageAmount * DamageDealtMultiplier * target.DamageReceivedMultiplier) * 2;
