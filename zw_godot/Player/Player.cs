@@ -49,6 +49,7 @@ public partial class Player : Entity
     public Dictionary<string, float> StatsBonusAdd;
 
     Godot.Timer RegenerationTimer;
+    PackedScene CritSlowMoTimer;
 
     public string PlayerClass;
 
@@ -73,6 +74,7 @@ public partial class Player : Entity
         AbilityUI = GameUI.GetNode<PanelContainer>("BottomBar").GetNode<AbilityUI>("AbilityUI");
 
         RegenerationTimer = GetNode<Godot.Timer>("RegenerationTimer");
+        CritSlowMoTimer = ResourceLoader.Load<PackedScene>("res://Player/Tools/CritSlowMoTimer.tscn");
 
         AbilityScript = GetNode<AbilityHandler>("Abilities");
 
@@ -261,11 +263,9 @@ public partial class Player : Entity
     {
         Main.StartSlowMo();
 
-        System.Timers.Timer aTimer = new System.Timers.Timer(1000)
-        {
-            Enabled = true
-        };
-        aTimer.Elapsed += Main.StopSlowMo;
+        Godot.Timer critTimer = (Godot.Timer)CritSlowMoTimer.Instantiate();
+        AddChild(critTimer);
+        critTimer.Timeout += Main.StopSlowMo;
     }
 
     public void DisableAllAbilities()
@@ -325,11 +325,6 @@ public partial class Player : Entity
         }
         GameUI.GetRewards();
         
-    }
-
-    public void CamFov()
-    {
-        MainCamera.Fov += 10;
     }
 
     public void UpdateStats()

@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Timers;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -421,17 +422,58 @@ public partial class GameManager : Node3D
 
     public void StartSlowMo()
     {
-        Engine.TimeScale = 0.5f;
-        Player.MainCamera.Fov -= 10;
+        StartCoroutine(SlowDown(1f, 0.5f, 0.1f));
+        StartCoroutine(Zoom(107.5f, 97.5f, 0.1f));
     }
 
-    public void StopSlowMo(Object source, ElapsedEventArgs e)
+    public void StopSlowMo()
     {
-        Player.CallDeferred("CamFov");
+        StartCoroutine(DeZoom(97.5f, 107.5f, 0.1f));
+        StartCoroutine(SpeedUp(0.5f, 1f, 0.1f));
+    }
 
-        System.Timers.Timer timer = (System.Timers.Timer)source;
-        timer.Dispose();
-        Engine.TimeScale = 1;
+    IEnumerable Zoom(float currentFOV, float newFOV, float changeSpeed)
+    {
+        for (float newfov = currentFOV; newfov > newFOV + 0.005; newfov = Mathf.Lerp(newfov, newFOV, changeSpeed))
+        {
+            GD.Print(newfov);
+            Player.MainCamera.Fov = newfov;
+            yield return null;
+        }
+        Player.MainCamera.Fov = newFOV;
+    }
+
+    IEnumerable SlowDown(float currentSpeed, float reducedSpeed, float changeSpeed)
+    {
+        for (float newSpeed = currentSpeed; newSpeed > reducedSpeed + 0.005; newSpeed = Mathf.Lerp(newSpeed, reducedSpeed, changeSpeed))
+        {
+            GD.Print(newSpeed);
+            Engine.TimeScale = newSpeed;
+            yield return null;
+        }
+        Engine.TimeScale = reducedSpeed;
+    }
+
+    IEnumerable SpeedUp(float currentSpeed, float reducedSpeed, float changeSpeed)
+    {
+        for (float newSpeed = currentSpeed; newSpeed < reducedSpeed - 0.005; newSpeed = Mathf.Lerp(newSpeed, reducedSpeed, changeSpeed))
+        {
+            GD.Print(newSpeed);
+            Engine.TimeScale = newSpeed;
+            yield return null;
+        }
+        Engine.TimeScale = reducedSpeed;
+    }
+
+    IEnumerable DeZoom(float currentFOV, float newFOV, float changeSpeed)
+    {
+        for (float newfov = currentFOV; newfov < newFOV - 0.005; newfov = Mathf.Lerp(newfov, newFOV, changeSpeed))
+        {
+            GD.Print(newfov);
+            Player.MainCamera.Fov = newfov;
+            yield return null;
+        }
+        Player.MainCamera.Fov = newFOV;
     }
 
     public void Load()
@@ -449,5 +491,14 @@ public partial class GameManager : Node3D
         Player.SetLevel(levelInt);
         Player.SetExperience(experienceInt);
         PlayerInfo.GameNumber = gameNumberInt;
+    }
+
+    public static async void StartCoroutine(IEnumerable objects)
+       {
+        var mainLoopTree = Engine.GetMainLoop();
+        foreach (var _ in objects)
+        {
+            await mainLoopTree.ToSignal(mainLoopTree, SceneTree.SignalName.ProcessFrame);
+        }
     }
 }
