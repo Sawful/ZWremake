@@ -48,7 +48,7 @@ public partial class Warrior3 : LineAbility
                 Array<Node3D> targets = CurrentHitbox.GetOverlappingBodies();
                 foreach (Entity target in targets)
                 {
-                    Player.DealDamage(target, (int)Math.Round(Player.Damage * 0.66));
+                    Player.DealDirectDamage(target, (int)Math.Round(Player.Damage * 0.66));
                 }
 
                 AbilityTimerFinished = new TaskCompletionSource<bool>();

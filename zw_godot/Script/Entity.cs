@@ -22,6 +22,7 @@ public partial class Entity : RigidBody3D
 
     public NavigationAgent3D NavAgent;
 
+    Random rnd = new Random();
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -61,15 +62,13 @@ public partial class Entity : RigidBody3D
         CheckIfDead();
     }
 
-    public void DealDirectDamage(Entity target, int damageAmount)
+    public virtual void DealDirectDamage(Entity target, int damageAmount)
     {
-        DealDamage(target, Mathf.RoundToInt(damageAmount * DamageDealtMultiplier));
+        int damageDealt;
+        damageDealt = Mathf.RoundToInt(damageAmount * DamageDealtMultiplier);
+        DealDamage(target, damageDealt);
     }
 
-    public virtual void TakeDirectDamage(Entity attacker, int damageAmount)
-    {
-        TakeDamage(attacker, Mathf.RoundToInt(damageAmount * DamageReceivedMultiplier));
-    }
 
     public void CheckIfDead()
     {

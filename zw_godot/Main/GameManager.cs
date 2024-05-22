@@ -1,6 +1,10 @@
 using Godot;
 using System;
+using System.Timers;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+
 public partial class GameManager : Node3D
 {
     
@@ -25,8 +29,13 @@ public partial class GameManager : Node3D
     public int TimeSeconds = 0;
     Label TimeDisplay;
 
+    public PackedScene SoundEffectPlayer;
+    AudioStreamPlayer audioStreamPlayer;
     Variant Content;
     Variant Content2;
+
+    public AudioStreamWav SlowDownSFX;
+    public AudioStreamWav SpeedUpSFX;
 
     PackedScene PauseMenu;
     PackedScene DeathMenu;
@@ -43,6 +52,12 @@ public partial class GameManager : Node3D
         TimeDisplay.Text = TimeSeconds.ToString();
 
         SpawnPosition = SpawnLocation.Position;
+
+        SlowDownSFX = (AudioStreamWav)ResourceLoader.Load("res://Sound/SlowDown.wav");
+        SpeedUpSFX = (AudioStreamWav)ResourceLoader.Load("res://Sound/SpeedUp.wav");
+
+        SoundEffectPlayer = (PackedScene)ResourceLoader.Load("res://Sound/SoundEffect.tscn");
+        audioStreamPlayer = (AudioStreamPlayer)SoundEffectPlayer.Instantiate();
 
         TopLeft = new(40, 0, -40);
         TopRight = new(40, 0, 40);
@@ -416,6 +431,68 @@ public partial class GameManager : Node3D
         }
     }
 
+    public void StartSlowMo()
+    {
+        StartCoroutine(SlowDown((float)Engine.TimeScale, 0.5f, 0.1f));
+        StartCoroutine(Zoom(Player.MainCamera.Fov, 97.5f, 0.1f));
+        AudioStreamPlayer soundEffect = (AudioStreamPlayer)SoundEffectPlayer.Instantiate();
+        soundEffect.Stream = SlowDownSFX;
+        AddChild(soundEffect);
+    }
+
+    public void StopSlowMo()
+    {
+        StartCoroutine(DeZoom(Player.MainCamera.Fov, 107.5f, 0.1f));
+        StartCoroutine(SpeedUp((float)Engine.TimeScale, 1f, 0.1f));
+        AudioStreamPlayer soundEffect = (AudioStreamPlayer)SoundEffectPlayer.Instantiate();
+        soundEffect.Stream = SpeedUpSFX;
+        AddChild(soundEffect);
+    }
+
+    IEnumerable Zoom(float currentFOV, float newFOV, float changeSpeed)
+    {
+        for (float newfov = currentFOV; newfov > newFOV + 0.005; newfov = Mathf.Lerp(newfov, newFOV, changeSpeed))
+        {
+            GD.Print(newfov);
+            Player.MainCamera.Fov = newfov;
+            yield return null;
+        }
+        Player.MainCamera.Fov = newFOV;
+    }
+
+    IEnumerable SlowDown(float currentSpeed, float reducedSpeed, float changeSpeed)
+    {
+        for (float newSpeed = currentSpeed; newSpeed > reducedSpeed + 0.005; newSpeed = Mathf.Lerp(newSpeed, reducedSpeed, changeSpeed))
+        {
+            GD.Print(newSpeed);
+            Engine.TimeScale = newSpeed;
+            yield return null;
+        }
+        Engine.TimeScale = reducedSpeed;
+    }
+
+    IEnumerable SpeedUp(float currentSpeed, float reducedSpeed, float changeSpeed)
+    {
+        for (float newSpeed = currentSpeed; newSpeed < reducedSpeed - 0.005; newSpeed = Mathf.Lerp(newSpeed, reducedSpeed, changeSpeed))
+        {
+            GD.Print(newSpeed);
+            Engine.TimeScale = newSpeed;
+            yield return null;
+        }
+        Engine.TimeScale = reducedSpeed;
+    }
+
+    IEnumerable DeZoom(float currentFOV, float newFOV, float changeSpeed)
+    {
+        for (float newfov = currentFOV; newfov < newFOV - 0.005; newfov = Mathf.Lerp(newfov, newFOV, changeSpeed))
+        {
+            GD.Print(newfov);
+            Player.MainCamera.Fov = newfov;
+            yield return null;
+        }
+        Player.MainCamera.Fov = newFOV;
+    }
+
     public void Load()
     {
         using var file = FileAccess.Open("user://save_game.dat", FileAccess.ModeFlags.Read);
@@ -431,5 +508,14 @@ public partial class GameManager : Node3D
         Player.SetLevel(levelInt);
         Player.SetExperience(experienceInt);
         PlayerInfo.GameNumber = gameNumberInt;
+    }
+
+    public static async void StartCoroutine(IEnumerable objects)
+       {
+        var mainLoopTree = Engine.GetMainLoop();
+        foreach (var _ in objects)
+        {
+            await mainLoopTree.ToSignal(mainLoopTree, SceneTree.SignalName.ProcessFrame);
+        }
     }
 }

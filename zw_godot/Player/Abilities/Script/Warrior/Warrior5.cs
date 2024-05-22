@@ -32,7 +32,7 @@ public partial class Warrior5 : AreaAbility
 		foreach (Entity target in targets)
         {
 			GD.Print(target);
-            caster.DealDamage(target, caster.Damage);
+            caster.DealDirectDamage(target, caster.Damage);
         }
 
         CurrentHitbox.QueueFree();

@@ -55,7 +55,7 @@ public partial class Warrior6 : LineAbility
 			{
 				if(!TargetHit.Contains(Target))
 				{
-					Player.DealDamage(Target, Player.Damage);
+					Player.DealDirectDamage(Target, Player.Damage);
 					TargetHit.Add(Target);
 				}
 			}

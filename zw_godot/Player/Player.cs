@@ -12,7 +12,7 @@ public partial class Player : Entity
     public float CooldownReduction;
 
     // Nodes
-    public Node Main;
+    public GameManager Main;
     public Camera3D MainCamera;
     [Export] public StaticBody3D Ground;
     private Enemy EnemyClicked;
@@ -23,6 +23,7 @@ public partial class Player : Entity
 
     public PackedScene SoundEffectPlayer;
     public AudioStreamWav AttackSound;
+
 
     // Ranged attack
     public bool RangedAttack;
@@ -49,6 +50,7 @@ public partial class Player : Entity
     public Dictionary<string, float> StatsBonusAdd;
 
     Godot.Timer RegenerationTimer;
+    PackedScene CritSlowMoTimer;
 
     public string PlayerClass;
 
@@ -67,12 +69,13 @@ public partial class Player : Entity
     public override void _Ready()
     {
         PlayerInfo = GetNode<PlayerInfo>("/root/PlayerInfo");
-        Main = GetTree().Root.GetNode("Main");
+        Main = GetTree().Root.GetNode<GameManager>("Main");
 
         GameUI = Main.GetNode<GameUI>("PlayerUI");
         AbilityUI = GameUI.GetNode<PanelContainer>("BottomBar").GetNode<AbilityUI>("AbilityUI");
 
         RegenerationTimer = GetNode<Godot.Timer>("RegenerationTimer");
+        CritSlowMoTimer = ResourceLoader.Load<PackedScene>("res://Player/Tools/CritSlowMoTimer.tscn");
 
         AbilityScript = GetNode<AbilityHandler>("Abilities");
 
@@ -216,7 +219,7 @@ public partial class Player : Entity
     {
         if (AttackReload <= 0)
         {
-            DealDamage(target, Damage);
+            DealDirectDamage(target, Damage);
             AttackReload = 1 / AttackSpeed;
             // Call auto attack
             foreach (AbilityResource currentAbility in AbilityResource)
@@ -228,9 +231,42 @@ public partial class Player : Entity
                         currentAbility.AbilityNode.Call("AutoAttacked");
                     }
                 }
-             
             }
         }
+    }
+
+    public override void DealDirectDamage(Entity target, int damageAmount)
+    {
+        Random rnd = new();
+        int critChance =  rnd.Next(100);
+        int damageDealt;
+        if(critChance == 4)
+        {
+            GD.Print("Critical Hit");
+            damageDealt = Mathf.RoundToInt(damageAmount * DamageDealtMultiplier * target.DamageReceivedMultiplier) * 2;
+
+            if(target.Health - damageDealt <= 0)
+            {
+                CriticalKill();
+            }
+
+            DealDamage(target, damageDealt);
+        }
+        else
+        {
+            damageDealt = Mathf.RoundToInt(damageAmount * DamageDealtMultiplier);
+
+            DealDamage(target, damageDealt);
+        }
+    }
+
+    void CriticalKill()
+    {
+        Main.StartSlowMo();
+
+        Godot.Timer critTimer = (Godot.Timer)CritSlowMoTimer.Instantiate();
+        AddChild(critTimer);
+        critTimer.Timeout += Main.StopSlowMo;
     }
 
     public void DisableAllAbilities()
