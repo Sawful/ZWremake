@@ -21,12 +21,13 @@ public partial class GameUI : Control
     HealthBar HealthBar;
 
 
-    // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
         Player = GetTree().Root.GetNode("Main").GetNode<Player>("Player");
         UpgradePointCounter = (Label)GetNode("TopRightDisplay").GetNode("UpgradePointCounter");
         UpgradePointCounter.Text = "Upgrade Points: " + UpgradePoint.ToString();
+
+        Resource = GetNode("BottomBar").GetNode("AbilityUI").GetNode<Label>("ResourceText");
 
         // Set Top Left Display
         TopLeftDisplay = GetNode<BoxContainer>("TopLeftDisplay");
@@ -34,7 +35,6 @@ public partial class GameUI : Control
             // Set Rewards Section
             Level = TopLeftDisplay.GetNode<Label>("LevelText");
             Experience = TopLeftDisplay.GetNode<Label>("ExperienceText");
-            Resource = TopLeftDisplay.GetNode<Label>("ResourceText");
             GetRewards();
 
             // Set Stats Section
@@ -51,16 +51,17 @@ public partial class GameUI : Control
         
     }
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public void UpgradeStats(string stat)
+	public void UpgradeStats(string stat, int cost)
 	{
-        if (UpgradePoint > 0)
-        {
-            Player.StatsLevel[stat] += 1;
-            Player.UpdateStats();
-            UpgradePoint -= 1;
-        }
-        UpgradePointCounter.Text = "Upgrade Points: " + UpgradePoint.ToString();
+        Player.StatsLevel[stat] += 1;
+        Player.UpdateStats();
+        Player.Resource -= cost;
+        Resource.Text = "Resource: " + Player.GetResource().ToString();
+    }
+
+    public bool TestCost(int cost)
+    {
+        return Player.Resource >= cost;
     }
 
     public void GetRewards()
