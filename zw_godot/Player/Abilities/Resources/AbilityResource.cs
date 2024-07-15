@@ -19,6 +19,7 @@ public partial class AbilityResource : Resource
 	public Ability AbilityNode;
 	[Export] public string AbilityNodePath;
 	[Export] public CompressedTexture2D Icon;
+	public int AbilityLevel = 0;
 	public AbilityUI AbilityUI;
 	private List<Timer> CooldownTimerList = new();
 

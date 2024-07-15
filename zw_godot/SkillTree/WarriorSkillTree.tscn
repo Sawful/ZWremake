@@ -34,7 +34,7 @@ allow_unpress = true
 resource_local_to_scene = false
 allow_unpress = true
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_tfmpf"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_wfb53"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -193,7 +193,7 @@ offset_left = 1300.0
 offset_top = 410.0
 offset_right = 1380.0
 offset_bottom = 490.0
-button_group = SubResource("ButtonGroup_tfmpf")
+button_group = SubResource("ButtonGroup_wfb53")
 ParentNode1 = NodePath("../Node71")
 ParentNode2 = NodePath("../Node72")
 

@@ -13,6 +13,8 @@ public partial class AbilityUI : ItemList
     new Tuple<Button, Label, CompressedTexture2D>(null, null, null),
     new Tuple<Button, Label, CompressedTexture2D>(null, null, null),};
 
+
+
     public Player Player;
     public List<AbilityResource> AbilityResource;
 
@@ -44,7 +46,7 @@ public partial class AbilityUI : ItemList
         }
     }
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
+
     public override void _Process(double delta)
 	{
         foreach(AbilityResource abilityResource in AbilityResource)
@@ -155,6 +157,8 @@ public partial class AbilityUI : ItemList
     {
         AbilityResource[3].AbilityNode.Call("CastAbility", Player);
     }
+
+    
 
     public void DisableAbility(int abilityIndex)
     {

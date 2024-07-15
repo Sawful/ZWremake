@@ -5,8 +5,10 @@ public partial class GameUI : Control
 {
 
     public Player Player;
-    public int UpgradePoint;
+    public int UpgradePoint = 50;
     public Label UpgradePointCounter;
+
+    AbilityUI AbilityUI;
 
     private BoxContainer TopLeftDisplay;
     private Label Level;
@@ -27,7 +29,9 @@ public partial class GameUI : Control
         UpgradePointCounter = (Label)GetNode("TopRightDisplay").GetNode("UpgradePointCounter");
         UpgradePointCounter.Text = "Upgrade Points: " + UpgradePoint.ToString();
 
-        Resource = GetNode("BottomBar").GetNode("AbilityUI").GetNode<Label>("ResourceText");
+        AbilityUI = (AbilityUI)GetNode("BottomBar").GetNode("AbilityUI");
+
+        Resource = AbilityUI.GetNode<Label>("ResourceText");
 
         // Set Top Left Display
         TopLeftDisplay = GetNode<BoxContainer>("TopLeftDisplay");
@@ -48,7 +52,6 @@ public partial class GameUI : Control
         // Set HealthBar
         HealthBar = GetNode<HealthBar>("HealthBar");
         HealthBar.SetPlayer(Player);
-        
     }
 
 	public void UpgradeStats(string stat, int cost)
@@ -57,6 +60,24 @@ public partial class GameUI : Control
         Player.UpdateStats();
         Player.Resource -= cost;
         Resource.Text = "Resource: " + Player.GetResource().ToString();
+    }
+
+    public void UpgradeAbility(int abilityIndex)
+    {
+        if(UpgradePoint > 0 & AbilityUI.AbilityResource[abilityIndex].AbilityLevel < 5)
+        {
+            UpgradePoint -= 1;
+            AbilityUI.AbilityResource[abilityIndex].AbilityLevel += 1;
+
+            GD.Print("Ability number: ");
+            GD.Print(abilityIndex);
+            GD.Print("Is now level: ");
+            GD.Print(AbilityUI.AbilityResource[abilityIndex].AbilityLevel);
+
+            UpgradePointCounter.Text = "Upgrade Points: " + UpgradePoint.ToString();
+        }
+
+        
     }
 
     public bool TestCost(int cost)
