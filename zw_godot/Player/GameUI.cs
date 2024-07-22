@@ -64,20 +64,22 @@ public partial class GameUI : Control
 
     public void UpgradeAbility(int abilityIndex)
     {
-        if(UpgradePoint > 0 & AbilityUI.AbilityResource[abilityIndex].AbilityLevel < 5)
+        AbilityResource currentAbility = AbilityUI.AbilityResource[abilityIndex];
+        if(UpgradePoint > 0 & currentAbility.AbilityLevel < 4)
         {
             UpgradePoint -= 1;
-            AbilityUI.AbilityResource[abilityIndex].AbilityLevel += 1;
+            currentAbility.AbilityLevel += 1;
 
             GD.Print("Ability number: ");
             GD.Print(abilityIndex);
             GD.Print("Is now level: ");
-            GD.Print(AbilityUI.AbilityResource[abilityIndex].AbilityLevel);
+            GD.Print(currentAbility.AbilityLevel);
 
             UpgradePointCounter.Text = "Upgrade Points: " + UpgradePoint.ToString();
-        }
 
-        
+            // Set the ability's stat for it's level 
+            currentAbility.AbilityNode.UpgradeAbility(currentAbility.AbilityLevel);
+        }
     }
 
     public bool TestCost(int cost)

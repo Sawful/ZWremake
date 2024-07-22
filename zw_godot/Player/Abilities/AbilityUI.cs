@@ -13,8 +13,6 @@ public partial class AbilityUI : ItemList
     new Tuple<Button, Label, CompressedTexture2D>(null, null, null),
     new Tuple<Button, Label, CompressedTexture2D>(null, null, null),};
 
-
-
     public Player Player;
     public List<AbilityResource> AbilityResource;
 

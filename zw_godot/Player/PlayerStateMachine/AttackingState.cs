@@ -47,6 +47,7 @@ public partial class AttackingState : MobileState
 
             if (Message.ContainsKey("Ability"))
             {
+                // WARRIOR 1
                 if ((string)Message["Ability"] == "Warrior1")
                 {
                     float range = (float)Message["Range"];
@@ -59,7 +60,8 @@ public partial class AttackingState : MobileState
                     {
                         Player.RotateTo(targetPosition, Entity.RotationWeight);
                         //Play spell
-                        Player.DealDirectDamage(Target, (int) Mathf.Round(Player.Damage * (float)Message["DamageMultiplier"]));
+                        int damage = (int) Mathf.Round(Player.Damage * (float)Message["PercentDamage"]) + (int)Message["FlatDamage"];
+                        Player.DealDirectDamage(Target, damage);
                         AbilityUI.SetAbilityCooldown(0); // Set Cooldown
 
                         //Reset attack
