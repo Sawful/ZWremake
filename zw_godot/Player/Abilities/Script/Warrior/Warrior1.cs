@@ -6,14 +6,29 @@ using System.Threading.Tasks;
 
 public partial class Warrior1 : PointAndClickAbility
 {
+    int[] FlatDamageArray = new[] {10, 25, 45, 70, 100}; // StatListsInt[0]
+    float[] PercentDamageArray = new[] {0.2f, 0.25f, 0.35f, 0.40f, 0.5f}; // StatListsFloat[0]
+    float[] CooldownArray = new[] {12f, 11f, 10f, 9f, 8f}; // StatsListsFloat[1]
+
 	public override void _Ready()
 	{
         base._Ready();
+
+        // Stat Lists
+        StatListsInt.Add(FlatDamageArray);
+        StatListsFloat.Add(PercentDamageArray);
+        StatListsFloat.Add(CooldownArray);
 	}
 
 	public void CastAbility(Entity caster)
     {
         PointAndClick(caster);
+    }
+
+    public override void UpgradeAbility(int level)
+    {
+        base.UpgradeAbility(level);
+        AbilityResource.Cooldown = StatListsFloatCurrent[1];
     }
 
     public void Ability(Entity caster)
@@ -29,7 +44,8 @@ public partial class Warrior1 : PointAndClickAbility
                         {"Target",  enemyHit},
                         {"Ability", "Warrior1"},
                         {"Range", 2f},
-                        {"DamageMultiplier", 2f}
+                        {"PercentDamage", StatListsFloatCurrent[0]},
+                        {"FlatDamage", StatListsIntCurrent[0]}
                     };
                     Player.PlayerStateMachine.ChangeState("AttackingState", message);
                 }

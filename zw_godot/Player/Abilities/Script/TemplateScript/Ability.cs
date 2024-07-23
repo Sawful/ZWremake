@@ -1,23 +1,30 @@
 using Godot;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 
 
 public partial class Ability : Node
 {
+    // Nodes the ability might use
     public Player Player;
     public Camera3D MainCamera;
     public StaticBody3D Ground;
     public Node3D Main;
     public AbilityHandler Handler;
+    public AbilityResource AbilityResource;
+
     public float Cooldown;
+    PackedScene StatEffect;
+    [Export(PropertyHint.Layers3DPhysics)] public uint MouseColliderLayers;
+    public List<float[]> StatListsFloat = new();
+    public List<float> StatListsFloatCurrent = new();
+    public List<int[]> StatListsInt = new();
+    public List<int> StatListsIntCurrent = new();
 
     private const float RayLength = 1000.0f;
 
-    [Export(PropertyHint.Layers3DPhysics)] public uint MouseColliderLayers;
-
-
-    PackedScene StatEffect;
 
     public override void _Ready()
 	{
@@ -77,6 +84,23 @@ public partial class Ability : Node
 
         Player.AddChild(effect);
         return effect;
+    }
+
+    public virtual void UpgradeAbility(int level)
+    {
+        // Update all FLOAT stats
+        StatListsFloatCurrent.Clear();
+        foreach (float[] currentFloatArray in StatListsFloat)
+        {
+            StatListsFloatCurrent.Add(currentFloatArray[level]);
+        }
+
+        // Same for INT
+        StatListsIntCurrent.Clear();
+        foreach (int[] currentIntArray in StatListsInt)
+        {
+            StatListsIntCurrent.Add(currentIntArray[level]);
+        }
     }
 
     public async void AbilityStructure()

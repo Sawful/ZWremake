@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bl0rsh88rppk"]
+[gd_scene load_steps=26 format=3 uid="uid://bl0rsh88rppk"]
 
 [ext_resource type="FontFile" uid="uid://d1b0osrg7ontx" path="res://Visual/Ui/Font/The Macabre.otf" id="1_51u4j"]
 [ext_resource type="Script" path="res://Player/GameUI.cs" id="2_g4yvb"]
@@ -8,7 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://cd8cp4s5o0cj5" path="res://Visual/Ui/Icon/ability2.png" id="5_xvn8f"]
 [ext_resource type="Texture2D" uid="uid://ch5ydusk4job1" path="res://Visual/Ui/Icon/ability3.png" id="6_m7vp1"]
 [ext_resource type="Texture2D" uid="uid://6w71rmh4rjdc" path="res://Visual/Ui/Icon/ability4.png" id="7_ytta3"]
+[ext_resource type="Theme" uid="uid://c446b4qm1augp" path="res://StatIcon.tres" id="9_atn4g"]
 [ext_resource type="Script" path="res://Player/HealthBar.cs" id="9_sd6lq"]
+[ext_resource type="Script" path="res://Player/UpgradeStatButton.cs" id="10_c6gke"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_fh17m"]
 font = ExtResource("1_51u4j")
@@ -46,6 +48,11 @@ action = &"AbilityKey4"
 [sub_resource type="Shortcut" id="Shortcut_yflvq"]
 events = [SubResource("InputEventAction_5dmq4")]
 
+[sub_resource type="LabelSettings" id="LabelSettings_3cauu"]
+font_size = 32
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_3rqkr"]
 font_size = 24
 outline_size = 4
@@ -57,11 +64,6 @@ outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_nhhdy"]
-font_size = 32
-outline_size = 4
-outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_3cauu"]
 font_size = 32
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
@@ -191,6 +193,114 @@ label_settings = SubResource("LabelSettings_wqw4v")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="UpgradeDamageButton" type="Button" parent="BottomBar/AbilityUI"]
+layout_mode = 2
+offset_left = 550.0
+offset_top = 30.0
+offset_right = 582.0
+offset_bottom = 62.0
+size_flags_vertical = 3
+tooltip_text = "Upgrade Damage"
+theme = ExtResource("9_atn4g")
+shortcut_in_tooltip = false
+text = "Dmg"
+script = ExtResource("10_c6gke")
+Stat = "Damage"
+
+[node name="UpgradeAttackSpeedButton" type="Button" parent="BottomBar/AbilityUI"]
+layout_mode = 2
+offset_left = 625.0
+offset_top = 30.0
+offset_right = 657.0
+offset_bottom = 62.0
+size_flags_vertical = 3
+tooltip_text = "Upgrade Attack Speed"
+theme = ExtResource("9_atn4g")
+shortcut_in_tooltip = false
+text = "AttS"
+script = ExtResource("10_c6gke")
+Stat = "AttackSpeed"
+
+[node name="UpgradeMovementSpeedButton" type="Button" parent="BottomBar/AbilityUI"]
+layout_mode = 2
+offset_left = 700.0
+offset_top = 30.0
+offset_right = 732.0
+offset_bottom = 62.0
+size_flags_vertical = 3
+tooltip_text = "A"
+theme = ExtResource("9_atn4g")
+shortcut_in_tooltip = false
+text = "MovS"
+script = ExtResource("10_c6gke")
+Stat = "MovementSpeed"
+
+[node name="UpgradeMaxHealthButton" type="Button" parent="BottomBar/AbilityUI"]
+layout_mode = 2
+offset_left = 550.0
+offset_top = 88.0
+offset_right = 582.0
+offset_bottom = 120.0
+size_flags_vertical = 3
+tooltip_text = "A"
+theme = ExtResource("9_atn4g")
+shortcut_in_tooltip = false
+text = "MxHP"
+script = ExtResource("10_c6gke")
+Stat = "MaxHealth"
+
+[node name="UpgradeAbilityHasteButton" type="Button" parent="BottomBar/AbilityUI"]
+layout_mode = 2
+offset_left = 625.0
+offset_top = 88.0
+offset_right = 657.0
+offset_bottom = 120.0
+size_flags_vertical = 3
+tooltip_text = "A"
+theme = ExtResource("9_atn4g")
+shortcut_in_tooltip = false
+text = "AbH"
+script = ExtResource("10_c6gke")
+Stat = "AbilityHaste"
+
+[node name="ResourceText" type="Label" parent="BottomBar/AbilityUI"]
+layout_mode = 2
+offset_left = 700.0
+offset_top = 85.0
+offset_right = 1000.0
+offset_bottom = 120.0
+size_flags_vertical = 3
+theme = ExtResource("2_v3j47")
+label_settings = SubResource("LabelSettings_3cauu")
+
+[node name="Ability1Upgrade" type="Button" parent="BottomBar/AbilityUI"]
+layout_mode = 0
+offset_left = 35.0
+offset_top = 6.0
+offset_right = 115.0
+offset_bottom = 22.0
+
+[node name="Ability2Upgrade" type="Button" parent="BottomBar/AbilityUI"]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 6.0
+offset_right = 240.0
+offset_bottom = 22.0
+
+[node name="Ability3Upgrade" type="Button" parent="BottomBar/AbilityUI"]
+layout_mode = 0
+offset_left = 285.0
+offset_top = 6.0
+offset_right = 365.0
+offset_bottom = 22.0
+
+[node name="Ability4Upgrade" type="Button" parent="BottomBar/AbilityUI"]
+layout_mode = 0
+offset_left = 410.0
+offset_top = 6.0
+offset_right = 490.0
+offset_bottom = 22.0
+
 [node name="HealthBar" type="ProgressBar" parent="."]
 layout_mode = 2
 offset_left = 480.0
@@ -231,12 +341,6 @@ layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("2_v3j47")
 label_settings = SubResource("LabelSettings_nhhdy")
-
-[node name="ResourceText" type="Label" parent="TopLeftDisplay"]
-layout_mode = 2
-size_flags_vertical = 3
-theme = ExtResource("2_v3j47")
-label_settings = SubResource("LabelSettings_3cauu")
 
 [node name="DamageText" type="Label" parent="TopLeftDisplay"]
 layout_mode = 2
@@ -280,37 +384,16 @@ layout_mode = 2
 text = "Upgrade Points: "
 horizontal_alignment = 1
 
-[node name="UpgradeDamageButton" type="Button" parent="TopRightDisplay"]
-layout_mode = 2
-size_flags_vertical = 3
-text = "Upgrade Damage"
-
-[node name="UpgradeAttackSpeedButton" type="Button" parent="TopRightDisplay"]
-layout_mode = 2
-size_flags_vertical = 3
-text = "Upgrade Attack Speed"
-
-[node name="UpgradeMovementSpeedButton" type="Button" parent="TopRightDisplay"]
-layout_mode = 2
-size_flags_vertical = 3
-text = "Upgrade Movement Speed"
-
-[node name="UpgradeMaxHealthButton" type="Button" parent="TopRightDisplay"]
-layout_mode = 2
-size_flags_vertical = 3
-text = "Upgrade Max Health"
-
-[node name="UpgradeAbilityHasteButton" type="Button" parent="TopRightDisplay"]
-layout_mode = 2
-size_flags_vertical = 3
-text = "Upgrade Ability Haste"
-
 [connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton1" to="BottomBar/AbilityUI" method="OnAbilityButton1Pressed"]
 [connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton2" to="BottomBar/AbilityUI" method="OnAbilityButton2Pressed"]
 [connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton3" to="BottomBar/AbilityUI" method="OnAbilityButton3Pressed"]
 [connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton4" to="BottomBar/AbilityUI" method="OnAbilityButton4Pressed"]
-[connection signal="pressed" from="TopRightDisplay/UpgradeDamageButton" to="." method="UpgradeStats" binds= ["Damage"]]
-[connection signal="pressed" from="TopRightDisplay/UpgradeAttackSpeedButton" to="." method="UpgradeStats" binds= ["AttackSpeed"]]
-[connection signal="pressed" from="TopRightDisplay/UpgradeMovementSpeedButton" to="." method="UpgradeStats" binds= ["MovementSpeed"]]
-[connection signal="pressed" from="TopRightDisplay/UpgradeMaxHealthButton" to="." method="UpgradeStats" binds= ["MaxHealth"]]
-[connection signal="pressed" from="TopRightDisplay/UpgradeAbilityHasteButton" to="." method="UpgradeStats" binds= ["AbilityHaste"]]
+[connection signal="pressed" from="BottomBar/AbilityUI/UpgradeDamageButton" to="BottomBar/AbilityUI/UpgradeDamageButton" method="_on_pressed"]
+[connection signal="pressed" from="BottomBar/AbilityUI/UpgradeAttackSpeedButton" to="BottomBar/AbilityUI/UpgradeAttackSpeedButton" method="_on_pressed"]
+[connection signal="pressed" from="BottomBar/AbilityUI/UpgradeMovementSpeedButton" to="BottomBar/AbilityUI/UpgradeMovementSpeedButton" method="_on_pressed"]
+[connection signal="pressed" from="BottomBar/AbilityUI/UpgradeMaxHealthButton" to="BottomBar/AbilityUI/UpgradeMaxHealthButton" method="_on_pressed"]
+[connection signal="pressed" from="BottomBar/AbilityUI/UpgradeAbilityHasteButton" to="BottomBar/AbilityUI/UpgradeAbilityHasteButton" method="_on_pressed"]
+[connection signal="pressed" from="BottomBar/AbilityUI/Ability1Upgrade" to="." method="UpgradeAbility" binds= [0]]
+[connection signal="pressed" from="BottomBar/AbilityUI/Ability2Upgrade" to="." method="UpgradeAbility" binds= [1]]
+[connection signal="pressed" from="BottomBar/AbilityUI/Ability3Upgrade" to="." method="UpgradeAbility" binds= [2]]
+[connection signal="pressed" from="BottomBar/AbilityUI/Ability4Upgrade" to="." method="UpgradeAbility" binds= [3]]

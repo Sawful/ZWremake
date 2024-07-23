@@ -7,8 +7,9 @@ public partial class Menu : Control
 	PackedScene SettingsPackedScene;
 	Node SettingsScene;
 	PackedScene WarriorSkillTree;
-
 	private PlayerInfo PlayerInfo;
+
+
 	public override void _Ready()
 	{
 		MainScene = (PackedScene)ResourceLoader.Load("res://Main/Main.tscn");
@@ -18,11 +19,6 @@ public partial class Menu : Control
 
 		PlayerInfo = GetNode<PlayerInfo>("/root/PlayerInfo");
 		PlayerInfo.PlayerClass = "Warrior";
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
 	}
 
 	public void _on_start_button_pressed()

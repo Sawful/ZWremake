@@ -57,7 +57,7 @@ public partial class Player : Entity
     private int Experience;
     private int Level = 1;
     private int ExperienceToLevelUp;
-    private int Resource;
+    public int Resource;
 
     private NavigationMesh NavMesh;
     private Rid NavMeshRID;
@@ -315,9 +315,9 @@ public partial class Player : Entity
         return closest;
     }
 
-    public void GetRewards(int ressource, int experience)
+    public void GetRewards(int resource, int experience)
     {
-        Resource += ressource;
+        Resource += resource;
         Experience += experience;
 
         while (Experience >= ExperienceToLevelUp)

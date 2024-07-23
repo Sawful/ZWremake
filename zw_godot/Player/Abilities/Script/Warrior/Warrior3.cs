@@ -7,12 +7,26 @@ using Godot.Collections;
 
 public partial class Warrior3 : LineAbility
 {
+	float[] CooldownArray = new[] {22f, 21f, 20f, 19f, 18f}; // StatsListsFloat[0]
+    float[] PercentDamageArray = new[] {0.1f, 0.15f, 0.2f, 0.25f, 0.3f}; // StatListsFloat[1]
+    int[] FlatDamageArray = new[] {4, 8, 12, 16, 20}; // StatListsInt[0]
+
 	System.Timers.Timer AbilityTimer;
     public TaskCompletionSource<bool> AbilityTimerFinished = new();
     public override void _Ready()
 	{
         base._Ready();
+        StatListsFloat.Add(CooldownArray);
+		StatListsFloat.Add(PercentDamageArray);
+		StatListsInt.Add(FlatDamageArray);
 	}
+
+    public override void UpgradeAbility(int level)
+    {
+        base.UpgradeAbility(level);
+        AbilityResource.Cooldown = StatListsFloatCurrent[0];
+    }
+
 	public void CastAbility(Entity caster)
     {
         float length = 4;
@@ -48,7 +62,8 @@ public partial class Warrior3 : LineAbility
                 Array<Node3D> targets = CurrentHitbox.GetOverlappingBodies();
                 foreach (Entity target in targets)
                 {
-                    Player.DealDirectDamage(target, (int)Math.Round(Player.Damage * 0.66));
+                    int damage = (int)Math.Round(Player.Damage * StatListsFloatCurrent[1]) + StatListsIntCurrent[0];
+                    Player.DealDirectDamage(target, damage);
                 }
 
                 AbilityTimerFinished = new TaskCompletionSource<bool>();

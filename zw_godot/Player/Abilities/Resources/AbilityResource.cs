@@ -6,19 +6,21 @@ public partial class AbilityResource : Resource
 {
 	[Export] public string AbilityName;
 	[Export] public int Slot;
-	[Export] public bool TimedCooldown; 
+	[Export] public bool TimedCooldown;
 	[Export] public float Cooldown;
 	[Export] public float CurrentCooldown;
 	[Export] public bool OnCooldown;
 	[Export] public bool CooldownRecharge;
-	[Export] public bool MultipleCharges; 
-	[Export] public int MaxCharges; 
-	[Export] public int Charges; 
+	[Export] public bool MultipleCharges;
+	[Export] public int MaxCharges;
+	[Export] public int Charges;
 	private Timer CooldownTimer;
 	private PackedScene CooldownTimerPacked;
 	public Ability AbilityNode;
 	[Export] public string AbilityNodePath;
 	[Export] public CompressedTexture2D Icon;
+	public int AbilityLevel = 0;
+
 	public AbilityUI AbilityUI;
 	private List<Timer> CooldownTimerList = new();
 
@@ -31,6 +33,8 @@ public partial class AbilityResource : Resource
 		abilityHandler.AddChild(AbilityNode);
 		CooldownTimerPacked = (PackedScene)ResourceLoader.Load("res://Player/Abilities/Scenes/CooldownTimer.tscn");
 		Charges = MaxCharges - CooldownTimerList.Count;
+		AbilityNode.AbilityResource = this;
+		AbilityNode.UpgradeAbility(0);
 	}
 
 	public void SetCooldown()

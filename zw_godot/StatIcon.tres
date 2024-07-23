@@ -1,0 +1,20 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://c446b4qm1augp"]
+
+[sub_resource type="FontFile" id="FontFile_jis6q"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yqhiv"]
+bg_color = Color(0.0588235, 0.0392157, 0.0392157, 0.901961)
+
+[resource]
+default_font_size = 16
+Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+Button/font_sizes/font_size = 6
+TooltipLabel/colors/font_color = Color(0.980392, 0.980392, 0.980392, 1)
+TooltipLabel/fonts/font = SubResource("FontFile_jis6q")
+TooltipPanel/styles/panel = SubResource("StyleBoxFlat_yqhiv")
