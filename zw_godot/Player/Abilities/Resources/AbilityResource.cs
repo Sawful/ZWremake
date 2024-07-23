@@ -30,10 +30,11 @@ public partial class AbilityResource : Resource
 		PackedScene ability = (PackedScene)ResourceLoader.Load(AbilityNodePath);
 		AbilityNode = (Ability)ability.Instantiate();
 		AbilityNode.Cooldown = Cooldown;
-		//AbilityNode.AbilityResource = this;
 		abilityHandler.AddChild(AbilityNode);
 		CooldownTimerPacked = (PackedScene)ResourceLoader.Load("res://Player/Abilities/Scenes/CooldownTimer.tscn");
 		Charges = MaxCharges - CooldownTimerList.Count;
+		AbilityNode.AbilityResource = this;
+		AbilityNode.UpgradeAbility(0);
 	}
 
 	public void SetCooldown()
