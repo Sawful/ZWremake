@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://cb8yen2ns4432"]
+
+[ext_resource type="Script" path="res://TaskArea.cs" id="1_dlf02"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_cg4l5"]
+height = 1.0
+radius = 1.0
+
+[node name="TaskArea" type="Area3D"]
+script = ExtResource("1_dlf02")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_cg4l5")
+
+[node name="ConfirmationTimer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]
+[connection signal="body_exited" from="." to="." method="OnBodyExited"]
+[connection signal="timeout" from="ConfirmationTimer" to="." method="OnTimeout"]

@@ -80,7 +80,7 @@ script = ExtResource("2_g4yvb")
 
 [node name="TopBarDisplay" type="CenterContainer" parent="."]
 layout_mode = 0
-offset_right = 1600.0
+offset_right = 400.0
 offset_bottom = 90.0
 
 [node name="TimeDisplay" type="Label" parent="TopBarDisplay"]
@@ -383,6 +383,17 @@ offset_bottom = 249.0
 layout_mode = 2
 text = "Upgrade Points: "
 horizontal_alignment = 1
+
+[node name="ThreatBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(800, 50)
+offset_left = 400.0
+offset_top = 15.0
+offset_right = 1200.0
+offset_bottom = 65.0
+max_value = 50000.0
+step = 1.0
+value = 5000.0
+show_percentage = false
 
 [connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton1" to="BottomBar/AbilityUI" method="OnAbilityButton1Pressed"]
 [connection signal="pressed" from="BottomBar/AbilityUI/AbilityButton2" to="BottomBar/AbilityUI" method="OnAbilityButton2Pressed"]

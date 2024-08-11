@@ -20,6 +20,7 @@ public partial class BaseEnemy : Enemy
 
         RessourceOnDeath = 1;
         ExperienceOnDeath = 1;
+        ThreatOnDeath = 100;
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

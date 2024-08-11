@@ -69,7 +69,8 @@ public partial class Player : Entity
     public override void _Ready()
     {
         PlayerInfo = GetNode<PlayerInfo>("/root/PlayerInfo");
-        Main = GetTree().Root.GetNode<GameManager>("Main");
+        Main = GetParent<GameManager>();
+        
 
         GameUI = Main.GetNode<GameUI>("PlayerUI");
         AbilityUI = GameUI.GetNode<PanelContainer>("BottomBar").GetNode<AbilityUI>("AbilityUI");
@@ -143,6 +144,18 @@ public partial class Player : Entity
         else
         {
             GD.Print("Unknown Class");
+
+            //Set default as Warrior
+            AbilityResource = PlayerInfo.AbilityResource;
+            foreach(AbilityResource abilityResource in AbilityResource)
+            {
+                if(abilityResource != null)
+                {
+                    abilityResource.SetAbility(AbilityScript);
+                }
+            }
+            Range = 2;
+            RangedAttack = false;
         }
 
         MaxHealth = (int)Mathf.Round((200 + StatsBonusAdd["MaxHealth"] + 10 * StatsLevel["MaxHealth"]) * (1 + StatsBonusMult["MaxHealth"]));
@@ -315,7 +328,7 @@ public partial class Player : Entity
         return closest;
     }
 
-    public void GetRewards(int resource, int experience)
+    public void GetRewards(int resource, int experience, int threat)
     {
         Resource += resource;
         Experience += experience;
@@ -325,7 +338,8 @@ public partial class Player : Entity
             LevelUp();
         }
         GameUI.GetRewards();
-        
+
+        Main.IncreaseThreat(threat);
     }
 
     public void UpdateStats()

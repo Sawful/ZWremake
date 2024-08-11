@@ -17,6 +17,7 @@ public partial class TankEnemy : Enemy
 
         RessourceOnDeath = 2;
         ExperienceOnDeath = 3;
+        ThreatOnDeath = 250;
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.

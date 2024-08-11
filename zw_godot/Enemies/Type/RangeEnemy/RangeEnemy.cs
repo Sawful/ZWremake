@@ -17,6 +17,8 @@ public partial class RangeEnemy : Enemy
 
         RessourceOnDeath = 3;
         ExperienceOnDeath = 2;
+        ThreatOnDeath = 200;
+
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.

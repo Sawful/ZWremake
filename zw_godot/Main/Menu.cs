@@ -3,7 +3,7 @@ using System;
 
 public partial class Menu : Control
 {
-	PackedScene MainScene;
+	GameManager MainScene;
 	PackedScene SettingsPackedScene;
 	Node SettingsScene;
 	PackedScene WarriorSkillTree;
@@ -12,7 +12,7 @@ public partial class Menu : Control
 
 	public override void _Ready()
 	{
-		MainScene = (PackedScene)ResourceLoader.Load("res://Main/Main.tscn");
+		MainScene = (GameManager)ResourceLoader.Load<PackedScene>("res://Main/Main.tscn").Instantiate();
 		SettingsPackedScene = (PackedScene)ResourceLoader.Load("res://Main/Settings/Settings.tscn");
 
 		WarriorSkillTree = (PackedScene)ResourceLoader.Load("res://SkillTree/WarriorSkillTree.tscn");
@@ -23,7 +23,8 @@ public partial class Menu : Control
 
 	public void _on_start_button_pressed()
 	{
-		GetTree().ChangeSceneToPacked(MainScene);
+		GetTree().Root.AddChild(MainScene);
+		QueueFree();
 	}
 
 	public void _on_settings_button_pressed()

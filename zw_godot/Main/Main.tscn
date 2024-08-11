@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://btk08876ggvce"]
+[gd_scene load_steps=10 format=3 uid="uid://btk08876ggvce"]
 
 [ext_resource type="Script" path="res://Main/GameManager.cs" id="1_8bxkj"]
 [ext_resource type="PackedScene" uid="uid://cunm7mu63qeb4" path="res://Main/MainScenePrefabs/ground.tscn" id="2_4n4u5"]
@@ -7,6 +7,7 @@
 [ext_resource type="NavigationMesh" uid="uid://b5t5cqq35ddch" path="res://Main/MainNavMesh.tres" id="5_dfkgu"]
 [ext_resource type="PackedScene" uid="uid://bl0rsh88rppk" path="res://Player/PlayerUI.tscn" id="5_npj1m"]
 [ext_resource type="PackedScene" uid="uid://dl5ocu3debwmg" path="res://Main/box.tscn" id="6_y5g6b"]
+[ext_resource type="PackedScene" uid="uid://cb8yen2ns4432" path="res://TaskArea.tscn" id="8_dlb7i"]
 
 [sub_resource type="Environment" id="Environment_v8m81"]
 background_mode = 1
@@ -78,6 +79,9 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -17, 1, 17)
 
 [node name="Box8" parent="NavigationRegion3D" instance=ExtResource("6_y5g6b")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -15, 1, 17)
+
+[node name="TaskArea" parent="." instance=ExtResource("8_dlb7i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 2)
 
 [connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
 [connection signal="timeout" from="Seconds" to="." method="OnSecondsTimeout"]
