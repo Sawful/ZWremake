@@ -386,6 +386,7 @@ horizontal_alignment = 1
 
 [node name="ThreatBar" type="ProgressBar" parent="."]
 custom_minimum_size = Vector2(800, 50)
+layout_mode = 0
 offset_left = 400.0
 offset_top = 15.0
 offset_right = 1200.0
