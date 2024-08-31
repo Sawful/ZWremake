@@ -31,8 +31,9 @@ public partial class GameManager : Node3D
 
     public PackedScene SoundEffectPlayer;
     AudioStreamPlayer audioStreamPlayer;
-    Variant Content;
-    Variant Content2;
+
+    ProgressBar ThreatBar;
+    int ThreatRank;
 
     public AudioStreamWav SlowDownSFX;
     public AudioStreamWav SpeedUpSFX;
@@ -50,6 +51,7 @@ public partial class GameManager : Node3D
         HealthBar = PlayerUI.GetNode<ProgressBar>("HealthBar");
         TimeDisplay = PlayerUI.GetNode<CenterContainer>("TopBarDisplay").GetNode<Label>("TimeDisplay");
         TimeDisplay.Text = TimeSeconds.ToString();
+        ThreatBar = PlayerUI.GetNode<ProgressBar>("ThreatBar");
 
         SpawnPosition = SpawnLocation.Position;
 
@@ -71,8 +73,6 @@ public partial class GameManager : Node3D
         PauseMenu = (PackedScene)ResourceLoader.Load("res://Main/PauseMenu.tscn");
         DeathMenu = (PackedScene)ResourceLoader.Load("res://Main/DeathMenu.tscn");
 
-        Content = "GaMiNg";
-        Content2 = "don't feel like gaming rn";
         Load();
 
         PlayerInfo.GameNumber += 1;
@@ -413,6 +413,17 @@ public partial class GameManager : Node3D
         #endregion
     }
 
+
+    public void IncreaseThreat(int increaseBy)
+    {
+        ThreatBar.Value += increaseBy;
+        if(ThreatRank < ThreatBar.Value / 10000)
+        {
+            ThreatRank += 1;
+            GD.Print("Threat Rank has increased to");
+            GD.Print(ThreatRank);
+        }
+    }
     public void Save()
     {
         PlayerInfo.PlayerLevel = Player.GetLevel();

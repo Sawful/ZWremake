@@ -12,19 +12,20 @@ public partial class Enemy : Entity
 
     PackedScene DeathParticles;
 
-    Node Main;
+    GameManager Main;
 
     // States
     public SimpleStateMachine EnemyStateMachine;
 
     public int RessourceOnDeath;
     public int ExperienceOnDeath;
+    public int ThreatOnDeath;
 
     public override void _Ready()
 	{
         // Stats
         base._Ready();
-        Main = GetTree().Root.GetNode("Main");
+        Main = GetTree().Root.GetNode<GameManager>("Main");
 
         if(IsInstanceValid(Main.GetNode<Player>("Player")))
         {
@@ -71,6 +72,6 @@ public partial class Enemy : Entity
 
     private void GiveReward()
     {
-        Player.GetRewards(RessourceOnDeath, ExperienceOnDeath);
+        Player.GetRewards(RessourceOnDeath, ExperienceOnDeath, ThreatOnDeath);
     }
 }
