@@ -529,4 +529,5 @@ public partial class GameManager : Node3D
             await mainLoopTree.ToSignal(mainLoopTree, SceneTree.SignalName.ProcessFrame);
         }
     }
+
 }

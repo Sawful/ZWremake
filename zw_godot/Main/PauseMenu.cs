@@ -3,11 +3,13 @@ using System;
 
 public partial class PauseMenu : Control
 {
-	PackedScene MainMenuScene;
+	Menu MainMenu;
 	PackedScene SettingsScene;
+	GameManager CurrentMain;
 	public override void _Ready()
 	{
-		MainMenuScene = (PackedScene)ResourceLoader.Load("res://Main/Menu.tscn");
+		MainMenu = (Menu)ResourceLoader.Load<PackedScene>("res://Main/Menu.tscn").Instantiate();
+		CurrentMain = GetTree().Root.GetNode<GameManager>("Main");
 		SettingsScene = (PackedScene)ResourceLoader.Load("res://Main/Settings/Settings.tscn");
 	}
 
@@ -27,7 +29,8 @@ public partial class PauseMenu : Control
 	public void _on_exit_button_pressed()
 	{
 		GetTree().Paused = false;
-		GetTree().ChangeSceneToPacked(MainMenuScene);
+		GetTree().Root.AddChild(MainMenu);
+		CurrentMain.QueueFree();
 	}
 	
 }
