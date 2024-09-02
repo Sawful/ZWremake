@@ -9,12 +9,14 @@ public partial class DeathMenu : Control
 	public override void _Ready()
 	{
 		MainMenuScene = (PackedScene)ResourceLoader.Load("res://Main/Menu.tscn");
-		Main = (GameManager)ResourceLoader.Load<PackedScene>("res://Main/Main.tscn").Instantiate();
 		CurrentMain = GetTree().Root.GetNode<GameManager>("Main");
+		CurrentMain.Name = "CurrentMain";
+		Main = (GameManager)ResourceLoader.Load<PackedScene>("res://Main/Main.tscn").Instantiate();
 	}
 	public void _on_retry_button_pressed()
 	{
 		GetTree().Paused = false;
+		Main.Name = "Main";
 		GetTree().Root.AddChild(Main);
 		CurrentMain.QueueFree();
 	}
