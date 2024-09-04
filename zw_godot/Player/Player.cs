@@ -84,7 +84,6 @@ public partial class Player : Entity
         AbilityScript.MainCamera = MainCamera;
 
         PlayerClass = PlayerInfo.PlayerClass;
-        GD.Print(PlayerClass);
 
         ExperienceToLevelUp = 5;
 
